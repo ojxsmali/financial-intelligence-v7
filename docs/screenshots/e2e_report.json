@@ -1,0 +1,162 @@
+[
+  {
+    "check": "Overview AAPL (desktop)",
+    "ok": true,
+    "problems": [],
+    "screenshot": "01_overview_aapl.png"
+  },
+  {
+    "check": "Explorer search 'berkshire'",
+    "ok": true,
+    "problems": [],
+    "screenshot": "02_explorer_search.png"
+  },
+  {
+    "check": "Explorer grid contains BRK.A and BRK.B",
+    "ok": true,
+    "problems": []
+  },
+  {
+    "check": "Explorer default universe",
+    "ok": true,
+    "problems": [],
+    "screenshot": null
+  },
+  {
+    "check": "Compare AAPL/MSFT/GOOGL/NVDA",
+    "ok": true,
+    "problems": [],
+    "screenshot": "03_compare.png"
+  },
+  {
+    "check": "Statements JPM (bank)",
+    "ok": true,
+    "problems": [],
+    "screenshot": "04_statements_jpm.png"
+  },
+  {
+    "check": "CSV download is valid",
+    "ok": true,
+    "problems": [],
+    "rows": 80
+  },
+  {
+    "check": "Insights NVDA",
+    "ok": true,
+    "problems": [],
+    "screenshot": "05_insights_nvda.png"
+  },
+  {
+    "check": "AI assistant page (no key exposure)",
+    "ok": true,
+    "problems": [],
+    "screenshot": "06_assistant.png"
+  },
+  {
+    "check": "Sources & methodology",
+    "ok": true,
+    "problems": [],
+    "screenshot": "07_sources.png"
+  },
+  {
+    "check": "Overview Toyota (20-F, JPY, IFRS)",
+    "ok": true,
+    "problems": [],
+    "screenshot": "08_overview_toyota_ifrs.png"
+  },
+  {
+    "check": "XOM holding company: explained, not substituted",
+    "ok": true,
+    "problems": [],
+    "screenshot": "09_xom_unavailable.png"
+  },
+  {
+    "check": "ETF explained",
+    "ok": true,
+    "problems": [],
+    "screenshot": null
+  },
+  {
+    "check": "Overview GOOG",
+    "ok": true,
+    "problems": [],
+    "screenshot": null
+  },
+  {
+    "check": "Overview AMZN",
+    "ok": true,
+    "problems": [],
+    "screenshot": null
+  },
+  {
+    "check": "Overview META",
+    "ok": true,
+    "problems": [],
+    "screenshot": null
+  },
+  {
+    "check": "Overview WMT",
+    "ok": true,
+    "problems": [],
+    "screenshot": null
+  },
+  {
+    "check": "Overview TSLA",
+    "ok": true,
+    "problems": [],
+    "screenshot": null
+  },
+  {
+    "check": "Overview BRK.B",
+    "ok": true,
+    "problems": [],
+    "screenshot": null
+  },
+  {
+    "check": "Overview MSFT",
+    "ok": true,
+    "problems": [],
+    "screenshot": null
+  },
+  {
+    "check": "Overview GOOGL",
+    "ok": true,
+    "problems": [],
+    "screenshot": null
+  },
+  {
+    "check": "Overview NVDA",
+    "ok": true,
+    "problems": [],
+    "screenshot": null
+  },
+  {
+    "check": "Overview JPM",
+    "ok": true,
+    "problems": [],
+    "screenshot": null
+  },
+  {
+    "check": "Overview MSFT (mobile 390px)",
+    "ok": true,
+    "problems": [],
+    "screenshot": "10_mobile_overview.png"
+  },
+  {
+    "check": "No horizontal page overflow on mobile",
+    "ok": true,
+    "problems": []
+  },
+  {
+    "check": "Compare (mobile 390px)",
+    "ok": true,
+    "problems": [],
+    "screenshot": "11_mobile_compare.png"
+  },
+  {
+    "check": "Statements (tablet 820px)",
+    "ok": true,
+    "problems": [],
+    "screenshot": "12_tablet_statements.png"
+  }
+]

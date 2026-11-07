@@ -1,0 +1,32 @@
+# --- secrets: NEVER commit ---
+.streamlit/secrets.toml
+.env
+.env.*
+*.key
+secrets*.toml
+!.streamlit/secrets.toml.example
+
+# --- runtime caches ---
+.cache/
+*.sqlite3
+*.sqlite3-*
+*.salt
+
+# --- python ---
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# --- build outputs ---
+build/
+dist/
+*.spec.bak
+release/
+
+# --- os / editor ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

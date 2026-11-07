@@ -1,0 +1,34 @@
+{
+  "built_at": "2026-11-03T15:27:10+00:00",
+  "nasdaq_file_created": "1103202610:01",
+  "other_file_created": "1103202610:01",
+  "total_securities": 13239,
+  "companies": 5608,
+  "with_cik": 7630,
+  "by_exchange": {
+    "Nasdaq": 5600,
+    "NYSE": 2882,
+    "NYSE Arca": 2749,
+    "Cboe BZX": 1676,
+    "NYSE American": 310,
+    "Texas Stock Exchange": 12,
+    "Other US exchange (F)": 10
+  },
+  "by_type": {
+    "ETF": 5775,
+    "Common stock": 4248,
+    "ADR / foreign issuer": 1360,
+    "Preferred / depositary": 504,
+    "Warrant": 422,
+    "Unit": 321,
+    "Closed-end fund / trust": 313,
+    "Notes / debt": 155,
+    "Right": 126,
+    "ETN": 15
+  },
+  "sources": [
+    "https://www.nasdaqtrader.com/dynamic/SymDir/nasdaqlisted.txt",
+    "https://www.nasdaqtrader.com/dynamic/SymDir/otherlisted.txt",
+    "https://www.sec.gov/files/company_tickers_exchange.json"
+  ]
+}
