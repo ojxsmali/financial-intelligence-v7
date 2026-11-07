@@ -1,0 +1,41 @@
+[server]
+headless = true
+runOnSave = false
+maxUploadSize = 1          # MB — CSV uploads are validated again server-side
+enableXsrfProtection = true
+enableCORS = true
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"
+showErrorDetails = "none"  # never render stack traces to visitors
+
+[logger]
+level = "warning"
+
+[theme]
+base = "dark"
+primaryColor = "#10B981"
+backgroundColor = "#070B14"
+secondaryBackgroundColor = "#0E1626"
+textColor = "#E6EDF7"
+linkColor = "#22D3EE"
+borderColor = "#1C2940"
+dataframeBorderColor = "#1C2940"
+dataframeHeaderBackgroundColor = "#0E1626"
+codeBackgroundColor = "#0E1626"
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap, sans-serif"
+codeFont = "JetBrains Mono:https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap, monospace"
+headingFontWeights = [700, 650, 600, 600, 600, 600]
+baseFontSize = 15
+baseRadius = "10px"
+buttonRadius = "8px"
+showWidgetBorder = true
+showSidebarBorder = true
+chartCategoricalColors = ["#10B981", "#22D3EE", "#F59E0B", "#A78BFA", "#F472B6", "#60A5FA"]
+
+[theme.sidebar]
+backgroundColor = "#0A101D"
+secondaryBackgroundColor = "#111B2E"
