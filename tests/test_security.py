@@ -70,3 +70,24 @@ def test_secrets_toml_excluded_from_release_build():
 def test_secrets_not_tracked_by_git():
     tracked = subprocess.run(["git", "ls-files"], cwd=ROOT, capture_output=True, text=True).stdout
     assert ".streamlit/secrets.toml" not in tracked.splitlines()
+
+
+def test_env_example_is_tracked_and_placeholder_only():
+    ignore = (ROOT / ".gitignore").read_text(encoding="utf-8")
+    assert "!.env.example" in ignore and ".env" in ignore
+    example = (ROOT / ".env.example").read_text(encoding="utf-8")
+    assert "GEMINI_API_KEY=" in example and not GOOGLE_KEY.search(example)
+
+
+def test_dotenv_parser_and_loader_never_override(tmp_path, monkeypatch):
+    from fip.config import load_dotenv, parse_env_file
+    parsed = parse_env_file('# c\nexport A_KEY="x y"\nB=2 # note\nlower=1\nC=\n')
+    assert parsed == {"A_KEY": "x y", "B": "2", "C": ""}
+    env = tmp_path / ".env"
+    env.write_text("SEC_CONTACT_EMAIL=file@example.com\nAI_ENABLED=false\n", encoding="utf-8")
+    monkeypatch.setenv("SEC_CONTACT_EMAIL", "real@example.com")
+    monkeypatch.delenv("AI_ENABLED", raising=False)
+    loaded = load_dotenv(env)
+    import os
+    assert loaded == ["AI_ENABLED"] and os.environ["SEC_CONTACT_EMAIL"] == "real@example.com"
+    monkeypatch.delenv("AI_ENABLED", raising=False)

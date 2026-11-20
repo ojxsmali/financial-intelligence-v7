@@ -15,16 +15,15 @@ datas = [
     (str(ROOT / ".streamlit" / "config.toml"), ".streamlit"),   # NEVER secrets.toml
 ]
 datas += collect_data_files("streamlit")
-datas += collect_data_files("plotly")
 datas += copy_metadata("streamlit")
-for package in ("pandas", "numpy", "requests", "plotly", "pyarrow", "altair", "toml"):
+for package in ("pandas", "numpy", "requests", "pyarrow", "altair", "toml"):
     datas += copy_metadata(package)
 
 hiddenimports = (
     collect_submodules("fip")
     + collect_submodules("streamlit.web")
     + collect_submodules("streamlit.runtime")
-    + ["plotly.graph_objects", "plotly.io", "toml", "sqlite3"]
+    + ["toml", "sqlite3"]
 )
 
 a = Analysis(
@@ -32,7 +31,7 @@ a = Analysis(
     pathex=[str(ROOT)],
     datas=datas,
     hiddenimports=hiddenimports,
-    excludes=["tkinter", "matplotlib", "IPython", "pytest", "playwright", "PyInstaller"],
+    excludes=["tkinter", "matplotlib", "plotly", "IPython", "pytest", "playwright", "PyInstaller"],
     noarchive=False,
 )
 pyz = PYZ(a.pure)

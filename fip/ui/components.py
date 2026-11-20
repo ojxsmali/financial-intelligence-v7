@@ -9,6 +9,9 @@ import streamlit as st
 from fip import APP_NAME, VERSION
 from fip.insights import Insight
 
+AUTHOR_NAME = "Ojas Mali"
+AUTHOR_URL = "https://github.com/ojxsmali"
+
 
 def esc(value) -> str:
     return html.escape("" if value is None else str(value), quote=True)
@@ -18,7 +21,7 @@ def safe_url(url: str) -> str:
     """Only allow https links to known public sources inside raw HTML."""
     url = str(url or "")
     allowed = ("https://www.sec.gov/", "https://data.sec.gov/", "https://www.nasdaqtrader.com/",
-               "https://aistudio.google.com/", "https://ai.google.dev/")
+               "https://aistudio.google.com/", "https://ai.google.dev/", AUTHOR_URL)
     return esc(url) if url.startswith(allowed) else "#"
 
 
@@ -27,33 +30,39 @@ def render(markup: str) -> None:
 
 
 def chip(text: str, kind: str = "", dot: bool = False) -> str:
-    dot_html = '<span class="fi-dot"></span>' if dot else ""
+    dot_html = '<span class="fi-dot" aria-hidden="true"></span>' if dot else ""
     return f'<span class="fi-chip {esc(kind)}">{dot_html}{esc(text)}</span>'
 
 
+def tags(items: list[str]) -> None:
+    render('<div class="fi-tags">' + "".join(items) + "</div>")
+
+
 def page_header(eyebrow: str, title: str, subtitle: str = "") -> None:
-    sub = f'<div class="fi-sub">{esc(subtitle)}</div>' if subtitle else ""
+    sub = f'<p class="fi-sub">{esc(subtitle)}</p>' if subtitle else ""
     render(f'<div class="fi-eyebrow">{esc(eyebrow)}</div><h1 class="fi-title">{esc(title)}</h1>{sub}')
 
 
 def notice(text: str, kind: str = "") -> None:
-    render(f'<div class="fi-notice {esc(kind)}" role="status">{esc(text)}</div>')
+    label = {"info": "Note", "bad": "Problem"}.get(kind, "Caveat")
+    render(f'<div class="fi-notice {esc(kind)}" role="status"><b>{label}:</b> {esc(text)}</div>')
 
 
-def empty_state(title: str, body: str, icon: str = "◇") -> None:
-    render(f'<div class="fi-empty"><div style="font-size:1.6rem;color:var(--faint)">{esc(icon)}</div>'
-           f'<h3>{esc(title)}</h3><div>{esc(body)}</div></div>')
+def empty_state(title: str, body: str, kicker: str = "Nothing to show") -> None:
+    render(f'<div class="fi-empty" role="status"><div class="fi-empty-k">{esc(kicker)}</div>'
+           f'<h3>{esc(title)}</h3><div class="b">{esc(body)}</div></div>')
 
 
 def skeleton(height: int = 120, count: int = 1) -> str:
-    blocks = "".join(f'<div class="fi-skel" style="height:{int(height)}px;margin-bottom:.6rem"></div>'
-                     for _ in range(count))
-    return blocks
+    return "".join(f'<div class="fi-skel" style="height:{int(height)}px;margin-bottom:.6rem"></div>'
+                   for _ in range(count))
 
 
-def skeleton_kpis(n: int = 6) -> str:
-    cells = "".join('<div class="fi-skel" style="height:104px"></div>' for _ in range(n))
-    return f'<div class="fi-kpis" aria-busy="true" aria-label="Loading">{cells}</div>' + skeleton(300)
+def skeleton_kpis(n: int = 6, message: str = "Loading annual filings from SEC EDGAR…") -> str:
+    cells = "".join('<div class="fi-kpi"><div class="fi-skel" style="height:12px;width:60%"></div>'
+                    '<div class="fi-skel" style="height:26px;width:80%;margin-top:.6rem"></div></div>' for _ in range(n))
+    return (f'<div role="status" aria-live="polite"><p class="fi-loading">{esc(message)}</p>'
+            f'<div class="fi-kpis" aria-hidden="true">{cells}</div>{skeleton(260)}</div>')
 
 
 @dataclass
@@ -64,18 +73,24 @@ class Kpi:
     direction: str = "flat"     # up | down | flat
     foot: str = ""
     tooltip: str = ""
-    accent: str = "var(--emerald)"
+    accent: str = ""            # kept for API compatibility; KPI tiles are no longer colour-coded
     available: bool = True
+
+
+_GLYPH = {"up": "▲", "down": "▼", "flat": ""}
 
 
 def kpi_grid(items: list[Kpi]) -> None:
     cells = []
     for k in items:
-        tip = f'<span class="fi-info" title="{esc(k.tooltip)}" aria-label="{esc(k.tooltip)}">i</span>' if k.tooltip else ""
-        delta = f'<span class="fi-delta {esc(k.direction)}">{esc(k.delta)}</span>' if k.delta else "<span></span>"
+        tip = (f'<span class="fi-info" title="{esc(k.tooltip)}" role="img" aria-label="Definition: {esc(k.tooltip)}">i</span>'
+               if k.tooltip else "")
+        glyph = _GLYPH.get(k.direction, "")
+        glyph_html = f'<span aria-hidden="true">{glyph} </span>' if glyph and k.delta else ""
+        delta = f'<span class="fi-delta {esc(k.direction)}">{glyph_html}{esc(k.delta)}</span>' if k.delta else ""
         cls = "fi-kpi" + ("" if k.available else " na")
         cells.append(
-            f'<div class="{cls}" style="--accent:{esc(k.accent)}" role="group" aria-label="{esc(k.label)}">'
+            f'<div class="{cls}" role="group" aria-label="{esc(k.label)}">'
             f'<div class="fi-kpi-label"><span>{esc(k.label)}</span>{tip}</div>'
             f'<div class="fi-kpi-value">{esc(k.value)}</div>'
             f'<div class="fi-kpi-foot">{delta}<span>{esc(k.foot)}</span></div></div>'
@@ -85,43 +100,37 @@ def kpi_grid(items: list[Kpi]) -> None:
 
 def company_header(symbol: str, name: str, *, exchange: str, instrument: str, cik, sector: str, sic_desc: str,
                    fye: str, chips: list[str], facts: list[tuple[str, str]]) -> None:
-    initials = "".join(w[0] for w in name.split()[:2] if w and w[0].isalnum()).upper()[:2] or symbol[:2]
-    fact_html = "".join(f'<div><div class="fi-fact-k">{esc(k)}</div><div class="fi-fact-v">{esc(v)}</div></div>'
-                        for k, v in facts)
-    meta = [chip(symbol, "sym"), chip(exchange), chip(instrument)]
+    meta = [esc(exchange), esc(instrument)]
     if cik:
-        meta.append(chip(f"CIK {int(cik)}"))
+        meta.append(f"CIK {int(cik)}")
     if sector and sector != "Unclassified":
-        meta.append(chip(sector, "info"))
-    meta += chips
+        meta.append(esc(sector))
+    meta_html = '<span class="sep" aria-hidden="true">/</span>'.join(f"<span>{m}</span>" for m in meta)
+    fact_html = "".join(f"<div><dt>{esc(k)}</dt><dd>{esc(v)}</dd></div>" for k, v in facts)
     render(
-        '<div class="fi-company">'
-        f'<div class="fi-company-left"><div class="fi-logo" aria-hidden="true">{esc(initials)}</div>'
-        f'<div style="min-width:0"><div class="fi-company-name">{esc(name)}</div>'
-        f'<div class="fi-company-meta">{"".join(meta)}</div></div></div>'
-        f'<div class="fi-facts">{fact_html}</div></div>'
+        '<section class="fi-company" aria-label="Company">'
+        f'<div class="fi-company-id"><span class="fi-ticker">{esc(symbol)}</span>'
+        f'<h2 class="fi-company-name">{esc(name)}</h2>'
+        f'<div class="fi-company-meta">{meta_html}</div>'
+        f'<div class="fi-tags" style="margin:.6rem 0 0">{"".join(chips)}</div></div>'
+        f'<dl class="fi-facts">{fact_html}</dl></section>'
     )
-
-
-TONE_COLORS = {"positive": "var(--emerald)", "negative": "var(--rose)", "caution": "var(--amber)",
-               "neutral": "var(--cyan)"}
-CATEGORY_CHIP = {"Fact": "ok", "Calculation": "info", "Flag": "warn"}
 
 
 def insight_card(item: Insight) -> None:
+    cat_cls = "fi-cat flag" if item.category == "Flag" else "fi-cat"
     render(
-        f'<div class="fi-insight" style="--tone:{TONE_COLORS.get(item.tone, "var(--faint)")}">'
-        f'<div style="display:flex;gap:.5rem;align-items:center;margin-bottom:.3rem">'
-        f'{chip(item.category, CATEGORY_CHIP.get(item.category, ""))}</div>'
-        f'<h4>{esc(item.title)}</h4><p>{esc(item.detail)}</p>'
-        f'<div class="fi-rule"><span>Rule: <code>{esc(item.rule)}</code></span><span>Evidence: {esc(item.evidence)}</span></div>'
-        '</div>'
+        f'<article class="fi-insight"><div class="fi-insight-head"><span class="{cat_cls}">{esc(item.category)}</span>'
+        f'<h4>{esc(item.title)}</h4></div><p>{esc(item.detail)}</p>'
+        f'<div class="fi-rule"><span>Rule <code>{esc(item.rule)}</code></span><span>Evidence: {esc(item.evidence)}</span></div>'
+        '</article>'
     )
 
 
-def html_table(header: list[str], rows: list[dict]) -> None:
-    """rows: {"cells": [...], "cls": "sub|ratio|", "neg": [bool,...]}"""
-    head = "".join(f"<th>{esc(h)}</th>" for h in header)
+def html_table(header: list[str], rows: list[dict], caption: str = "") -> None:
+    """rows: {"cells": [...], "cls": "sub|ratio|group", "neg": [bool,...], "marks": [str,...]}.
+    The first cell of each row is a row header (``<th scope="row">``) for screen readers."""
+    head = "".join(f'<th scope="col">{esc(h)}</th>' for h in header)
     body = []
     for row in rows:
         tds = []
@@ -133,21 +142,30 @@ def html_table(header: list[str], rows: list[dict]) -> None:
                 classes.append("neg")
             text = esc(cell)
             if row.get("marks") and i < len(row["marks"]) and row["marks"][i]:
-                text += f'<span class="fi-mark" title="{esc(row["marks"][i])}">●</span>'
-            tds.append(f'<td class="{" ".join(classes)}">{text}</td>')
+                note = esc(row["marks"][i])
+                text += f'<span class="fi-mark" title="{note}" role="img" aria-label="{note}">●</span>'
+            tag = 'th scope="row"' if i == 0 else "td"
+            close = "th" if i == 0 else "td"
+            tds.append(f'<{tag} class="{" ".join(classes)}">{text}</{close}>')
         body.append(f'<tr class="{esc(row.get("cls", ""))}">{"".join(tds)}</tr>')
-    render(f'<div class="fi-table-wrap"><table class="fi-table"><thead><tr>{head}</tr></thead>'
+    cap = f"<caption>{esc(caption)}</caption>" if caption else ""
+    render(f'<div class="fi-table-wrap" role="region" aria-label="{esc(caption or header[0])}" tabindex="0">'
+           f'<table class="fi-table">{cap}<thead><tr>{head}</tr></thead>'
            f'<tbody>{"".join(body)}</tbody></table></div>')
 
 
 def section(title: str, subtitle: str = "") -> None:
     sub = f'<div class="fi-panel-sub">{esc(subtitle)}</div>' if subtitle else ""
-    render(f'<div class="fi-panel-title">{esc(title)}</div>{sub}')
+    render(f'<h3 class="fi-panel-title">{esc(title)}</h3>{sub}')
+
+
+def credit_html() -> str:
+    return f'Designed &amp; built by <a href="{AUTHOR_URL}" target="_blank" rel="noopener">{esc(AUTHOR_NAME)}</a>'
 
 
 def footer() -> None:
     render(
-        f'<div class="fi-footer"><span>{esc(APP_NAME)} v{esc(VERSION)} · Data: SEC EDGAR XBRL, Nasdaq Trader symbol '
-        'directory</span><span>Reported annual financial statements — not real-time market data. Educational '
-        'research only; not investment advice.</span></div>'
+        f'<footer class="fi-footer"><span>{esc(APP_NAME)} v{esc(VERSION)} · Data: SEC EDGAR XBRL, Nasdaq Trader '
+        'symbol directory. Reported annual statements — not real-time market data, not investment advice.</span>'
+        f'<span>{credit_html()}</span></footer>'
     )

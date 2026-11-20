@@ -49,9 +49,9 @@ def _apply_preset(name: str) -> None:
 
 
 def main() -> None:
-    ui.page_header("AI research assistant", "Gemini explanations grounded in SEC data",
-                   "Answers use only the structured figures shown in this app. Facts, calculations and hypotheses are "
-                   "kept separate, with fiscal-year citations.")
+    ui.page_header("Assistant", "Ask Google Gemini about the reported figures",
+                   "This is the only AI feature in the app. Gemini receives just the structured SEC figures shown "
+                   "elsewhere, and must keep facts, calculations and hypotheses apart and cite each fiscal year.")
     guard = _guard()
     configured = config.gemini_configured()
     models, rejected = resolve_models(config.get_setting("GEMINI_MODELS"))
@@ -59,13 +59,14 @@ def main() -> None:
     status = guard.status(client)
     limits = guard.limits
 
-    chips = [ui.chip("Configured" if configured else "Not configured", "ok" if configured else "warn", dot=True),
+    chips = [ui.chip("Gemini configured" if configured else "Gemini not configured", "ok" if configured else "warn",
+                     dot=True),
              ui.chip("Free-tier models only", "info"),
              ui.chip(f"Your remaining questions (24 h): {status.client_remaining}/{limits.client_per_day}"),
              ui.chip(f"Site budget left: {status.global_remaining}/{limits.global_per_day}")]
     if not limits.enabled:
         chips.append(ui.chip("Disabled by owner", "bad"))
-    ui.render('<div style="display:flex;gap:.4rem;flex-wrap:wrap;margin:.3rem 0 .8rem">' + "".join(chips) + "</div>")
+    ui.tags(chips)
 
     if not configured:
         ui.notice("The AI assistant is switched off because no Gemini API key is configured on the server. All "
@@ -97,10 +98,10 @@ def main() -> None:
                             max_selections=MAX_COMPANIES, key="ai_companies",
                             format_func=lambda s: option_label(universe, s),
                             help="Taken from the selected company and your comparison list.")
-    st.caption("Presets:")
-    cols = st.columns(len(PRESETS))
-    for col, name in zip(cols, PRESETS):
-        col.button(name, key=f"preset_{name}", on_click=_apply_preset, args=(name,), width="stretch")
+    st.caption("Start from a template question")
+    with st.container(horizontal=True, gap="small"):
+        for name in PRESETS:
+            st.button(name, key=f"preset_{name}", on_click=_apply_preset, args=(name,))
     st.session_state.setdefault("ai_q", PRESETS["Performance"])
     question = st.text_area("Research question", key="ai_q", max_chars=MAX_QUESTION_CHARS, height=110)
 
@@ -141,13 +142,13 @@ def main() -> None:
 
     answer = st.session_state.get("ai_answer")
     if answer:
+        ui.section("Gemini's answer", "AI-generated text — check every figure against the cited filing")
         with st.container(border=True):
             meta = [ui.chip(answer["model"], "info"), ui.chip(answer["at"]),
                     ui.chip(", ".join(answer["symbols"]), "sym")]
             if answer.get("from_cache"):
                 meta.append(ui.chip("Cached answer · no quota used", "ok"))
-            ui.render('<div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.5rem">' + "".join(meta)
-                      + "</div>")
+            ui.tags(meta)
             st.markdown(answer["text"])
             st.caption("AI-generated text can contain mistakes. Every figure should be checked against the cited "
                        "filing (Sources & Methodology). Not investment advice.")

@@ -1,5 +1,17 @@
 # Changelog
 
+## 7.1.0 — 2026-11-20 · UI redesign
+
+- **New design system** ("research note"): light paper/ink theme with one navy accent, Source Serif 4 + IBM Plex Sans/Mono, tabular figures, hairline structure instead of cards. Tokens in `fip/ui/theme.py`, mirrored in `.streamlit/config.toml`.
+- **Charts rebuilt without Plotly** (`fip/ui/charts.py`): server-rendered HTML/SVG, one stated scale, straight segments (no spline smoothing), legends, keyboard-focusable per-year tooltips, and a data-table alternative. Colour-blind-validated 6-colour palette in fixed order; on Compare each company keeps its colour across charts. Plotly removed from requirements and the exe.
+- Company masthead, KPI strip and balance-sheet strip replace gradient banner and coloured cards; deltas use ▲/▼ plus sign, never colour alone.
+- Mobile: page links stay one tap away (Streamlit folds its top nav into the drawer on phones); verified at 320, 360, 820 and 1440 px with no horizontal page overflow.
+- Accessible tables (row/column headers, scrollable regions), visible focus rings, reduced-motion support, live loading status.
+- Honest labelling: rule-based insights say "not AI-generated"; the Assistant page is the only AI feature and names Gemini. Page icons and emoji removed.
+- Fixes: fiscal year-end shown as "26 Sep" (was "Sep 26", readable as a year); Compare uses listing names instead of SEC's upper-case names; "1 match" grammar; explorer grid no longer clips its last row; disabled primary button readable.
+- Optional `.env` loading (`.env.example` added; real environment variables win). Credit: "Designed & built by Ojas Mali".
+- Tests: 158 (new chart, `.env` and fiscal-year-end tests).
+
 ## 7.0.0 — 2026-11-03
 
 ### Company coverage

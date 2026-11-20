@@ -17,6 +17,7 @@ os.environ["FIP_OFFLINE"] = "1"
 def isolated_cache(tmp_path, monkeypatch):
     monkeypatch.setenv("FIP_CACHE_DIR", str(tmp_path / "cache"))
     monkeypatch.setenv("FIP_OFFLINE", "1")
+    monkeypatch.setenv("FIP_NO_DOTENV", "1")
     for key in ("GEMINI_API_KEY", "AI_ACCESS_CODE", "AI_ENABLED", "GEMINI_MODELS", "SEC_CONTACT_EMAIL"):
         monkeypatch.delenv(key, raising=False)
     # A developer's local .streamlit/secrets.toml must not influence tests.

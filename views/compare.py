@@ -5,6 +5,7 @@ from fip.exports import long_format, to_csv_bytes
 from fip.formatting import format_money, format_percent, is_missing
 from fip.metrics import annual_table, comparison_frame, comparison_warnings
 from fip.ui import charts
+from fip.ui.theme import SERIES
 from fip.ui import components as ui
 from fip.ui.state import MAX_COMPARE, company_bundles, display_unit, get_universe, option_label, years_shown
 
@@ -20,7 +21,7 @@ MONEY_METRICS = {"revenue": "Revenue", "net_income": "Net income", "operating_in
 
 def main() -> None:
     universe = get_universe()
-    ui.page_header("Company comparison", "Side-by-side fundamentals",
+    ui.page_header("Compare", "Side-by-side fundamentals",
                    "Latest audited fiscal year for each company, with currency, period and accounting-basis checks.")
 
     options = list(universe.company_symbols)
@@ -32,7 +33,7 @@ def main() -> None:
     symbols = st.session_state.get("compare", [])
     if len(symbols) < 2:
         ui.empty_state("Pick at least two companies", "Use the box above or “Add to comparison” in the sidebar or "
-                       "Company Explorer.", "⇄")
+                       "Company Explorer.", "Comparison")
         return
 
     with st.spinner("Loading SEC filings…"):
@@ -51,6 +52,10 @@ def main() -> None:
         return
 
     frame = comparison_frame(ok)
+    # Listing names ("Microsoft Corp") read better than SEC's upper-case entity names ("MICROSOFT CORP").
+    frame["company"] = [(universe.by_symbol.get(s) or {}).get("name") or c for s, c in zip(frame["symbol"], frame["company"])]
+    # Colour follows the company (selection order), never its rank, so every chart on the page agrees.
+    colors = {s: SERIES[i % len(SERIES)] for i, (s, _) in enumerate(ok)}
     for w in comparison_warnings(frame):
         ui.notice(w, "info")
     currencies = frame["currency"].unique()
@@ -87,49 +92,46 @@ def main() -> None:
         row("Return on equity", frame["return_on_equity"], "ratio", format_percent),
         row("Liabilities / assets", frame["liabilities_to_assets"], "ratio", format_percent),
     ]
-    ui.html_table(header, rows)
+    ui.html_table(header, rows, caption="Latest fiscal year per company")
     st.caption("“—” means the company does not report that line item in its XBRL data (e.g. banks have no gross "
                "margin); it is never estimated. Ratios are currency-neutral.")
 
-    st.write("")
-    left, right = st.columns(2, gap="medium")
+    left, right = st.columns(2, gap="large")
     with left:
-        with st.container(border=True):
-            metric = st.pills("Ratio", list(RATIO_METRICS), default="net_margin", key="cmp_ratio",
-                              format_func=RATIO_METRICS.get) or "net_margin"
-            st.plotly_chart(charts.comparison_bars(frame, metric, RATIO_METRICS[metric], kind="ratio"),
-                            config=charts.PLOTLY_CONFIG, key="cmp_ratio_chart")
+        ui.section("Ratios", "Currency-neutral; latest fiscal year")
+        metric = st.pills("Ratio", list(RATIO_METRICS), default="net_margin", key="cmp_ratio",
+                          format_func=RATIO_METRICS.get, label_visibility="collapsed") or "net_margin"
+        charts.show(charts.comparison_bars(frame, metric, RATIO_METRICS[metric], kind="ratio", colors=colors))
     with right:
-        with st.container(border=True):
-            metric = st.pills("Amount", list(MONEY_METRICS), default="revenue", key="cmp_money",
-                              format_func=MONEY_METRICS.get) or "revenue"
-            if single_currency:
-                st.plotly_chart(charts.comparison_bars(frame, metric, MONEY_METRICS[metric], kind="money",
-                                                       currency=cur, unit=unit),
-                                config=charts.PLOTLY_CONFIG, key="cmp_money_chart")
-            else:
-                ui.empty_state("Different reporting currencies",
-                               "Absolute amounts are not charted together because the companies report in "
-                               + ", ".join(currencies) + ". Compare the ratio chart instead.", "¤")
-
-    with st.container(border=True):
-        ui.section("Trend", f"Last {years_shown()} fiscal years per company (each on its own fiscal calendar)")
-        trend_metric = st.pills("Series", ["revenue", "net_margin", "operating_margin", "revenue_growth"],
-                                default="revenue", key="cmp_trend",
-                                format_func=lambda k: {"revenue": "Revenue", "net_margin": "Net margin",
-                                                       "operating_margin": "Operating margin",
-                                                       "revenue_growth": "Revenue growth"}[k]) or "revenue"
-        series = {s: annual_table(f).tail(years_shown()) for s, f in ok}
-        if trend_metric == "revenue" and not single_currency:
-            ui.empty_state("Different reporting currencies", "Revenue trends need a common currency; choose a ratio.")
+        ui.section("Amounts", "Only charted when every company reports in the same currency")
+        metric = st.pills("Amount", list(MONEY_METRICS), default="revenue", key="cmp_money",
+                          format_func=MONEY_METRICS.get, label_visibility="collapsed") or "revenue"
+        if single_currency:
+            charts.show(charts.comparison_bars(frame, metric, MONEY_METRICS[metric], kind="money",
+                                               currency=cur, unit=unit, colors=colors))
         else:
-            kind = "money" if trend_metric == "revenue" else "ratio"
-            label = {"revenue": "Revenue", "net_margin": "Net margin", "operating_margin": "Operating margin",
-                     "revenue_growth": "Revenue growth"}[trend_metric]
-            st.plotly_chart(charts.trend_comparison(series, trend_metric, label, kind=kind, currency=cur, unit=unit),
-                            config=charts.PLOTLY_CONFIG, key="cmp_trend_chart")
+            ui.empty_state("Different reporting currencies",
+                           "Absolute amounts are not charted together because the companies report in "
+                           + ", ".join(currencies) + ". Compare the ratio chart instead.", "Not comparable")
 
-    st.download_button("⬇ Download comparison data (CSV, full provenance)", to_csv_bytes(long_format(ok)),
+    ui.section("Trend", f"Last {years_shown()} fiscal years per company (each on its own fiscal calendar)")
+    trend_metric = st.pills("Series", ["revenue", "net_margin", "operating_margin", "revenue_growth"],
+                            default="revenue", key="cmp_trend",
+                            format_func=lambda k: {"revenue": "Revenue", "net_margin": "Net margin",
+                                                   "operating_margin": "Operating margin",
+                                                   "revenue_growth": "Revenue growth"}[k],
+                            label_visibility="collapsed") or "revenue"
+    series = {s: annual_table(f).tail(years_shown()) for s, f in ok}
+    if trend_metric == "revenue" and not single_currency:
+        ui.empty_state("Different reporting currencies", "Revenue trends need a common currency; choose a ratio.")
+    else:
+        kind = "money" if trend_metric == "revenue" else "ratio"
+        label = {"revenue": "Revenue", "net_margin": "Net margin", "operating_margin": "Operating margin",
+                 "revenue_growth": "Revenue growth"}[trend_metric]
+        charts.show(charts.trend_comparison(series, trend_metric, label, kind=kind, currency=cur, unit=unit,
+                                            colors=colors))
+
+    st.download_button("Download comparison (CSV, full provenance)", to_csv_bytes(long_format(ok)),
                        file_name="fip_comparison_" + "_".join(s for s, _ in ok) + ".csv", mime="text/csv",
                        key="cmp_dl")
     st.caption("CSV values are in full reporting-currency units (not thousands or millions), one row per company × "

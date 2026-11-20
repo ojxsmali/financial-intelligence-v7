@@ -19,7 +19,7 @@ def main() -> None:
     universe = get_universe()
     frame = universe.frame
     meta = universe.meta
-    ui.page_header("Company Explorer", "Search every US-listed security",
+    ui.page_header("Explorer", "Search every US-listed security",
                    f"{len(frame):,} securities from Nasdaq, NYSE, NYSE American, NYSE Arca, Cboe BZX and IEX — "
                    f"{int(frame['is_company'].sum()):,} operating companies. Rebuilt daily from official directories.")
 
@@ -47,19 +47,19 @@ def main() -> None:
     pages = max(1, math.ceil(total / PAGE_SIZE))
     page = min(st.session_state.get("ex_page", 1), pages)
 
-    chips = [ui.chip(f"{total:,} matches", "info")]
+    chips = [ui.chip(f"{total:,} {'match' if total == 1 else 'matches'}", "info")]
     if query:
         chips.append(ui.chip(f"query: {query}"))
     else:
         results = results.sort_values(["is_company", "symbol"], ascending=[False, True])
     by_ex = results["exchange"].value_counts().head(4)
     chips += [ui.chip(f"{k}: {v:,}") for k, v in by_ex.items()]
-    ui.render('<div style="display:flex;gap:.4rem;flex-wrap:wrap;margin:.2rem 0 .6rem">' + "".join(chips) + "</div>")
+    ui.tags(chips)
 
     if total == 0:
         ui.empty_state("No matching securities",
                        "Try a shorter query, a different spelling, or clear the filters. Tickers are matched with "
-                       "or without separators (BRK.B = BRK-B = BRKB).", "⌕")
+                       "or without separators (BRK.B = BRK-B = BRKB).", "No match")
         return
 
     view = results.iloc[(page - 1) * PAGE_SIZE: page * PAGE_SIZE]
@@ -75,7 +75,7 @@ def main() -> None:
     })
     event = st.dataframe(
         table, hide_index=True, on_select="rerun", selection_mode="single-row", key=f"ex_table_{page}",
-        height=min(38 * len(table) + 40, 38 * PAGE_SIZE + 40),
+        height=min(36 * (len(table) + 1) + 8, 36 * (PAGE_SIZE + 1) + 8),
         column_config={
             "Symbol": st.column_config.TextColumn(width="small"),
             "Company": st.column_config.TextColumn(width="large"),
@@ -86,11 +86,11 @@ def main() -> None:
 
     nav = st.columns([1, 1, 3, 2.2, 2.2], vertical_alignment="center")
     with nav[0]:
-        if st.button("← Prev", disabled=page <= 1, width="stretch", key="ex_prev"):
+        if st.button("Previous", disabled=page <= 1, width="stretch", key="ex_prev"):
             st.session_state["ex_page"] = page - 1
             st.rerun()
     with nav[1]:
-        if st.button("Next →", disabled=page >= pages, width="stretch", key="ex_next"):
+        if st.button("Next", disabled=page >= pages, width="stretch", key="ex_next"):
             st.session_state["ex_page"] = page + 1
             st.rerun()
     with nav[2]:

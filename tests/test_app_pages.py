@@ -49,7 +49,7 @@ def test_overview_shows_units_and_snapshot_label():
     assert "Apple Inc." in text
     assert "USD" in text and "B" in text                 # money formatted with scale
     assert "Bundled snapshot" in text or "bundled snapshot" in text   # offline fallback is labelled
-    assert "Sep 26" in text                                # fiscal year-end from bundled SEC profile data
+    assert "26 Sep" in text                                # fiscal year-end (day month) from bundled SEC profile data
 
 
 def test_company_without_annual_data_shows_explanation():

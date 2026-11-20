@@ -5,6 +5,7 @@
 *.key
 secrets*.toml
 !.streamlit/secrets.toml.example
+!.env.example
 
 # --- runtime caches ---
 .cache/

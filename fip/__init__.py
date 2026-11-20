@@ -6,4 +6,4 @@ tested without Streamlit running.
 
 APP_NAME = "Financial Intelligence Platform"
 APP_SHORT = "FIP"
-VERSION = "7.0.0"
+VERSION = "7.1.0"

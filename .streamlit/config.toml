@@ -16,26 +16,28 @@ showErrorDetails = "none"  # never render stack traces to visitors
 level = "warning"
 
 [theme]
-base = "dark"
-primaryColor = "#10B981"
-backgroundColor = "#070B14"
-secondaryBackgroundColor = "#0E1626"
-textColor = "#E6EDF7"
-linkColor = "#22D3EE"
-borderColor = "#1C2940"
-dataframeBorderColor = "#1C2940"
-dataframeHeaderBackgroundColor = "#0E1626"
-codeBackgroundColor = "#0E1626"
-font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap, sans-serif"
-codeFont = "JetBrains Mono:https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap, monospace"
-headingFontWeights = [700, 650, 600, 600, 600, 600]
+# "Research paper" design system — tokens mirrored in fip/ui/theme.py
+base = "light"
+primaryColor = "#1D3B5A"
+backgroundColor = "#F5F3EE"
+secondaryBackgroundColor = "#ECE8E0"
+textColor = "#16181B"
+linkColor = "#1D3B5A"
+borderColor = "#D8D3C8"
+dataframeBorderColor = "#D8D3C8"
+dataframeHeaderBackgroundColor = "#F5F3EE"
+codeBackgroundColor = "#ECE8E0"
+font = "IBM Plex Sans:https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap, sans-serif"
+headingFont = "Source Serif 4:https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap, serif"
+codeFont = "IBM Plex Mono:https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap, monospace"
+headingFontWeights = [600, 600, 600, 600, 600, 600]
 baseFontSize = 15
-baseRadius = "10px"
-buttonRadius = "8px"
+baseRadius = "4px"
+buttonRadius = "4px"
 showWidgetBorder = true
 showSidebarBorder = true
-chartCategoricalColors = ["#10B981", "#22D3EE", "#F59E0B", "#A78BFA", "#F472B6", "#60A5FA"]
+chartCategoricalColors = ["#1F6FB8", "#D4602C", "#16956A", "#B07A00", "#C2507F", "#6A4FB0"]
 
 [theme.sidebar]
-backgroundColor = "#0A101D"
-secondaryBackgroundColor = "#111B2E"
+backgroundColor = "#EFECE5"
+secondaryBackgroundColor = "#E6E2D9"

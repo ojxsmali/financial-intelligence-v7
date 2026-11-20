@@ -166,9 +166,8 @@ def _on_pick() -> None:
 def render_sidebar() -> None:
     universe = get_universe()
     with st.sidebar:
-        render(f'<div class="fi-brand"><div class="fi-brand-mark">FI</div><div>'
-               f'<div class="fi-brand-name">{esc(APP_NAME)}</div>'
-               f'<div class="fi-brand-ver">V{esc(VERSION)} · SEC EDGAR</div></div></div>')
+        render(f'<div class="fi-brand"><div class="fi-brand-name">{esc(APP_NAME)}</div>'
+               f'<div class="fi-brand-ver">Version {esc(VERSION)} · SEC EDGAR fundamentals</div></div>')
 
         options = universe.company_symbols
         current = st.session_state["symbol"]
@@ -180,7 +179,7 @@ def render_sidebar() -> None:
             help=f"Type a ticker or name. {len(universe.company_symbols):,} listed companies with SEC filings; "
                  "ETFs, funds and other instruments are in Company Explorer.",
         )
-        if st.button("＋ Add to comparison", width="stretch", key="sb_add_cmp"):
+        if st.button("Add to comparison", width="stretch", key="sb_add_cmp", icon=":material/add:"):
             if add_to_compare(current):
                 st.toast(f"{current} added to comparison")
             else:
@@ -192,22 +191,21 @@ def render_sidebar() -> None:
                                  f"{k} = {v}" for k, v in DISPLAY_UNIT_LABELS.items() if k in ("auto", "M", "B", "T")))
         st.select_slider("Fiscal years shown", options=[3, 4, 5, 6, 7, 8, 10], key="years")
 
-        st.divider()
         meta = universe.meta
         rows = [
             ("Listed securities", f"{meta.get('total_securities', len(universe.frame)):,}"),
-            ("Companies", f"{meta.get('companies', 0):,}"),
+            ("Operating companies", f"{meta.get('companies', 0):,}"),
             ("With SEC filer ID", f"{meta.get('with_cik', 0):,}"),
             ("Listings source", universe.origin),
             ("Listings built", str(meta.get("built_at", "—"))[:16].replace("T", " ") + " UTC"),
+            ("Gemini assistant", "configured" if config.gemini_configured() else "off"),
+            ("SEC contact e-mail", "set" if contact_email() else "missing"),
         ]
-        render("".join(f'<div class="fi-status-row"><span>{esc(k)}</span><b>{esc(v)}</b></div>' for k, v in rows))
+        render('<div class="fi-eyebrow" style="margin-top:1.2rem">Data status</div><dl class="fi-status">'
+               + "".join(f'<div class="fi-status-row"><dt>{esc(k)}</dt><dd>{esc(v)}</dd></div>' for k, v in rows)
+               + "</dl>")
         if universe.warning:
-            st.caption(f"⚠ {universe.warning}")
-
-        ai_ok = config.gemini_configured()
-        render(f'<div class="fi-status-row"><span>AI assistant</span><b>{"configured" if ai_ok else "off"}</b></div>'
-               f'<div class="fi-status-row"><span>SEC contact</span><b>{"set" if contact_email() else "missing"}</b></div>')
+            st.caption(f"Listings caveat: {universe.warning}")
 
         if not config.sec_contact_email():
             with st.expander("Settings · SEC contact", expanded=not contact_email()):
@@ -221,3 +219,6 @@ def render_sidebar() -> None:
                         st.rerun()
                     else:
                         st.error("Enter a valid e-mail address.")
+
+        from fip.ui.components import credit_html
+        render(f'<p class="fi-credit">{credit_html()}</p>')

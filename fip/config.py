@@ -30,6 +30,43 @@ def _streamlit_secret(name: str):
         return None
 
 
+def parse_env_file(text: str) -> dict[str, str]:
+    """Minimal ``.env`` parser: KEY=VALUE lines, ``#`` comments, optional quotes, optional ``export``."""
+    out: dict[str, str] = {}
+    for raw in text.splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        key = key.strip().removeprefix("export ").strip()
+        value = value.strip()
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+            value = value[1:-1]
+        elif " #" in value:
+            value = value.split(" #", 1)[0].rstrip()
+        if re.fullmatch(r"[A-Z_][A-Z0-9_]*", key):
+            out[key] = value
+    return out
+
+
+def load_dotenv(path: Path | None = None) -> list[str]:
+    """Copy settings from a local ``.env`` into the process environment without overriding real
+    environment variables. Returns the names loaded (never values). ``.env`` is gitignored."""
+    if path is None and os.environ.get("FIP_NO_DOTENV") == "1":   # tests: a developer's .env must not leak in
+        return []
+    path = path or PROJECT_ROOT / ".env"
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError:
+        return []
+    loaded = []
+    for key, value in parse_env_file(text).items():
+        if value and not os.environ.get(key):
+            os.environ[key] = value
+            loaded.append(key)
+    return loaded
+
+
 def get_setting(name: str, default: str = "") -> str:
     value = os.environ.get(name)
     if value is None or not str(value).strip():

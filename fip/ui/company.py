@@ -49,7 +49,7 @@ def load_company_context(show_header: bool = True) -> CompanyContext | None:
     if entry is None:
         ui.empty_state("Symbol not found in current listings",
                        f"{symbol} is not in today's Nasdaq Trader exchange directories. It may have been delisted "
-                       "or renamed. Search for the company in Company Explorer.", "⌕")
+                       "or renamed. Search for the company in Company Explorer.", "No match")
         return None
 
     result = bundle.result
@@ -81,7 +81,7 @@ def load_company_context(show_header: bool = True) -> CompanyContext | None:
         else:
             body = (f"{entry['instrument_type']} securities are not operating companies and do not publish 10-K "
                     "financial statements. Choose a common stock or ADR to see company fundamentals.")
-        ui.empty_state("No SEC financial statements for this security", body, "∅")
+        ui.empty_state("No SEC financial statements for this security", body, "Not applicable")
         return None
 
     if result is None or not result.ok:
@@ -90,7 +90,7 @@ def load_company_context(show_header: bool = True) -> CompanyContext | None:
                  "config": "SEC contact e-mail required",
                  "upstream": "SEC data temporarily unavailable"}.get(result.error_kind if result else "",
                                                                       "Financial data unavailable")
-        ui.empty_state(title, result.error if result else "Unknown error.", "∅")
+        ui.empty_state(title, result.error if result else "Unknown error.", "Data unavailable")
         if bundle.profile and bundle.profile.annual_filings:
             st.caption("Annual filings on EDGAR for this registrant:")
             for f in bundle.profile.annual_filings[:3]:
@@ -127,7 +127,7 @@ def freshness_line(ctx: CompanyContext) -> None:
             "scaled for display only. Not real-time market data."
         )
     with cols[1]:
-        if st.button("↻ Re-check SEC", key=f"refresh_{fin.cik}", help="Bypass caches and fetch the latest filing data",
+        if st.button("Re-check SEC", key=f"refresh_{fin.cik}", help="Bypass caches and fetch the latest filing data",
                      width="stretch"):
             request_refresh(fin.cik)
             st.rerun()

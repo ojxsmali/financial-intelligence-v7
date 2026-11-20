@@ -54,7 +54,8 @@ class CompanyProfile:
         months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
         fye = self.fiscal_year_end
         if len(fye) == 4 and fye.isdigit() and 1 <= int(fye[:2]) <= 12:
-            return f"{months[int(fye[:2]) - 1]} {int(fye[2:])}"
+            # Day before month ("26 Sep") so it can't be misread as a year ("Sep 26" looked like September 2026).
+            return f"{int(fye[2:])} {months[int(fye[:2]) - 1]}"
         return "—"
 
     @property

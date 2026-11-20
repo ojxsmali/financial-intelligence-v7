@@ -112,7 +112,7 @@ def _platform_sources() -> None:
 
 
 def main() -> None:
-    ui.page_header("Sources & methodology", "Where every number comes from",
+    ui.page_header("Sources", "Where every number comes from",
                    "Filing links, fiscal periods, XBRL concepts, formulas, timestamps and limitations.")
     t1, t2, t3 = st.tabs(["Selected company", "Methodology", "Platform data sources"])
     with t1:

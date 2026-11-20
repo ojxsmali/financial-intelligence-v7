@@ -99,10 +99,10 @@ def main() -> int:
         print(("PASS" if ok else "FAIL") + f" CSV download ({len(rows)} rows)", flush=True)
 
         visit(page, "/insights?t=NVDA")
-        check(page, "Insights NVDA", ["NVIDIA", "Calculation", "Rule:"], "05_insights_nvda.png")
+        check(page, "Insights NVDA", ["NVIDIA", "Calculation", "Rule"], "05_insights_nvda.png")
 
         visit(page, "/assistant?t=AAPL")
-        check(page, "AI assistant page (no key exposure)", ["AI research assistant", "Free-tier models only"],
+        check(page, "AI assistant page (no key exposure)", ["Ask Google Gemini", "Free-tier models only"],
               "06_assistant.png", forbid=["AIza"])
 
         visit(page, "/sources?t=AAPL")

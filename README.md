@@ -6,7 +6,7 @@ V7 rebuilds the V6 Streamlit prototype into a production-quality financial resea
 
 - **13,000+ US exchange-listed securities** are searchable, rebuilt daily from official exchange directories. About 5,600 of them are operating companies.
 - **Audited annual statements** come straight from SEC XBRL (10-K / 20-F / 40-F), with correct units, fiscal periods and filing links.
-- **A premium dark UI** with KPI cards, shared-scale Plotly charts, statements, comparisons and rule-based insights.
+- **A research-note interface** — warm paper, ink and one navy accent, serif headings, tabular figures, hairline rules instead of cards, and accessible server-rendered charts (legend, keyboard tooltips, data-table alternative, colour-blind-validated palette). Responsive down to 320 px.
 - **A secure Gemini assistant.** The key stays server-side, only free-tier models are allowlisted, and abuse limits are enforced on the server.
 - **A one-click Windows executable** and a ready-to-deploy Streamlit Community Cloud configuration.
 
@@ -22,7 +22,7 @@ V7 rebuilds the V6 Streamlit prototype into a production-quality financial resea
 3. [Configure secrets (Gemini + SEC)](#configure-secrets-gemini--sec)
 4. [Public deployment hardening](#public-deployment-hardening)
 5. [Data sources and accuracy rules](#data-sources-and-accuracy-rules)
-6. [Architecture](#architecture)
+6. [Architecture](#architecture) · [Design decisions](#design-decisions-2026-11-redesign)
 7. [Testing](#testing)
 8. [Limitations](#limitations)
 
@@ -32,12 +32,12 @@ V7 rebuilds the V6 Streamlit prototype into a production-quality financial resea
 
 | Page | What it does |
 |---|---|
-| **Overview** | Company header (exchange, CIK, SIC sector, fiscal year-end, latest 10-K/20-F), six KPI cards with YoY deltas, revenue & profit bars, margin profile, cash generation, balance-sheet snapshot, and data-provenance chips. |
+| **Overview** | Company masthead (exchange, CIK, SIC sector, fiscal year-end, latest 10-K/20-F, data-provenance tag), a six-figure KPI strip with YoY deltas (▲/▼ + sign, never colour alone), revenue & profit bars, margin profile, cash generation, rule-based observations and a balance-sheet strip. |
 | **Explorer** | Ranked search by ticker or name across the full listing universe. `BRK.B`, `BRK-B` and `brkb` all work. Filters for exchange, instrument type (common stock, ADR, ETF, fund, preferred, warrant, unit, right, notes) and SIC-derived sector. Paginated results. |
 | **Compare** | Up to 6 companies side by side, with automatic warnings for different currencies, fiscal year-ends and GAAP vs IFRS. Ratio and amount charts, multi-year trends, and a CSV export with full provenance. |
 | **Statements** | Income statement, balance sheet, cash flow, ratios and an XBRL concept map. Derived and restated values are marked, and every table uses a single unit scale. |
 | **Insights** | Rule-based observations, each labelled *Fact*, *Calculation* or *Flag*, with the rule and the fiscal year it rests on. Also includes the V6 **CSV upload analyzer** (now with a unit selector). |
-| **AI Research** | Gemini answers grounded in a structured "fact pack" of SEC figures. Answers are split into facts, calculations, hypotheses and limitations, with `[AAPL FY2025 10-K]` citations. |
+| **Assistant** | The only AI feature, clearly labelled as Gemini. Answers grounded in a structured "fact pack" of SEC figures. Answers are split into facts, calculations, hypotheses and limitations, with `[AAPL FY2025 10-K]` citations. |
 | **Sources** | Filing documents and indexes for each fiscal year used, Company Facts JSON, metric→concept definitions, formulas, timestamps and limitations. |
 
 A display-unit selector (Auto/M/B/T) and a fiscal-years slider apply across the whole app.
@@ -81,6 +81,8 @@ python -m venv .venv
 ```
 Or run `streamlit run app.py` from the project folder. Streamlit reads `.streamlit/` from the working directory.
 
+Configuration: copy `.env.example` to `.env` (gitignored) and fill in `SEC_CONTACT_EMAIL` and, optionally, `GEMINI_API_KEY`. The app loads `.env` at start-up without overriding real environment variables.
+
 ---
 
 ## Configure secrets (Gemini + SEC)
@@ -95,7 +97,7 @@ Or run `streamlit run app.py` from the project folder. Streamlit reads `.streaml
 
 | Where the app runs | Put the settings in |
 |---|---|
-| Local, from source | `.streamlit/secrets.toml`: copy `.streamlit/secrets.toml.example` and edit it (the file is gitignored). Environment variables with the same names also work and take precedence. |
+| Local, from source | `.env`: copy [`.env.example`](.env.example) (gitignored). Or `.streamlit/secrets.toml` from `.streamlit/secrets.toml.example`. Real environment variables take precedence over both. |
 | Windows exe | `%LOCALAPPDATA%\FinancialIntelligenceV7\config.toml`. The exe creates a commented template on first run; open it with Notepad, uncomment the lines, add your values and restart the app. |
 | Streamlit Community Cloud | App → **Settings → Secrets**: paste the same `KEY = "value"` lines. |
 
@@ -171,13 +173,28 @@ fip/
   ai_guard.py             server-side quotas, cooldowns, access code, answer cache
   exports.py              CSV import/export (formula-injection safe)
   formatting.py           single formatting system for money/percent/pp/scales
-  ui/                     theme tokens + CSS, components, charts, shared state
+  ui/                     theme tokens + CSS, components, HTML/SVG charts, shared state
 desktop/                  launcher.py, PyInstaller spec, build script, icon
 scripts/                  data refresh, release packaging, browser E2E checks
 data/                     bundled snapshots (universe, SEC profiles, 53 companies' statements)
 tests/                    pytest suite (+ trimmed real SEC fixtures)
 ```
-**Why Streamlit was kept:** version 1.65 provides top navigation, fuzzy select search, virtualized grids, `st.context.ip_address` and Google-font theming. With a custom design system on top, the UI goal was reachable without rewriting a working Python codebase into a separate JS frontend plus API. The trade-off is less pixel-level control than React. The custom CSS and components close most of that gap.
+## Design decisions (2026-11 redesign)
+
+The full pre-redesign review is in [docs/REVIEW.md](docs/REVIEW.md).
+
+**Stayed on Streamlit, replaced the presentation layer.** The server-side Gemini key model, the AI guard, the Streamlit Cloud deploy path, the one-file exe and the AppTest page suite all depend on Streamlit; a separate JS frontend would have needed a new API, a second host and a new launcher. What made the old UI look generic was Plotly defaults and card-everything CSS — both replaceable.
+
+- **Identity: a printed equity-research note.** Paper `#F5F3EE`, ink `#16181B`, one navy accent `#1D3B5A`. Structure comes from hairline rules and a heavy rule above each section, not from boxes. No gradients, glows or emoji.
+- **Type.** Source Serif 4 for headings (editorial, readable at display sizes); IBM Plex Sans for UI and numbers, with `tabular-nums` so columns of figures align; IBM Plex Mono for tickers, XBRL concepts and formulas.
+- **Tokens** live in `fip/ui/theme.py` (`TOKENS`, `SERIES`) and are mirrored into Streamlit's own theme in `.streamlit/config.toml`, so native widgets and custom HTML share one palette.
+- **Charts** (`fip/ui/charts.py`) are server-rendered HTML + SVG instead of Plotly: one scale per chart stated in the header, straight segments between fiscal years (the old spline smoothing implied intra-year data), a legend for 2+ series, a per-year tooltip that opens on hover *and* keyboard focus, and a "Data table" disclosure with the exact values. The six series colours were checked with a colour-vision-deficiency validator (protan/deutan/tritan ΔE, ≥ 3:1 contrast) and are assigned in fixed order; on Compare each company keeps its colour across every chart.
+- **Honest labelling.** Rule-based insights say "not AI-generated"; the Assistant page is the only AI feature and names Gemini. Derived values (free cash flow, restated figures) are marked.
+- **States.** Loading uses a skeleton with a live "Loading annual filings…" status; empty and error states explain *why* (ETF, no XBRL, SEC unreachable) and what to do next; fallback data is tagged on the masthead.
+- **Responsive & accessible.** Layout reflows to one column on phones; a scrollable page row keeps all pages one tap away on mobile (Streamlit folds its top nav into the drawer). Tables use row/column headers and scroll inside their own region; focus rings are visible; `prefers-reduced-motion` disables the skeleton pulse.
+- **Trade-off.** Streamlit still owns widget internals and reruns, so a few rules target its `data-testid` hooks; Streamlit is pinned `<2.0` for that reason.
+
+Designed & built by [Ojas Mali](https://github.com/ojxsmali).
 
 ---
 
@@ -185,7 +202,7 @@ tests/                    pytest suite (+ trimmed real SEC fixtures)
 ```bash
 .venv\Scripts\python -m pytest -q
 ```
-There are 140+ tests, all offline. They cover unit formatting (including the spec examples), XBRL parsing edge cases, **real-filing regressions** (AAPL, MSFT, WMT, JPM, BRK.B, NVDA, TSM, TM, XOM), ticker mapping and search, HTTP retry and error handling, cache and snapshot fallbacks, Gemini failure and quota paths (mocked), the server-side AI guard, CSV import/export, secret-leakage scans, and headless rendering of all 7 pages.
+There are 158 tests, all offline. They cover unit formatting (including the spec examples), XBRL parsing edge cases, **real-filing regressions** (AAPL, MSFT, WMT, JPM, BRK.B, NVDA, TSM, TM, XOM), ticker mapping and search, HTTP retry and error handling, cache and snapshot fallbacks, Gemini failure and quota paths (mocked), the server-side AI guard, CSV import/export, secret-leakage scans, `.env` loading, the chart builders (scales, negative values, gaps, escaping, accessibility hooks), and headless rendering of all 7 pages.
 
 Browser end-to-end check with real screenshots (needs Microsoft Edge):
 ```bash

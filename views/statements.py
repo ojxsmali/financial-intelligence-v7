@@ -62,7 +62,7 @@ def _wide_csv(ctx, keys) -> bytes:
 
 
 def main() -> None:
-    ui.page_header("Financial statements", "Income statement, balance sheet & cash flow",
+    ui.page_header("Statements", "Income statement, balance sheet & cash flow",
                    "Annual figures from 10-K / 20-F / 40-F XBRL data. Each column is the company's own fiscal year.")
     ctx = load_company_context()
     if ctx is None:
@@ -73,7 +73,7 @@ def main() -> None:
     for tab, key in zip(tabs[:3], ("income", "balance", "cashflow")):
         with tab:
             _statement(ctx, STATEMENTS[key], unit)
-            st.download_button(f"⬇ {names[key].replace('_', ' ').title()} (CSV)", _wide_csv(ctx, STATEMENTS[key]),
+            st.download_button(f"Download {names[key].replace('_', ' ').title()} (CSV)", _wide_csv(ctx, STATEMENTS[key]),
                                file_name=f"{ctx.bundle.symbol}_{names[key]}.csv", mime="text/csv", key=f"dl_{key}")
     with tabs[3]:
         df = ctx.df
@@ -104,7 +104,7 @@ def main() -> None:
         st.dataframe(pd.DataFrame(records), hide_index=True, height=420)
         st.caption("Every value maps to an XBRL concept in a specific filing. When a later filing revises a prior "
                    "year (restatement or recast), the latest filed value is shown and flagged.")
-    st.download_button("⬇ All statements, long format with provenance (CSV)",
+    st.download_button("Download all statements, long format with provenance (CSV)",
                        to_csv_bytes(long_format([(ctx.bundle.symbol, ctx.fin)])),
                        file_name=f"{ctx.bundle.symbol}_financials_long.csv", mime="text/csv", key="dl_long")
     freshness_line(ctx)

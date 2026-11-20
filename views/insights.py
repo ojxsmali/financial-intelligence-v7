@@ -18,7 +18,10 @@ SAMPLE_CSV = (
 def _render_insights(items, key: str) -> None:
     choice = st.segmented_control("Show", ["All", FACT, CALCULATION, FLAG], default="All", key=key) or "All"
     shown = [i for i in items if choice == "All" or i.category == choice]
-    left, right = st.columns(2, gap="medium")
+    if not shown:
+        ui.empty_state("No observations in this category", "Choose another filter above.", "Filtered out")
+        return
+    left, right = st.columns(2, gap="large")
     for n, item in enumerate(shown):
         with (left if n % 2 == 0 else right):
             ui.insight_card(item)
@@ -45,7 +48,7 @@ def _upload_tab() -> None:
     with c3:
         currency = st.selectbox("Currency", list(CURRENCY_SYMBOLS), key="up_cur")
     name = st.text_input("Label", value="Uploaded company", max_chars=60, key="up_name")
-    st.download_button("⬇ Sample CSV template", SAMPLE_CSV.encode(), file_name="fip_sample_financials.csv",
+    st.download_button("Sample CSV template", SAMPLE_CSV.encode(), file_name="fip_sample_financials.csv",
                        mime="text/csv", key="up_sample")
     st.caption("Required columns: fiscal_year (or year), revenue, net_income. Optional: operating_income, "
                "gross_profit, operating_cash_flow, capex, total_assets, total_liabilities, total_equity.")
@@ -62,21 +65,22 @@ def _upload_tab() -> None:
     ui.kpi_grid([
         ui.Kpi("Revenue", format_money(last["revenue"], currency, unit=display_unit()),
                format_percent(last["revenue_growth"], signed=True) + " YoY" if last["revenue_growth"] == last["revenue_growth"] else "",
-               "up" if (last["revenue_growth"] or 0) > 0 else "down", f"FY{int(last['fiscal_year'])}"),
-        ui.Kpi("Net income", format_money(last["net_income"], currency, unit=display_unit()), accent="var(--cyan)"),
-        ui.Kpi("Net margin", format_percent(last["net_margin"]), accent="var(--amber)"),
+               "flat" if last["revenue_growth"] != last["revenue_growth"] else ("up" if last["revenue_growth"] > 0 else "down"), f"FY{int(last['fiscal_year'])}"),
+        ui.Kpi("Net income", format_money(last["net_income"], currency, unit=display_unit())),
+        ui.Kpi("Net margin", format_percent(last["net_margin"])),
     ])
-    st.plotly_chart(charts.money_bars(df, [("revenue", "Revenue"), ("net_income", "Net income")], currency,
-                                      display_unit()), config=charts.PLOTLY_CONFIG, key="up_chart")
+    charts.show(charts.money_bars(df, [("revenue", "Revenue"), ("net_income", "Net income")], currency,
+                                  display_unit(), title=f"{name.strip() or 'Uploaded company'}: revenue and net income"))
     _render_insights(generate_insights(df, currency, fin.warnings), "up_filter")
     export = df.drop(columns=["accession", "filed", "form"]).assign(currency=currency, unit="full units")
-    st.download_button("⬇ Prepared data with ratios (CSV)", to_csv_bytes(export), file_name="fip_uploaded_analysis.csv",
+    st.download_button("Download prepared data with ratios (CSV)", to_csv_bytes(export), file_name="fip_uploaded_analysis.csv",
                        mime="text/csv", key="up_dl")
 
 
 def main() -> None:
-    ui.page_header("Financial insights", "Transparent, rule-based analysis",
-                   "Every observation states its rule and evidence. Works without AI.")
+    ui.page_header("Insights", "Rule-based observations",
+                   "Every observation is computed by a fixed rule from reported figures, and states that rule and its "
+                   "evidence. No AI is involved on this page.")
     tab_company, tab_upload = st.tabs(["Selected company", "Upload your own CSV"])
     with tab_company:
         _company_tab()
