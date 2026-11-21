@@ -4,7 +4,7 @@
 
 *Designed & built by [Ojas Mali](https://github.com/ojxsmali).*
 
-**Live web app → LIVE_URL**
+**Live web app → <https://financial-intelligence-v7.vercel.app>**
 
 Two front ends share one Python data engine (`fip/`):
 - **Web app** (`web/` + `fip/api.py`): React + TypeScript front end and a FastAPI JSON API, deployed together on **Vercel**.

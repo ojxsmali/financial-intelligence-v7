@@ -93,7 +93,7 @@ def sec_user_agent(contact_email: str | None = None) -> str:
     if not email:
         raise ConfigurationError(
             "SEC requests need a contact e-mail in the User-Agent header. "
-            "Set SEC_CONTACT_EMAIL in Streamlit secrets or the environment, or enter one under Settings."
+            "The site owner can set SEC_CONTACT_EMAIL on the server, or you can enter a contact e-mail in the app."
         )
     return f"FinancialIntelligencePlatform/{VERSION} ({email})"
 
