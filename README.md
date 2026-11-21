@@ -20,7 +20,23 @@ What it does:
 
 > Educational research tool. It shows **reported annual financial statements**, not stock prices or real-time data, and it gives no investment advice.
 
-![Overview](docs/screenshots/01_overview_aapl.png)
+![Financial Intelligence — Apple Inc. overview: KPI strip, revenue and margin charts](docs/screenshots/web-overview-desktop.png)
+
+| Screener (verified against annual reports) | Health check + live SEC filings |
+|---|---|
+| ![Screener ranking companies by net margin, with verification and outlier notes](docs/screenshots/web-screener-desktop.png) | ![Nine-test financial health check beside the latest SEC filings](docs/screenshots/web-health-and-filings-desktop.png) |
+| **Watchlist** | **Compare** |
+| ![Watchlist of followed companies with plain-English filings](docs/screenshots/web-watchlist-desktop.png) | ![Side-by-side ratios, amounts and trends](docs/screenshots/web-compare-desktop.png) |
+| **Statements** | **Plain-English insights** |
+| ![Income statement with one scale, derived and restated markers](docs/screenshots/web-statements-desktop.png) | ![Insights that explain how each number is worked out](docs/screenshots/web-insights-desktop.png) |
+
+<p align="center">
+  <img src="docs/screenshots/web-overview-mobile.png" alt="Overview on a phone" width="240" />
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/web-screener-mobile.png" alt="Screener on a phone" width="240" />
+</p>
+
+*Screenshots of the web app with live SEC data (November 2026). The `01_…`–`12_…` images in `docs/screenshots/` are the Streamlit desktop version.*
 
 ---
 

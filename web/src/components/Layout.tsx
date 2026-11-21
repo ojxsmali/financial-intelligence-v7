@@ -7,6 +7,19 @@ import { useSettings, YEAR_OPTIONS } from '../lib/settings'
 import { CompanyPicker } from './CompanyPicker'
 import { Segmented } from './ui'
 
+/** Mark: three rising bars on an ink tile — audited figures, year after year. */
+export function LogoMark({ size = 30 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true" focusable="false" className="brand-mark">
+      <rect width="32" height="32" rx="6" fill="#16181B" />
+      <path d="M7.5 25.5h17" stroke="#F5F3EE" strokeWidth="1.6" strokeLinecap="round" opacity=".55" />
+      <rect x="8" y="16" width="4" height="7" rx="1" fill="#F5F3EE" />
+      <rect x="14" y="12" width="4" height="11" rx="1" fill="#F5F3EE" />
+      <rect x="20" y="7" width="4" height="16" rx="1" fill="#8FB8E3" />
+    </svg>
+  )
+}
+
 export const AUTHOR = { name: 'Ojas Mali', url: 'https://github.com/ojxsmali' }
 
 const NAV = [
@@ -39,8 +52,11 @@ export function Layout({ children }: { children: ReactNode }) {
       <header className="masthead-bar">
         <div className="bar-inner">
           <NavLink to={{ pathname: '/', search }} className="brand" aria-label="Financial Intelligence — home">
-            <span className="brand-name">Financial Intelligence</span>
-            <span className="brand-sub">SEC fundamentals</span>
+            <LogoMark />
+            <span className="brand-text">
+              <span className="brand-name">Financial Intelligence</span>
+              <span className="brand-sub">SEC fundamentals</span>
+            </span>
           </NavLink>
           <nav aria-label="Pages" className="nav">
             {NAV.map(n => (

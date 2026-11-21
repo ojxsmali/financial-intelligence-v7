@@ -1,5 +1,25 @@
 # Verification report — Financial Intelligence Platform V7
 
+## Web app (7.3) — 2026-11-21
+
+Measured here, not assumed. Production = https://financial-intelligence-v7.vercel.app (Vercel, Python 3.12 function + static build).
+
+| Check | Result |
+|---|---|
+| Python tests (`pytest`) | **191 passed** (API, filings feed, health score, screener verification, plain-English insights, cache versioning, concurrency) |
+| Web tests (`npm test --prefix web`) | **16 passed**; `tsc -b` clean; production build OK (118 kB gzip JS) |
+| Production load test | 50 company pages, 25 in parallel: **0 errors**, p50 3.2 s / max 5.2 s on cold instances; 49 served live from SEC |
+| Malformed input (≈25 cases: injection strings, emoji, 500-char queries, bad params, unknown routes) | No 500s; friendly 404/422 messages |
+| "Re-check SEC" throttle | 3 forced refreshes → 1 SEC fetch |
+| Screener | Cold ≈9 s, cached 0.03 s; 23/25 rows verified against annual reports; SEC bulk-data errors found and corrected (e.g. a quarter tagged as a full year) |
+| Pages at 360 px / 820 px / 1440 px | All 9 routes + 404: no horizontal overflow, no broken images, no console errors, per-page titles |
+| Daily data refresh (GitHub Actions) | Manual run succeeded; committed refreshed listings and 53 snapshots |
+| Contributors (GitHub API) | Only `ojxsmali` |
+
+Not verified here: a live Gemini answer on production (it needs the owner's access code); the Windows exe was not rebuilt for 7.3.
+
+---
+
 Date: 2026-11-03 · Machine: Windows 11 Pro 10.0.26200, Python 3.10.11, Streamlit 1.65.0, Microsoft Edge (headless, via Playwright 1.64)
 
 Every result below was produced by running the software here. Nothing was assumed.

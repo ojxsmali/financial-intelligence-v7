@@ -51,7 +51,9 @@ code, pre { font-family: var(--mono); }
 /* ---------- header + nav ---------- */
 .masthead-bar { background: var(--paper); border-bottom: 1px solid var(--rule); position: sticky; top: 0; z-index: 20; }
 .masthead-bar .bar-inner { display: flex; align-items: center; gap: 2rem; min-height: 56px; }
-.brand { text-decoration: none; color: var(--ink); display: flex; flex-direction: column; line-height: 1.1; flex: 0 0 auto; }
+.brand { text-decoration: none; color: var(--ink); display: flex; align-items: center; gap: .6rem; line-height: 1.1; flex: 0 0 auto; }
+.brand-text { display: flex; flex-direction: column; }
+.brand-mark { flex: 0 0 auto; }
 .brand-name { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; }
 .brand-sub { font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
 .nav { display: flex; gap: .15rem; overflow-x: auto; scrollbar-width: none; align-self: stretch; }

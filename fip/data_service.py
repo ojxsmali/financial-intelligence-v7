@@ -30,6 +30,7 @@ FINANCIALS_TTL = 12 * 3600
 FIN_SCHEMA = 2                # bump when extraction adds metrics; older cached copies are re-fetched
 PROFILE_TTL = 24 * 3600
 EVENTS_TTL = 3600            # latest-filings feed: re-checked hourly
+EVENTS_SCHEMA = 2             # bump when filing labels/explanations change so cached copies are rebuilt
 MIN_FORCE_INTERVAL = 600     # a forced refresh is honoured at most every 10 min per company
 SNAPSHOT_DIR = BUNDLED_DATA_DIR / "financials_snapshot"
 
@@ -183,7 +184,7 @@ def load_events(cik: int, *, contact_email: str | None = None, fetcher=fetch, li
     cik = int(cik)
     path = _disk_path("events", cik)
     cached, age = _read_cached(path)
-    if cached is not None and age is not None and age < EVENTS_TTL:
+    if cached is not None and age is not None and age < EVENTS_TTL and cached.get("schema") == EVENTS_SCHEMA:
         raw = cached
     else:
         try:
@@ -194,7 +195,7 @@ def load_events(cik: int, *, contact_email: str | None = None, fetcher=fetch, li
             keep = [e for e in everything if e.importance != "low"][:150] +                    [e for e in everything if e.importance == "low"][:50]
             keep.sort(key=lambda e: (e.filing_date, e.accession), reverse=True)
             raw = {"retrieved_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-                   "events": [e.to_dict() for e in keep]}
+                   "schema": EVENTS_SCHEMA, "events": [e.to_dict() for e in keep]}
             _write_json(path, raw)
         except (DataSourceError, ValueError) as exc:
             if cached is None:
