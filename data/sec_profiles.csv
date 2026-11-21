@@ -281,7 +281,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 74208,"UDR, Inc.",6798,Real Estate Investment Trusts,05 Real Estate & Construction,United States,MD,1231,operating,Large accelerated filer,2
 74260,OLD REPUBLIC INTERNATIONAL CORP,6351,Surety Insurance,02 Finance,United States,DE,1231,operating,Large accelerated filer,2
 74303,OLIN Corp,2800,Chemicals & Allied Products,08 Industrial Applications and Services,United States,VA,1231,operating,Large accelerated filer,2
-75252,ACCENDRA HEALTH INC/VA/,5047,"Wholesale-Medical, Dental & Hospital Equipment & Supplies",07 Trade & Services,United States,VA,1231,operating,Large accelerated filer,2
 75288,OXFORD INDUSTRIES INC,2320,"Men's & Boys' Furnishgs, Work Clothg, & Allied Garments",04 Manufacturing,United States,GA,0131,operating,Accelerated filer,2
 75362,PACCAR INC,3711,Motor Vehicles & Passenger Car Bodies,04 Manufacturing,United States,DE,1231,operating,Large accelerated filer,2
 75677,PACKAGING CORP OF AMERICA,2650,Paperboard Containers & Boxes,04 Manufacturing,United States,,1231,operating,Large accelerated filer,2
@@ -612,6 +611,7 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 739421,CITIZENS FINANCIAL SERVICES INC,6022,State Commercial Banks,02 Finance,United States,PA,1231,operating,Accelerated filer,2
 740260,"Ventas, Inc.",6798,Real Estate Investment Trusts,05 Real Estate & Construction,United States,DE,1231,operating,Large accelerated filer,2
 740664,R F INDUSTRIES LTD,3678,Electronic Connectors,04 Manufacturing,United States,NV,1031,operating,Non-accelerated filer<br>Smaller reporting company,2
+740806,F&M BANK CORP,6022,State Commercial Banks,02 Finance,United States,VA,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 742278,RPC INC,1389,"Oil & Gas Field Services, NEC",01 Energy & Transportation,United States,,1231,operating,Accelerated filer,2
 743367,BAR HARBOR BANKSHARES,6022,State Commercial Banks,02 Finance,United States,ME,1231,operating,Accelerated filer,2
 744187,REX AMERICAN RESOURCES Corp,2860,Industrial Organic Chemicals,08 Industrial Applications and Services,United States,DE,0131,operating,Large accelerated filer,2
@@ -816,6 +816,7 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 833079,Meritage Homes CORP,1531,Operative Builders,05 Real Estate & Construction,United States,MD,1231,operating,Large accelerated filer,2
 833444,Johnson Controls International plc,3585,Air-Cond & Warm Air Heatg Equip & Comm & Indl Refrig Equip,06 Technology,Ireland,L2,0930,operating,Large accelerated filer,2
 833640,POWER INTEGRATIONS INC,3674,Semiconductors & Related Devices,04 Manufacturing,United States,CA,1231,operating,Large accelerated filer,2
+835011,"SEMPREON, INC",5180,"Wholesale-Beer, Wine & Distilled Alcoholic Beverages",07 Trade & Services,United States,KS,1231,operating,Accelerated filer,2
 835324,"Stock Yards Bancorp, Inc.",6022,State Commercial Banks,02 Finance,United States,KY,1231,operating,Large accelerated filer,2
 835403,DIAGEO PLC,2080,Beverages,04 Manufacturing,United Kingdom,X0,0630,other,Large accelerated filer,2
 836157,LINDSAY CORP,3523,Farm Machinery & Equipment,06 Technology,United States,DE,0831,operating,Large accelerated filer,2
@@ -1208,7 +1209,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 941221,ICL Group Ltd.,2870,Agricultural Chemicals,08 Industrial Applications and Services,Israel,L3,1231,other,Large accelerated filer,2
 943452,WESTINGHOUSE AIR BRAKE TECHNOLOGIES CORP,3743,Railroad Equipment,04 Manufacturing,United States,DE,1231,operating,Large accelerated filer,2
 943819,RESMED INC,3841,Surgical & Medical Instruments & Apparatus,08 Industrial Applications and Services,United States,DE,0630,operating,Large accelerated filer,2
-944075,"SOCKET MOBILE, INC.",3571,Electronic Computers,06 Technology,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 944695,"HANOVER INSURANCE GROUP, INC.",6331,"Fire, Marine & Casualty Insurance",02 Finance,United States,DE,1231,operating,Large accelerated filer,2
 944745,"CIVISTA BANCSHARES, INC.",6022,State Commercial Banks,02 Finance,United States,OH,1231,operating,Accelerated filer,2
 944809,"OPKO HEALTH, INC.",2834,Pharmaceutical Preparations,03 Life Sciences,United States,DE,1231,operating,Accelerated filer,2
@@ -1403,7 +1403,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1041657,"URBAN ONE, INC.",4832,Radio Broadcasting Stations,06 Technology,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1041792,ENERGY CO OF PARANA,4911,Electric Services,01 Energy & Transportation,Brazil,,1231,other,Large accelerated filer,2
 1041803,PRICESMART INC,5331,Retail-Variety Stores,07 Trade & Services,United States,DE,0831,operating,Large accelerated filer,2
-1041859,"Childrens Place, Inc.",5651,Retail-Family Clothing Stores,07 Trade & Services,United States,,0131,operating,Non-accelerated filer<br>Smaller reporting company,2
 1041934,EDAP TMS SA,3845,Electromedical & Electrotherapeutic Apparatus,08 Industrial Applications and Services,France,,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1042046,AMERICAN FINANCIAL GROUP INC,6331,"Fire, Marine & Casualty Insurance",02 Finance,United States,OH,1231,operating,Large accelerated filer,2
 1042187,YUNHONG GREEN CTI LTD.,3060,"Fabricated Rubber Products, NEC",04 Manufacturing,United States,IL,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
@@ -1604,7 +1603,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1095565,HEALTHSTREAM INC,7370,"Services-Computer Programming, Data Processing, Etc.",06 Technology,United States,TN,1231,operating,Accelerated filer,2
 1095651,Safehold Inc.,6798,Real Estate Investment Trusts,05 Real Estate & Construction,United States,MD,1231,operating,Large accelerated filer,2
 1095981,"CERENOME, INC.",3841,Surgical & Medical Instruments & Apparatus,08 Industrial Applications and Services,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
-1096056,LUXFER HOLDINGS PLC,2810,Industrial Inorganic Chemicals,08 Industrial Applications and Services,United Kingdom,X0,1231,operating,Accelerated filer,2
 1096275,Worksport Ltd,3714,Motor Vehicle Parts & Accessories,04 Manufacturing,United States,NV,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1096343,MARKEL GROUP INC.,6331,"Fire, Marine & Casualty Insurance",02 Finance,United States,VA,1231,operating,Large accelerated filer,2
 1096752,EDGEWELL PERSONAL CARE Co,2844,"Perfumes, Cosmetics & Other Toilet Preparations",08 Industrial Applications and Services,United States,MO,0930,operating,Large accelerated filer,2
@@ -1654,7 +1652,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1113232,AXCELIS TECHNOLOGIES INC,3559,"Special Industry Machinery, NEC",06 Technology,United States,DE,1231,operating,Large accelerated filer,2
 1113809,BUILD-A-BEAR WORKSHOP INC,5945,"Retail-Hobby, Toy & Game Shops",07 Trade & Services,United States,DE,0130,operating,Accelerated filer,2
 1114448,NOVARTIS AG,2834,Pharmaceutical Preparations,03 Life Sciences,Switzerland,V8,1231,other,Large accelerated filer,2
-1114483,Integer Holdings Corp,3845,Electromedical & Electrotherapeutic Apparatus,08 Industrial Applications and Services,United States,DE,1231,operating,Large accelerated filer,2
 1114700,GRUPO FINANCIERO GALICIA SA,6029,"Commercial Banks, NEC",02 Finance,Argentina,C1,1231,other,Large accelerated filer,2
 1114925,LANTRONIX INC,3576,Computer Communications Equipment,06 Technology,United States,DE,0630,operating,Accelerated filer<br>Smaller reporting company,2
 1114927,FIRST NORTHERN COMMUNITY BANCORP,6035,"Savings Institution, Federally Chartered",02 Finance,United States,CA,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
@@ -2056,7 +2053,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1332349,Brookdale Senior Living Inc.,8050,Services-Nursing & Personal Care Facilities,08 Industrial Applications and Services,United States,DE,1231,operating,Large accelerated filer,2
 1332551,ACRES Commercial Realty Corp.,6798,Real Estate Investment Trusts,05 Real Estate & Construction,United States,MD,1231,operating,Accelerated filer<br>Smaller reporting company,2
 1333141,Fresenius Medical Care AG,8090,"Services-Misc Health & Allied Services, NEC",08 Industrial Applications and Services,Germany,,,other,Large accelerated filer,2
-1333274,MERCER INTERNATIONAL INC.,2611,Pulp Mills,04 Manufacturing,"British Columbia, Canada",WA,1231,operating,Accelerated filer,2
 1333493,"eHealth, Inc.",6411,"Insurance Agents, Brokers & Service",02 Finance,United States,DE,1231,operating,Accelerated filer<br>Smaller reporting company,2
 1333822,SemiLEDs Corp,3674,Semiconductors & Related Devices,04 Manufacturing,Taiwan,,0831,operating,Non-accelerated filer<br>Smaller reporting company,2
 1333986,"Equitable Holdings, Inc.",6411,"Insurance Agents, Brokers & Service",02 Finance,United States,DE,1231,operating,Large accelerated filer,2
@@ -2108,7 +2104,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1350102,"Ascent Solar Technologies, Inc.",3674,Semiconductors & Related Devices,04 Manufacturing,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1350593,"Mueller Water Products, Inc.",3490,Miscellaneous Fabricated Metal Products,04 Manufacturing,United States,DE,0930,operating,Large accelerated filer,2
 1350653,"Alphatec Holdings, Inc.",3841,Surgical & Medical Instruments & Apparatus,08 Industrial Applications and Services,United States,DE,1231,operating,Large accelerated filer,2
-1351636,"SOUNDTHINKING, INC.",7372,Services-Prepackaged Software,06 Technology,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1352010,"EPAM Systems, Inc.",7371,Services-Computer Programming Services,06 Technology,United States,DE,1231,operating,Large accelerated filer,2
 1353226,"STRATS(SM) Trust for Procter & Gamble Securities, Series 2006-1",6189,Asset-Backed Securities,Office of Structured Finance,United States,,,operating,,2
 1354866,Byrna Technologies Inc.,3690,"Miscellaneous Electrical Machinery, Equipment & Supplies",04 Manufacturing,United States,DE,1130,operating,Non-accelerated filer<br>Smaller reporting company,2
@@ -2119,7 +2114,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1356093,"CREATIVE REALITIES, INC.",7373,Services-Computer Integrated Systems Design,06 Technology,United States,MN,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1356115,NEXPOINT DIVERSIFIED REAL ESTATE TRUST,6798,Real Estate Investment Trusts,05 Real Estate & Construction,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1356284,"STRATS(SM) Trust for Goldman Sachs Group Securities, Series 2006-2",6189,Asset-Backed Securities,Office of Structured Finance,United States,,,operating,,2
-1356576,"SUPERNUS PHARMACEUTICALS, INC.",2834,Pharmaceutical Preparations,03 Life Sciences,United States,DE,1231,operating,Large accelerated filer,2
 1357459,"PALISADE BIO, INC.",2836,"Biological Products, (No Diagnostic Substances)",03 Life Sciences,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1357615,"KBR, INC.",1600,Heavy Construction Other Than Bldg Const - Contractors,05 Real Estate & Construction,United States,DE,0101,operating,Large accelerated filer,2
 1357660,"STRATS(SM) Trust for Allstate Corp Securities, Series 2006-3",6189,Asset-Backed Securities,Office of Structured Finance,United States,,,operating,,2
@@ -2245,7 +2239,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1396009,Vulcan Materials CO,1400,Mining & Quarrying of  Nonmetallic Minerals (No Fuels),01 Energy & Transportation,United States,NJ,1231,operating,Large accelerated filer,2
 1396440,Main Street Capital CORP,,,,United States,MD,1231,operating,Large accelerated filer,2
 1396536,"DUOS TECHNOLOGIES GROUP, INC.",7372,Services-Prepackaged Software,06 Technology,United States,FL,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
-1396814,"Pacira BioSciences, Inc.",2834,Pharmaceutical Preparations,03 Life Sciences,United States,DE,1231,operating,Large accelerated filer,2
 1397016,Optex Systems Holdings Inc,3827,Optical Instruments & Lenses,08 Industrial Applications and Services,United States,DE,0928,operating,Non-accelerated filer<br>Smaller reporting company,2
 1397183,"Iveda Solutions, Inc.",7372,Services-Prepackaged Software,06 Technology,United States,NV,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1397187,lululemon athletica inc.,2300,Apparel & Other Finishd Prods of  Fabrics & Similar Matl,04 Manufacturing,"British Columbia, Canada",DE,0131,operating,Large accelerated filer,2
@@ -2348,7 +2341,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1427925,"TALPHERA, INC.",2834,Pharmaceutical Preparations,03 Life Sciences,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1428205,"Armour Residential REIT, Inc.",6798,Real Estate Investment Trusts,05 Real Estate & Construction,United States,,1231,operating,Large accelerated filer,2
 1428336,"HEALTHEQUITY, INC.",7389,"Services-Business Services, NEC",07 Trade & Services,United States,DE,0131,operating,Large accelerated filer,2
-1428439,"ROKU, INC",4841,Cable & Other Pay Television Services,06 Technology,United States,DE,1231,operating,Large accelerated filer,2
 1429260,"Fortress Biotech, Inc.",2834,Pharmaceutical Preparations,03 Life Sciences,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1429764,Blink Charging Co.,3690,"Miscellaneous Electrical Machinery, Equipment & Supplies",04 Manufacturing,United States,NV,1231,operating,Accelerated filer,2
 1429937,B2GOLD CORP,1040,Gold and Silver Ores,01 Energy & Transportation,"British Columbia, Canada",A1,1231,other,,2
@@ -2449,7 +2441,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1467093,Scorpio Gold Corp,1040,Gold and Silver Ores,01 Energy & Transportation,"British Columbia, Canada",A1,1231,other,,2
 1467373,Accenture plc,7389,"Services-Business Services, NEC",07 Trade & Services,Ireland,L2,0831,operating,Large accelerated filer,2
 1467623,"DROPBOX, INC.",7372,Services-Prepackaged Software,06 Technology,United States,NV,1231,operating,Large accelerated filer,2
-1467760,"Apollo Commercial Real Estate Finance, Inc.",6798,Real Estate Investment Trusts,05 Real Estate & Construction,United States,MD,1231,operating,Large accelerated filer,2
 1467761,"FiEE, Inc.",7372,Services-Prepackaged Software,06 Technology,Japan,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1467858,General Motors Co,3711,Motor Vehicles & Passenger Car Bodies,04 Manufacturing,United States,,1231,operating,Large accelerated filer,2
 1468091,VEON Ltd.,4812,Radiotelephone Communications,06 Technology,United Arab Emirates,D0,1231,other,Large accelerated filer,2
@@ -2577,7 +2568,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1502377,Contango Silver & Gold Inc.,1040,Gold and Silver Ores,01 Energy & Transportation,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1503274,Quanterix Corp,3826,Laboratory Analytical Instruments,08 Industrial Applications and Services,United States,DE,1231,operating,Accelerated filer,2
 1503584,Costamare Inc.,4412,Deep Sea Foreign Transportation of  Freight,01 Energy & Transportation,Monaco,1T,1231,other,Accelerated filer,2
-1503802,Karyopharm Therapeutics Inc.,2834,Pharmaceutical Preparations,03 Life Sciences,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1504008,"BankUnited, Inc.",6035,"Savings Institution, Federally Chartered",02 Finance,United States,DE,1231,operating,Large accelerated filer,2
 1504379,Caesarstone Ltd.,3281,Cut Stone & Stone Products,04 Manufacturing,Israel,,,other,Non-accelerated filer,2
 1504461,NGL Energy Partners LP,4922,Natural Gas Transmission,01 Energy & Transportation,United States,DE,0331,operating,Accelerated filer,2
@@ -2792,6 +2782,7 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1560385,Liberty Media Corp,4833,Television Broadcasting Stations,06 Technology,United States,NV,1231,operating,Large accelerated filer,2
 1560672,Ellington Credit Co,6798,Real Estate Investment Trusts,,United States,DE,0331,operating,Non-accelerated filer,2
 1561032,"National Healthcare Properties, Inc.",6798,Real Estate Investment Trusts,05 Real Estate & Construction,United States,MD,1231,operating,Non-accelerated filer,2
+1561540,Torex Resources Inc.,1040,Gold and Silver Ores,01 Energy & Transportation,"Ontario, Canada",A6,1231,other,,2
 1561550,"Datadog, Inc.",7372,Services-Prepackaged Software,06 Technology,United States,NV,1231,operating,Large accelerated filer,2
 1561861,"Grupo Aeromexico, S.A.B. de C.V.",4512,"Air Transportation, Scheduled",01 Energy & Transportation,Mexico,O5,1231,other,Non-accelerated filer,2
 1561894,"HA Sustainable Infrastructure Capital, Inc.",6799,"Investors, NEC",05 Real Estate & Construction,United States,DE,1231,operating,Large accelerated filer,2
@@ -3067,6 +3058,7 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1624794,"CSW INDUSTRIALS, INC.",2891,Adhesives & Sealants,08 Industrial Applications and Services,United States,DE,0331,operating,Large accelerated filer,2
 1625101,"PULSE BIOSCIENCES, INC.",3841,Surgical & Medical Instruments & Apparatus,08 Industrial Applications and Services,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1625278,"NERDWALLET, INC.",7374,Services-Computer Processing & Data Preparation,06 Technology,United States,DE,1231,operating,Accelerated filer<br>Emerging growth company,2
+1625297,"Supernus, Inc.",2834,Pharmaceutical Preparations,03 Life Sciences,United States,DE,1231,operating,Large accelerated filer,2
 1625414,Baozun Inc.,5961,Retail-Catalog & Mail-Order Houses,07 Trade & Services,China,E9,1231,other,Accelerated filer,2
 1625641,"CS Disco, Inc.",7372,Services-Prepackaged Software,06 Technology,United States,DE,1231,operating,Accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 1625791,Kornit Digital Ltd.,3555,Printing Trades Machinery & Equipment,06 Technology,Israel,L3,1231,other,Large accelerated filer,2
@@ -3307,7 +3299,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1681459,TechnipFMC plc,3533,Oil & Gas Field Machinery & Equipment,01 Energy & Transportation,United Kingdom,X0,1231,operating,Large accelerated filer,2
 1681622,Varex Imaging Corp,3679,"Electronic Components, NEC",04 Manufacturing,United States,DE,1002,operating,Accelerated filer,2
 1681682,ENDRA Life Sciences Inc.,3845,Electromedical & Electrotherapeutic Apparatus,08 Industrial Applications and Services,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
-1682149,Datavault AI Inc.,7389,"Services-Business Services, NEC",07 Trade & Services,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1682220,Sachem Capital Corp.,6798,Real Estate Investment Trusts,05 Real Estate & Construction,United States,NY,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1682241,Metalpha Technology Holding Ltd,6199,Finance Services,09 Crypto Assets,Hong Kong,K3,,other,Non-accelerated filer,2
 1682639,"HYPERION DEFI, INC.",6199,Finance Services,09 Crypto Assets,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
@@ -3338,7 +3329,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1690437,GraniteShares Gold Trust,6221,Commodity Contracts Brokers & Dealers,09 Crypto Assets,United States,DE,0630,operating,Large accelerated filer,2
 1690511,Canada Goose Holdings Inc.,2300,Apparel & Other Finishd Prods of  Fabrics & Similar Matl,04 Manufacturing,"Ontario, Canada",A1,0331,other,Large accelerated filer,2
 1690585,"Dianthus Therapeutics, Inc. /DE/",2834,Pharmaceutical Preparations,03 Life Sciences,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
-1690639,VersaBank,6029,"Commercial Banks, NEC",02 Finance,"Ontario, Canada",Z4,1031,other,<br>Emerging growth company,2
 1690680,"NEWMARK GROUP, INC.",6531,Real Estate Agents & Managers (For Others),05 Real Estate & Construction,United States,DE,1231,operating,Large accelerated filer,2
 1690820,CARVANA CO.,5500,Retail-Auto Dealers & Gasoline Stations,07 Trade & Services,United States,DE,1231,operating,Large accelerated filer,2
 1691082,LB PHARMACEUTICALS INC,2834,Pharmaceutical Preparations,03 Life Sciences,United States,DE,1231,operating,<br>Emerging growth company,2
@@ -3569,9 +3559,7 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1738906,"111, Inc.",5912,Retail-Drug Stores and Proprietary Stores,07 Trade & Services,China,E9,1231,other,Non-accelerated filer,2
 1739016,Elevra Lithium Ltd,1400,Mining & Quarrying of  Nonmetallic Minerals (No Fuels),01 Energy & Transportation,Australia,C3,0630,other,Large accelerated filer,2
 1739104,Elanco Animal Health Inc,2834,Pharmaceutical Preparations,03 Life Sciences,United States,,1231,operating,Large accelerated filer,2
-1739174,Tessera Defense & Homeland Security Inc.,7372,Services-Prepackaged Software,06 Technology,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1739410,Rallybio Corp,2834,Pharmaceutical Preparations,03 Life Sciences,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
-1739566,"Utz Brands, Inc.",2090,Miscellaneous Food Preparations & Kindred Products,04 Manufacturing,United States,DE,0103,operating,Large accelerated filer,2
 1739940,Cigna Group,6324,Hospital & Medical Service Plans,02 Finance,United States,DE,1231,operating,Large accelerated filer,2
 1740279,"IN8BIO, INC.",2836,"Biological Products, (No Diagnostic Substances)",03 Life Sciences,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 1740332,"RESIDEO TECHNOLOGIES, INC.",5072,Wholesale-Hardware,07 Trade & Services,United States,DE,1231,operating,Large accelerated filer,2
@@ -3971,7 +3959,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1816708,"Owlet, Inc.",3829,"Measuring & Controlling Devices, NEC",08 Industrial Applications and Services,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1816736,"Disc Medicine, Inc.",2834,Pharmaceutical Preparations,03 Life Sciences,United States,,1231,operating,Large accelerated filer,2
 1816815,Bon Natural Life Ltd,2833,Medicinal Chemicals & Botanical Products,03 Life Sciences,China,E9,0930,other,Non-accelerated filer<br>Emerging growth company,2
-1817004,"NEXTNRG, INC.",5500,Retail-Auto Dealers & Gasoline Stations,07 Trade & Services,United States,NV,1231,operating,<br>Emerging growth company,2
 1817229,Vor Biopharma Inc.,2836,"Biological Products, (No Diagnostic Substances)",03 Life Sciences,United States,,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 1817241,"Artiva Biotherapeutics, Inc.",2836,"Biological Products, (No Diagnostic Substances)",03 Life Sciences,United States,DE,1231,operating,<br>Emerging growth company,2
 1817358,"Academy Sports & Outdoors, Inc.",5940,Retail-Miscellaneous Shopping Goods Stores,07 Trade & Services,United States,DE,0131,operating,Large accelerated filer,2
@@ -4121,6 +4108,7 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1832332,"Aveanna Healthcare Holdings, Inc.",8082,Services-Home Health Care Services,08 Industrial Applications and Services,United States,DE,0101,operating,Accelerated filer,2
 1832466,"Alignment Healthcare, Inc.",6324,Hospital & Medical Service Plans,02 Finance,United States,DE,1231,operating,Large accelerated filer,2
 1832483,Serve Robotics Inc. /DE/,3569,"General Industrial Machinery & Equipment, NEC",06 Technology,United States,DE,1231,operating,<br>Emerging growth company,2
+1832487,"Guerrilla RF, Inc.",3674,Semiconductors & Related Devices,04 Manufacturing,United States,DE,1231,operating,<br>Emerging growth company,2
 1832511,P3 Health Partners Inc.,8000,Services-Health Services,08 Industrial Applications and Services,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1833141,Helus Pharma Inc.,2834,Pharmaceutical Preparations,03 Life Sciences,"Ontario, Canada",A1,0331,other,<br>Emerging growth company,2
 1833197,"Latham Group, Inc.",3089,"Plastics Products, NEC",08 Industrial Applications and Services,United States,NY,1231,operating,<br>Emerging growth company,2
@@ -4130,7 +4118,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1833769,"Hyperfine, Inc.",3845,Electromedical & Electrotherapeutic Apparatus,08 Industrial Applications and Services,United States,DE,1231,operating,<br>Emerging growth company,2
 1833835,Paysafe Ltd,7389,"Services-Business Services, NEC",07 Trade & Services,United Kingdom,D0,1231,other,Large accelerated filer,2
 1834026,Gold Royalty Corp.,1040,Gold and Silver Ores,01 Energy & Transportation,"British Columbia, Canada",Z4,1231,other,Non-accelerated filer<br>Emerging growth company,2
-1834105,IMPACT BIOMEDICAL INC.,2834,Pharmaceutical Preparations,03 Life Sciences,United States,NV,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 1834376,InnovAge Holding Corp.,8000,Services-Health Services,08 Industrial Applications and Services,United States,DE,0630,operating,Accelerated filer<br>Smaller reporting company,2
 1834488,"N-able, Inc.",7372,Services-Prepackaged Software,06 Technology,United States,,1231,operating,Large accelerated filer,2
 1834489,Genius Sports Ltd,7990,Services-Miscellaneous Amusement & Recreation,07 Trade & Services,United Kingdom,Y7,1231,other,Large accelerated filer,2
@@ -4236,13 +4223,11 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1846715,Eco Wave Power Global AB (publ),4911,Electric Services,01 Energy & Transportation,Sweden,V7,1231,other,Non-accelerated filer<br>Emerging growth company,2
 1846832,dLocal Ltd,7389,"Services-Business Services, NEC",07 Trade & Services,Uruguay,E9,1231,other,Large accelerated filer,2
 1846839,SOL Strategies Inc.,6199,Finance Services,09 Crypto Assets,"Ontario, Canada",A6,0930,other,<br>Emerging growth company,2
-1847064,"PSQ Holdings, Inc.",7310,Services-Advertising,07 Trade & Services,United States,DE,1231,operating,<br>Emerging growth company,2
 1847075,SAIHEAT Ltd,6199,Finance Services,09 Crypto Assets,United States,,1231,operating,Non-accelerated filer<br>Emerging growth company,2
 1847345,"Aspire-Lakewood Holdings, Inc.",2834,Pharmaceutical Preparations,03 Life Sciences,United States,E9,1231,operating,<br>Emerging growth company,2
 1847367,ALUMIS INC.,2834,Pharmaceutical Preparations,03 Life Sciences,United States,DE,1231,operating,<br>Emerging growth company,2
 1847398,"NorthEast Community Bancorp, Inc./MD/",6036,"Savings Institutions, Not Federally Chartered",02 Finance,United States,MD,1231,operating,<br>Emerging growth company,2
 1847409,High Tide Inc.,5990,"Retail-Retail Stores, NEC",07 Trade & Services,"Alberta, Canada",A0,1031,other,<br>Emerging growth company,2
-1847590,Bowman Consulting Group Ltd.,8742,Services-Management Consulting Services,07 Trade & Services,United States,,,operating,<br>Emerging growth company,2
 1847806,Genius Group Ltd,7372,Services-Prepackaged Software,06 Technology,Singapore,U0,1231,other,Non-accelerated filer<br>Emerging growth company,2
 1847846,EUDA Health Holdings Ltd,8000,Services-Health Services,08 Industrial Applications and Services,Singapore,D8,1231,operating,Non-accelerated filer<br>Emerging growth company,2
 1847874,Mobile Infrastructure Corp,6500,Real Estate,05 Real Estate & Construction,United States,,1231,operating,<br>Emerging growth company,2
@@ -4301,7 +4286,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1854572,ICZOOM Group Inc.,5731,"Retail-Radio, Tv & Consumer Electronics Stores",07 Trade & Services,China,E9,,other,Non-accelerated filer<br>Emerging growth company,2
 1854587,Cellebrite DI Ltd.,7372,Services-Prepackaged Software,06 Technology,Israel,,1231,other,Large accelerated filer,2
 1854640,Centerra Gold Inc.,1040,Gold and Silver Ores,01 Energy & Transportation,"Ontario, Canada",Z4,1231,other,,2
-1854963,"SHF Holdings, Inc.",6199,Finance Services,02 Finance,United States,DE,1231,operating,<br>Emerging growth company,2
 1855129,GH Research PLC,2834,Pharmaceutical Preparations,03 Life Sciences,Ireland,L2,1231,other,Accelerated filer<br>Emerging growth company,2
 1855175,"Contineum Therapeutics, Inc.",2834,Pharmaceutical Preparations,03 Life Sciences,United States,DE,1231,operating,<br>Emerging growth company,2
 1855447,"TIGO ENERGY, INC.",3674,Semiconductors & Related Devices,04 Manufacturing,United States,DE,1231,operating,<br>Emerging growth company,2
@@ -4518,6 +4502,7 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1898601,IPERIONX Ltd,1090,Miscellaneous Metal Ores,01 Energy & Transportation,United States,C3,0630,other,Large accelerated filer,2
 1898643,Mobilicom Ltd,3721,Aircraft,04 Manufacturing,Australia,C3,1231,other,Non-accelerated filer<br>Emerging growth company,2
 1898718,GMR Solutions Inc.,4700,Transportation Services,01 Energy & Transportation,United States,DE,1231,operating,Non-accelerated filer,2
+1898722,Modern Mining Technology Corp.,4953,Refuse Systems,01 Energy & Transportation,"British Columbia, Canada",A1,1231,other,,2
 1898766,Trio Petroleum Corp,1311,Crude Petroleum & Natural Gas,01 Energy & Transportation,United States,DE,1031,operating,<br>Emerging growth company,2
 1898795,"LiveWire Group, Inc.",3751,"Motorcycles, Bicycles & Parts",04 Manufacturing,United States,DE,1231,operating,<br>Emerging growth company,2
 1899005,Beamr Imaging Ltd.,7372,Services-Prepackaged Software,06 Technology,Israel,L3,1231,other,Non-accelerated filer<br>Emerging growth company,2
@@ -4550,6 +4535,7 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1907108,"Lexeo Therapeutics, Inc.",2836,"Biological Products, (No Diagnostic Substances)",03 Life Sciences,United States,,1231,operating,<br>Emerging growth company,2
 1907184,Electra Battery Materials Corp,1400,Mining & Quarrying of  Nonmetallic Minerals (No Fuels),01 Energy & Transportation,"Ontario, Canada",A6,1231,other,Non-accelerated filer<br>Emerging growth company,2
 1907223,Greenland Mines Ltd,2836,"Biological Products, (No Diagnostic Substances)",03 Life Sciences,United States,,1231,operating,<br>Emerging growth company,2
+1907709,vVARDIS Holding AG,3841,Surgical & Medical Instruments & Apparatus,08 Industrial Applications and Services,Switzerland,V8,,other,,2
 1907909,VOX ROYALTY CORP.,1040,Gold and Silver Ores,01 Energy & Transportation,United States,A6,1231,other,<br>Emerging growth company,2
 1907982,D-Wave Quantum Inc.,7374,Services-Computer Processing & Data Preparation,06 Technology,United States,DE,1231,operating,Non-accelerated filer,2
 1908705,Global Engine Group Holding Ltd,7374,Services-Computer Processing & Data Preparation,06 Technology,Hong Kong,D8,0630,other,Non-accelerated filer<br>Emerging growth company,2
@@ -4586,7 +4572,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1924482,Innovation Beverage Group Ltd,2080,Beverages,04 Manufacturing,Australia,C3,1231,other,Non-accelerated filer<br>Emerging growth company,2
 1925062,"Forbright, Inc.",6022,State Commercial Banks,02 Finance,United States,DE,1231,operating,<br>Emerging growth company,2
 1925283,"Lincoln International, Inc.",6282,Investment Advice,02 Finance,United States,DE,1231,operating,<br>Emerging growth company,2
-1926293,Green Circle Decarbonize Technology Ltd,3585,Air-Cond & Warm Air Heatg Equip & Comm & Indl Refrig Equip,06 Technology,Hong Kong,E9,0331,other,Non-accelerated filer<br>Emerging growth company,2
 1926314,Ocean Capital Acquisition Corp,6770,Blank Checks,05 Real Estate & Construction,Hong Kong,,0630,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 1926599,Translational Development Acquisition Corp.,6770,Blank Checks,05 Real Estate & Construction,United States,,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 1926792,SAMFINE CREATION HOLDINGS GROUP Ltd,2750,Commercial Printing,04 Manufacturing,Hong Kong,E9,1231,other,<br>Emerging growth company,2
@@ -4727,7 +4712,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1962011,"Kairos Pharma, LTD.",2834,Pharmaceutical Preparations,03 Life Sciences,United States,DE,1231,operating,<br>Emerging growth company,2
 1962481,BranchOut Food Inc.,2000,Food and Kindred Products,04 Manufacturing,United States,NV,1231,operating,<br>Emerging growth company,2
 1962746,Lotus Technology Inc.,3711,Motor Vehicles & Passenger Car Bodies,04 Manufacturing,China,E9,1231,other,Non-accelerated filer<br>Emerging growth company,2
-1963088,"AtlasClear Holdings, Inc.",6199,Finance Services,02 Finance,United States,DE,0630,operating,Non-accelerated filer<br>Smaller reporting company,2
 1963439,"Turbo Energy, S.A.",3690,"Miscellaneous Electrical Machinery, Equipment & Supplies",04 Manufacturing,Spain,U3,1231,other,Non-accelerated filer<br>Emerging growth company,2
 1963685,RICHTECH ROBOTICS INC.,3569,"General Industrial Machinery & Equipment, NEC",06 Technology,United States,NV,0930,operating,<br>Emerging growth company,2
 1964314,JBDI Holdings Ltd,3412,"Metal Shipping Barrels, Drums, Kegs & Pails",04 Manufacturing,Singapore,E9,0531,other,Non-accelerated filer<br>Emerging growth company,2
@@ -4783,7 +4767,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1977102,Birkenstock Holding plc,3140,"Footwear, (No Rubber)",04 Manufacturing,United Kingdom,Y9,0930,other,Large accelerated filer,2
 1978057,Top Wealth Group Holding Ltd,2090,Miscellaneous Food Preparations & Kindred Products,04 Manufacturing,France,E9,1231,other,Non-accelerated filer<br>Emerging growth company,2
 1978527,Globavend Holdings Ltd,4731,Arrangement of  Transportation of  Freight & Cargo,01 Energy & Transportation,Australia,E9,,other,Non-accelerated filer<br>Emerging growth company,2
-1978867,Cadeler A/S,4412,Deep Sea Foreign Transportation of  Freight,01 Energy & Transportation,Denmark,G7,1231,other,Large accelerated filer,2
 1978954,BBB FOODS INC,5411,Retail-Grocery Stores,07 Trade & Services,Mexico,D8,1231,other,Large accelerated filer,2
 1979005,"Aimei Health Technology Co., Ltd.",6770,Blank Checks,05 Real Estate & Construction,United States,,1231,operating,<br>Emerging growth company,2
 1979330,"NB Bancorp, Inc.",6036,"Savings Institutions, Not Federally Chartered",02 Finance,United States,,1231,operating,<br>Emerging growth company,2
@@ -4806,7 +4789,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1982448,BeLive Holdings,7373,Services-Computer Integrated Systems Design,06 Technology,Singapore,E9,1231,other,Non-accelerated filer<br>Emerging growth company,2
 1982518,Smith Douglas Homes Corp.,1531,Operative Builders,05 Real Estate & Construction,United States,DE,1231,operating,Accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 1982708,Anbio Biotechnology,2835,In Vitro & In Vivo Diagnostic Substances,03 Life Sciences,Germany,E9,1231,other,Non-accelerated filer<br>Emerging growth company,2
-1982960,KNOREX LTD.,7370,"Services-Computer Programming, Data Processing, Etc.",06 Technology,Singapore,E9,1231,other,<br>Emerging growth company,2
 1982961,ENIGMATIG LTD,8742,Services-Management Consulting Services,07 Trade & Services,Singapore,E9,0930,other,Non-accelerated filer<br>Emerging growth company,2
 1983324,Real Messenger Corp,7370,"Services-Computer Programming, Data Processing, Etc.",06 Technology,United States,E9,,other,Non-accelerated filer<br>Emerging growth company,2
 1983550,Trident Digital Tech Holdings Ltd,7389,"Services-Business Services, NEC",07 Trade & Services,Singapore,,,other,Non-accelerated filer<br>Emerging growth company,2
@@ -4838,7 +4820,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1991792,"CG Oncology, Inc.",2836,"Biological Products, (No Diagnostic Substances)",03 Life Sciences,United States,DE,1231,operating,Large accelerated filer,2
 1992243,T1 Energy Inc.,3674,Semiconductors & Related Devices,04 Manufacturing,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company,2
 1992818,ZOOZ Strategy Ltd.,3590,Misc Industrial & Commercial Machinery & Equipment,06 Technology,Israel,L3,1231,other,Non-accelerated filer<br>Emerging growth company,2
-1993004,"NorthWestern Energy Group, Inc.",4931,Electric & Other Services Combined,01 Energy & Transportation,United States,DE,1231,operating,Large accelerated filer,2
 1993097,3 E Network Technology Group Ltd,7371,Services-Computer Programming Services,06 Technology,China,D8,0630,other,<br>Emerging growth company,2
 1993344,Allied Gold Corp,1040,Gold and Silver Ores,01 Energy & Transportation,"Ontario, Canada",A6,1231,other,<br>Emerging growth company,2
 1993400,Fatpipe Inc/UT,7372,Services-Prepackaged Software,06 Technology,United States,UT,0331,operating,<br>Emerging growth company,2
@@ -5047,7 +5028,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 2030834,OneConstruction Group Ltd,1520,General Bldg Contractors - Residential Bldgs,05 Real Estate & Construction,Hong Kong,,,other,Non-accelerated filer<br>Emerging growth company,2
 2030954,"TEN Holdings, Inc.",7389,"Services-Business Services, NEC",07 Trade & Services,United States,NV,1231,operating,<br>Emerging growth company,2
 2031009,Skyline Builders Group Holding Ltd,1700,Construction - Special Trade Contractors,05 Real Estate & Construction,Hong Kong,,,other,Non-accelerated filer<br>Emerging growth company,2
-2031561,Aldel Financial II Inc.,6770,Blank Checks,05 Real Estate & Construction,United States,,1231,operating,<br>Emerging growth company,2
 2031688,Rich Sparkle Holdings Ltd,7380,Services-Miscellaneous Business Services,07 Trade & Services,China,,,other,Non-accelerated filer<br>Emerging growth company,2
 2032341,"CYABRA, INC.",7372,Services-Prepackaged Software,06 Technology,Israel,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2032528,Roman DBDR Acquisition Corp. II,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,<br>Emerging growth company,2
@@ -5079,7 +5059,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 2035709,Phoenix Asia Holdings Ltd,1700,Construction - Special Trade Contractors,05 Real Estate & Construction,Hong Kong,E9,0331,other,Non-accelerated filer<br>Emerging growth company,2
 2035832,"Aktis Oncology, Inc.",2834,Pharmaceutical Preparations,03 Life Sciences,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2035989,Amrize Ltd,3241,"Cement, Hydraulic",04 Manufacturing,Switzerland,V8,1231,operating,Large accelerated filer,2
-2035992,Charming Medical Ltd,8090,"Services-Misc Health & Allied Services, NEC",08 Industrial Applications and Services,Hong Kong,,,other,Non-accelerated filer<br>Emerging growth company,2
 2036042,"Sionna Therapeutics, Inc.",2834,Pharmaceutical Preparations,03 Life Sciences,United States,DE,1231,operating,<br>Emerging growth company,2
 2036307,OFA Group,8711,Services-Engineering Services,07 Trade & Services,United States,E9,0331,operating,<br>Emerging growth company,2
 2036973,UY Scuti Acquisition Corp.,6770,Blank Checks,05 Real Estate & Construction,United States,E9,0331,operating,<br>Emerging growth company,2
@@ -5186,6 +5165,7 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 2062440,Kyivstar Group Ltd.,4812,Radiotelephone Communications,06 Technology,United Arab Emirates,D0,1231,other,Non-accelerated filer<br>Emerging growth company,2
 2062583,"MiniMed Group, Inc.",3841,Surgical & Medical Instruments & Apparatus,08 Industrial Applications and Services,United States,DE,1231,operating,Non-accelerated filer,2
 2063196,Netskope Inc,7372,Services-Prepackaged Software,06 Technology,United States,DE,0131,operating,Non-accelerated filer<br>Emerging growth company,2
+2063345,Cadeler plc,4412,Deep Sea Foreign Transportation of  Freight,01 Energy & Transportation,United Kingdom,X0,1231,other,,2
 2063816,Indigo Acquisition Corp.,6770,Blank Checks,05 Real Estate & Construction,United States,,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2063863,"Elauwit Connection, Inc.",4899,"Communications Services, NEC",06 Technology,United States,,1231,operating,<br>Emerging growth company,2
 2064124,"Figure Technology Solutions, Inc.",6163,Loan Brokers,02 Finance,United States,DE,1231,operating,<br>Emerging growth company,2
@@ -5260,6 +5240,7 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 2077785,Iris Acquisition Corp II,6770,Blank Checks,05 Real Estate & Construction,Cayman Islands,E9,1231,operating,<br>Emerging growth company,2
 2077954,Evolution Global Acquisition Corp,6770,Blank Checks,05 Real Estate & Construction,Cayman Islands,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2078008,Versigent PLC,3714,Motor Vehicle Parts & Accessories,04 Manufacturing,Switzerland,Y9,1231,operating,Non-accelerated filer,2
+2078148,Zoar Ltd,2834,Pharmaceutical Preparations,03 Life Sciences,Hong Kong,E9,0331,other,<br>Emerging growth company,2
 2078416,"Liberty Live Holdings, Inc.",7900,Services-Amusement & Recreation Services,07 Trade & Services,United States,NV,1231,operating,<br>Emerging growth company,2
 2078653,Range Capital Acquisition Corp II,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2078856,Hyperliquid Strategies Inc,6199,Finance Services,09 Crypto Assets,United States,DE,0630,operating,<br>Emerging growth company,2
@@ -5413,6 +5394,7 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 2097986,Forefront Tech Holdings Acquisition Corp,6770,Blank Checks,05 Real Estate & Construction,"Virgin Islands, British",E9,1231,operating,<br>Emerging growth company,2
 2098242,Spring Valley Acquisition Corp. IV,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2098395,IMC Rare Earths Ltd,1000,Metal Mining,01 Energy & Transportation,Brazil,E9,0331,other,<br>Emerging growth company,2
+2098410,Bluerock Acquisition Corp. II,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2098430,Madison Air Solutions Corp,3564,Industrial & Commercial Fans & Blowers & Air Purifing Equip,06 Technology,United States,DE,1231,operating,Non-accelerated filer,2
 2098669,United Acquisition Corp. I,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2098707,Burtech Acquisition Corp II,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
@@ -5431,6 +5413,7 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 2100704,East West Ave Acquisition Corp.,6770,Blank Checks,05 Real Estate & Construction,United States,NV,1130,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2100782,"Generate Biomedicines, Inc.",2834,Pharmaceutical Preparations,03 Life Sciences,United States,DE,1231,operating,<br>Emerging growth company,2
 2100805,"Janus Living, Inc.",6798,Real Estate Investment Trusts,05 Real Estate & Construction,United States,MD,1231,operating,<br>Emerging growth company,2
+2100848,Versa Bancorp,6029,"Commercial Banks, NEC",02 Finance,"Ontario, Canada",DE,1231,other,,2
 2101135,Illumination Acquisition Corp. I,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1130,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2101240,SunScout Holding Ltd,3674,Semiconductors & Related Devices,04 Manufacturing,New Zealand,E9,0630,other,,2
 2101393,AmperCap Acquisition Co,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1130,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
@@ -5444,7 +5427,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 2102155,Quantum Leap Acquisition Corp,6770,Blank Checks,05 Real Estate & Construction,Cayman Islands,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2102771,Keystone Acquisition Corp.,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2102907,Resolution Minerals Ltd,1040,Gold and Silver Ores,01 Energy & Transportation,Australia,C3,0630,other,Non-accelerated filer<br>Emerging growth company,2
-2103076,OPAY Ltd,6099,"Functions Related To Depository Banking, NEC",02 Finance,Singapore,E9,1231,other,,2
 2104052,Enviri Corp,4953,Refuse Systems,01 Energy & Transportation,United States,DE,1231,operating,Non-accelerated filer,2
 2104177,Long Table Growth Corp.,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2104204,"Alamar Biosciences, Inc.",3826,Laboratory Analytical Instruments,08 Industrial Applications and Services,United States,DE,1231,operating,<br>Emerging growth company,2
@@ -5453,6 +5435,7 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 2104391,Catalyst Acquisition Corp.,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,<br>Emerging growth company,2
 2104879,RMG ML Sports Holdings,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2104882,"EagleRock Land, LLC",6792,Oil Royalty Traders,01 Energy & Transportation,United States,TX,1231,operating,<br>Emerging growth company,2
+2105038,Cizzle Brands Corp,2000,Food and Kindred Products,04 Manufacturing,"Ontario, Canada",A1,0731,other,,2
 2105139,ADI GLOBAL DISTRIBUTION INC.,5072,Wholesale-Hardware,07 Trade & Services,United States,DE,1231,operating,Non-accelerated filer,2
 2105274,"InterPrivate Investment Partners V, Inc.",6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2105398,"Csquare, Inc.",7370,"Services-Computer Programming, Data Processing, Etc.",06 Technology,United States,DE,1231,operating,Non-accelerated filer,2
@@ -5466,6 +5449,7 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 2108164,"Pono Capital Four, Inc.",6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2108962,General Catalyst Global Resilience Merger Corp.,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2109150,INNIO N.V.,3621,Motors & Generators,04 Manufacturing,Germany,2M,1231,operating,Non-accelerated filer,2
+2109823,Leader's Advantage Acquisition Corp.,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2109869,Exascale Labs Holdings Inc.,7372,Services-Prepackaged Software,06 Technology,United States,DE,0630,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2109876,Mountain Crest Acquisition 6 Corp.,6770,Blank Checks,05 Real Estate & Construction,United States,D8,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2110029,"ERock, Inc.",3620,Electrical Industrial Apparatus,04 Manufacturing,United States,DE,1231,operating,Non-accelerated filer<br>Emerging growth company,2
@@ -5476,6 +5460,7 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 2111038,DISCIPLINED GROWTH ACQUISITION Corp,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2111542,ACP Holdings Acquisition Corp.,6770,Blank Checks,05 Real Estate & Construction,United States,,1231,operating,<br>Emerging growth company,2
 2111762,GSR V Acquisition Corp.,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
+2111838,Haymaker Acquisition Corp V,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2111846,Game Your Game Inc.,7372,Services-Prepackaged Software,06 Technology,United States,DE,1231,operating,<br>Emerging growth company,2
 2111860,"Xtend AI Robotics, Inc.",3760,Guided Missiles & Space Vehicles & Parts,04 Manufacturing,United States,DE,1231,other,<br>Emerging growth company,2
 2112446,JATT II Acquisition Corp.,6770,Blank Checks,05 Real Estate & Construction,Cayman Islands,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
@@ -5487,6 +5472,7 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 2114227,Churchill Capital Corp XII,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2114229,Churchill Capital Corp XIII,6770,Blank Checks,04 Manufacturing,United States,E9,1231,other,<br>Emerging growth company,2
 2115119,"Columbia Financial, Inc./MD/",6035,"Savings Institution, Federally Chartered",02 Finance,United States,MD,1231,operating,Accelerated filer,2
+2115191,Live Oak Acquisition Corp. VI,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2115404,Collective Acquisition Corp. II,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2115436,ExxonMobil Holdings Corp,2911,Petroleum Refining,01 Energy & Transportation,United States,TX,1231,operating,Large accelerated filer,2
 2116105,Futurewave Acquisition Corp,6770,Blank Checks,05 Real Estate & Construction,United States,E9,0331,operating,<br>Emerging growth company,2
@@ -5519,8 +5505,10 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 2128739,JAB Acquisition Corp I,6770,Blank Checks,05 Real Estate & Construction,United States,,1231,operating,<br>Emerging growth company,2
 2129056,Jones Ventures INTL Acquisition1 Corp,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,<br>Emerging growth company,2
 2129659,Freedom Metals Acquisition Corp.,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
+2130357,"Anthropic, PBC",7372,Services-Prepackaged Software,06 Technology,United States,DE,1231,other,,2
 2130386,Yorkville International Capital Corp.,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2130606,"Obsidian Therapeutics, Inc.",2834,Pharmaceutical Preparations,03 Life Sciences,United States,,1231,operating,Non-accelerated filer<br>Emerging growth company,2
+2131303,SPACCircle Acquisition Corp.,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,other,<br>Emerging growth company,2
 2131350,B&R Technology Merger Corp.,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,<br>Emerging growth company,2
 2131524,"Braveheart Bio, Inc.",2834,Pharmaceutical Preparations,03 Life Sciences,United States,DE,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2131813,newcleo plc,3443,Fabricated Plate Work (Boiler Shops),04 Manufacturing,United Kingdom,X0,1231,other,,2
@@ -5544,9 +5532,11 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 2141616,Amaero Inc.,3390,Miscellaneous Primary Metal Products,04 Manufacturing,United States,DE,1231,other,,2
 2143673,Uranium Royalty Corp.,6221,Commodity Contracts Brokers & Dealers,09 Crypto Assets,United States,DE,0430,operating,<br>Emerging growth company,2
 2143850,"CITY THERAPEUTICS, INC.",2834,Pharmaceutical Preparations,03 Life Sciences,United States,DE,1231,other,<br>Emerging growth company,2
+2145089,WINDWARD BIO GROUP AG,2836,"Biological Products, (No Diagnostic Substances)",03 Life Sciences,Switzerland,V8,1231,other,,2
 2145659,JATT III Acquisition Corp,6770,Blank Checks,06 Technology,United States,E9,1231,other,<br>Emerging growth company,2
 2146310,Inflection Point Acquisition Corp. VIII,6770,Blank Checks,02 Finance,United States,E9,1231,operating,<br>Emerging growth company,2
 2147219,Rainier Acquisition Corp,6770,Blank Checks,03 Life Sciences,United States,E9,1231,other,<br>Emerging growth company,2
+2148436,Southport Acquisition Corp. II,6770,Blank Checks,01 Energy & Transportation,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2149916,TCGX Acquisition Corp. II,6770,Blank Checks,06 Technology,Cayman Islands,E9,1231,other,<br>Emerging growth company,2
 2152623,"Navient Holdings, Inc.",6211,"Security Brokers, Dealers & Flotation Companies",02 Finance,United States,DE,1231,other,,2
 2153598,Frazier Life Sciences Acquisition Corp. II,6770,Blank Checks,01 Energy & Transportation,United States,E9,1231,other,<br>Emerging growth company,2
