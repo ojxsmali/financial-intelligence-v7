@@ -464,3 +464,5 @@ details.formula code { display: inline-block; margin-top: .2rem; font-size: .74r
 
 .verified { color: var(--up); font-weight: 700; cursor: help; }
 .unverified { color: var(--muted); cursor: help; }
+
+.empty .ref { font-size: .78rem; color: var(--muted); margin-top: .6rem; }

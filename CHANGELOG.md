@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.4.0 — 2026-11-21 · Production error handling, monitoring and alerts
+
+- Visitors never see internal errors: safe, consistent messages with a reference ID; specific validation messages kept.
+- Request IDs on every API response; structured, secret-scrubbed JSON logs (Vercel Runtime Logs).
+- Owner e-mail alerts (Gmail SMTP or Resend) with thresholds, hourly de-duplication and a daily cap.
+- Serverless time budgets for SEC and Gemini calls; front-end request timeouts, error boundary and crash reporting.
+- Tests for ten failure scenarios (SEC down / refusing, Gemini down / invalid / network / timeout / key rejected, missing configuration, invalid input, unavailable dataset, unexpected exception) and the alert engine. 209 Python tests, 21 web tests.
+
 ## 7.3.0 — 2026-11-21 · Watchlist, screener, health check, plain English
 
 - **Watchlist + live filings feed**: follow companies; every SEC filing is explained in plain English (8-K item numbers decoded: earnings, executive changes, deals, restatements, cyber incidents) with "New since last visit" badges. Auto-refreshes.

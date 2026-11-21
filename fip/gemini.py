@@ -167,7 +167,8 @@ def _extract_text(response) -> tuple[str, str]:
 
 
 def generate(fact_pack: dict, question: str, api_key: str, *, models=None, transport=None,
-             sleep=time.sleep, timeout: float = 45) -> GeminiAnswer:
+             sleep=time.sleep, timeout: float = 45, deadline: float | None = None,
+             clock=time.monotonic) -> GeminiAnswer:
     if not api_key or not api_key.strip():
         raise GeminiError("The AI assistant is not configured on this server (GEMINI_API_KEY is not set).",
                           "not_configured")
@@ -177,7 +178,11 @@ def generate(fact_pack: dict, question: str, api_key: str, *, models=None, trans
     attempts: list[str] = []
     saw_quota = False
 
+    started = clock()
     for model in chain:
+        if deadline is not None and clock() - started > deadline:
+            attempts.append(f"{model}: skipped (time budget used)")
+            break
         for attempt in range(2):
             try:
                 response = post(f"{BASE_URL}{model}:generateContent",

@@ -176,7 +176,8 @@ def test_symbol_normalisation_and_watchlist(client_api):
 
 def test_validation_errors_use_app_format(client_api):
     body = client_api.get("/api/search", params={"page": 0}).json()
-    assert body["error"]["kind"] == "bad_request" and "page" in body["error"]["message"]
+    assert body["error"]["kind"] == "bad_request" and "not valid" in body["error"]["message"]
+    assert body["error"]["ref"].startswith("FI-")
     assert client_api.get("/api/no-such-route").json()["error"]["kind"] == "not_found"
     assert client_api.get("/api/symbols", params={"q": ""}).json()["results"] == []
 

@@ -1,5 +1,5 @@
-import { useId, useRef, type KeyboardEvent, type ReactNode } from 'react'
-import type { Insight } from '../lib/api'
+import { Component, useId, useRef, type KeyboardEvent, type ReactNode } from 'react'
+import { MESSAGES, RequestError, reportClientError, type Insight } from '../lib/api'
 
 export function PageHeader({ eyebrow, title, sub }: { eyebrow: string; title: string; sub?: string }) {
   return (
@@ -81,12 +81,45 @@ export function Skeleton({ message = 'Loading annual filings from SEC EDGAR…' 
 }
 
 export function ErrorState({ error, retry }: { error: unknown; retry?: () => void }) {
-  const message = error instanceof Error ? error.message : 'Something went wrong.'
+  // Only visitor-safe text is ever shown; RequestError messages are already curated, anything else is generic.
+  const message = error instanceof RequestError ? error.message : MESSAGES.internal
+  const ref = error instanceof RequestError ? error.ref : ''
+  const title = error instanceof RequestError && ['upstream', 'unavailable', 'timeout'].includes(error.kind)
+    ? 'Temporarily unavailable' : error instanceof RequestError && error.kind === 'network' ? 'You appear to be offline'
+    : 'This couldn’t be loaded'
   return (
-    <EmptyState kicker="Request failed" title="This data could not be loaded" action={retry && <button className="btn" onClick={retry}>Try again</button>}>
-      {message}
+    <EmptyState kicker="Please try again" title={title} action={retry && <button className="btn" onClick={retry}>Try again</button>}>
+      <p>{message}</p>
+      {ref && <p className="ref">Reference: <span className="mono">{ref}</span></p>}
     </EmptyState>
   )
+}
+
+/** Catches rendering crashes so one broken view never blanks the site; reports privately, shows a calm message. */
+export class ErrorBoundary extends Component<{ children: ReactNode; resetKey?: string }, { failed: boolean; resetKey?: string }> {
+  state: { failed: boolean; resetKey?: string } = { failed: false }
+
+  static getDerivedStateFromError() {
+    return { failed: true }
+  }
+
+  static getDerivedStateFromProps(props: { resetKey?: string }, state: { failed: boolean; resetKey?: string }) {
+    return props.resetKey !== state.resetKey ? { failed: false, resetKey: props.resetKey } : null
+  }
+
+  componentDidCatch(error: unknown) {
+    reportClientError(error instanceof Error ? `${error.name}: ${error.message}` : 'Unknown render error', 'render')
+  }
+
+  render() {
+    if (!this.state.failed) return this.props.children
+    return (
+      <EmptyState kicker="Please try again" title="This page couldn’t be displayed"
+        action={<button className="btn" onClick={() => location.reload()}>Reload the page</button>}>
+        <p>{MESSAGES.internal}</p>
+      </EmptyState>
+    )
+  }
 }
 
 /** WAI-ARIA tabs with roving focus (Arrow keys, Home, End). */

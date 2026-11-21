@@ -90,7 +90,7 @@ export function CompanyGate({ children, masthead = true }: { children: (ctx: Com
         {head}
         <EmptyState kicker={company.status === 'not_company' ? 'Not applicable' : 'Data unavailable'}
           title={company.error?.title ?? 'Financial data unavailable'}
-          action={company.error?.kind === 'upstream' && <button className="btn" onClick={refresh} disabled={refreshing}>{refreshing ? 'Retrying…' : 'Retry SEC request'}</button>}>
+          action={company.error?.retryable && <button className="btn" onClick={refresh} disabled={refreshing}>{refreshing ? 'Retrying…' : 'Retry SEC request'}</button>}>
           <p>{company.error?.message}</p>
           {filings.length > 0 ? (
             <>

@@ -34,9 +34,8 @@ export function Assistant() {
         {!s.enabled && <Chip kind="bad">Disabled by owner</Chip>}
       </div>
       {!s.configured && (
-        <Notice kind="info">The assistant is switched off because no Gemini API key is configured on the server. All dashboards, statements and rule-based insights work without it. Site owner: set GEMINI_API_KEY in the server environment (see README). The key is never entered or shown in this web page.</Notice>
+        <Notice kind="info">The research assistant isn’t available on this site right now. All dashboards, statements, the screener and the rule-based insights work as usual.</Notice>
       )}
-      {s.rejected_models.length > 0 && <p className="caption">Ignored non-allowlisted models from GEMINI_MODELS: {s.rejected_models.join(', ')}</p>}
 
       <form className="ask" onSubmit={e => { e.preventDefault(); if (canAsk) ask.mutate({ symbols: selected, question: q, access_code: code }) }}>
         <fieldset>
@@ -88,7 +87,7 @@ export function Assistant() {
       <details className="disclosure">
         <summary>How the assistant is protected</summary>
         <ul>
-          <li>The Gemini key lives only in server-side configuration (GEMINI_API_KEY); this page never receives it.</li>
+          <li>The Gemini key is kept on the server; this page never receives it.</li>
           <li>Models are restricted to Google's free-tier allowlist ({s.models.join(', ')}). There is no paid fallback; quota errors simply pause the assistant.</li>
           <li>Server-side limits: {s.client_limit} questions per visitor per 24 h, {s.global_limit} per site per 24 h, {s.per_minute} per minute, {s.cooldown_seconds} s cooldown.</li>
           <li>Identical questions about identical data are answered from a 24 h cache without using quota.</li>

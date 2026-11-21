@@ -21,9 +21,12 @@ from fip import VERSION
 from fip.config import sec_contact_email
 
 RETRYABLE_STATUS = {429, 500, 502, 503, 504}
-DEFAULT_TIMEOUT = (6, 40)  # (connect, read) seconds
-MAX_ATTEMPTS = 4
-MAX_BACKOFF_SECONDS = 12.0
+# On Vercel a request must finish well inside the 60 s function limit, so the retry budget is smaller
+# there (worst case ≈ 2 × 20 s + 2 s backoff); desktop/Streamlit keep the patient defaults.
+_SERVERLESS = bool(os.environ.get("VERCEL"))
+DEFAULT_TIMEOUT = (5, 20) if _SERVERLESS else (6, 40)  # (connect, read) seconds
+MAX_ATTEMPTS = 2 if _SERVERLESS else 4
+MAX_BACKOFF_SECONDS = 2.0 if _SERVERLESS else 12.0
 
 
 class DataSourceError(RuntimeError):

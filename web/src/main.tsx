@@ -5,11 +5,12 @@ import '@fontsource/ibm-plex-sans/600.css'
 import '@fontsource/ibm-plex-mono/400.css'
 import './styles.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { StrictMode, useEffect } from 'react'
+import React, { StrictMode, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { Layout } from './components/Layout'
-import { EmptyState } from './components/ui'
+import { EmptyState, ErrorBoundary } from './components/ui'
+import { reportClientError } from './lib/api'
 import { SettingsProvider } from './lib/settings'
 import { Assistant } from './pages/Assistant'
 import { Compare } from './pages/Compare'
@@ -40,6 +41,18 @@ function RouteEffects() {
   return null
 }
 
+function RoutedBoundary({ children }: { children: React.ReactNode }) {
+  const { pathname } = useLocation()
+  return <ErrorBoundary resetKey={pathname}>{children}</ErrorBoundary>
+}
+
+// Uncaught errors and promise rejections are reported privately; the page keeps working.
+window.addEventListener('error', e => reportClientError(String(e.message || 'Script error'), 'window'))
+window.addEventListener('unhandledrejection', e => {
+  const r = e.reason as { message?: string } | undefined
+  reportClientError(String(r?.message ?? r ?? 'Unhandled rejection'), 'promise')
+})
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
@@ -47,6 +60,7 @@ createRoot(document.getElementById('root')!).render(
         <SettingsProvider>
           <RouteEffects />
           <Layout>
+            <RoutedBoundary>
             <Routes>
               <Route path="/" element={<Overview />} />
               <Route path="/watchlist" element={<Watchlist />} />
@@ -59,6 +73,7 @@ createRoot(document.getElementById('root')!).render(
               <Route path="/sources" element={<Sources />} />
               <Route path="*" element={<EmptyState kicker="404" title="Page not found">Use the navigation above.</EmptyState>} />
             </Routes>
+            </RoutedBoundary>
           </Layout>
         </SettingsProvider>
       </BrowserRouter>

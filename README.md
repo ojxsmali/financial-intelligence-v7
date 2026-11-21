@@ -185,6 +185,20 @@ Visitors are identified by a salted hash of their IP, so raw IPs are never store
 | Listings (new IPOs, delistings) | `.github/workflows/refresh-data.yml` rebuilds the bundled listing and snapshot files every weekday and commits them; the push redeploys Vercel. Needs the repository secret `SEC_CONTACT_EMAIL`. |
 | "Re-check SEC" button | Forces a refresh, rate-limited to once per 10 minutes per company to respect SEC fair-access rules. |
 
+## Error handling, monitoring and alerts
+
+**What visitors see.** Never a traceback, status code, exception text, file path or setting name. Failures map to a few calm messages — *“Something went wrong. Please try again shortly.”*, *“Financial data is temporarily unavailable. Please try again later.”*, *“This service is temporarily unavailable. We are working to restore it.”* — with a **reference ID** (e.g. `FI-7K3Q9A`) and a *Try again* button where a retry can help. Validation stays specific (bad CSV columns, wrong access code, question too long, usage limits).
+
+| Layer | Protection |
+|---|---|
+| API (`fip/api.py`) | Every request gets a reference ID (`X-Request-ID` header and in every error body). A global handler turns any unexpected exception into the generic message. Company errors, data caveats, feed and screener failures are rewritten in plain language; Gemini failures are mapped by category (down, quota, key rejected) without model names or status codes. |
+| Time limits | On Vercel, SEC calls use a 5 s connect / 20 s read timeout and 2 attempts; Gemini gets 20 s per call and a 40 s budget for the whole model chain — all inside the 60 s function limit. |
+| Front end (`web/`) | Requests time out (30 s; 60–70 s for compare, screener and the assistant). Only server-written, visitor-safe messages are displayed; platform error pages, gateway timeouts and unknown shapes become a generic message. A React error boundary catches render crashes per page; uncaught errors and promise rejections are reported privately to `/api/client-error`. |
+| Logs (`fip/observability.py`) | One JSON line per event — timestamp, level, reference ID, category, service, duration, error type and the last few code frames — in **Vercel → Project → Logs** (search by reference ID). Secrets are scrubbed: keys/tokens/passwords/access codes are dropped and API keys, bearer tokens and e-mail addresses are masked. |
+| Alerts (`fip/alerts.py`) | E-mail to the owner for unexpected failures: backend exceptions (immediately), SEC outages (≥3 in 10 min), Gemini outage (≥2), Gemini key rejected or SEC contact missing (immediately, *requires attention*), quota exhaustion, repeated front-end crashes. Each alert includes project, category, service, UTC time, description, reference ID, occurrence count and whether it is temporary. The same incident type is e-mailed at most once per hour, with a cap of 20 per day; user mistakes never trigger alerts. |
+
+To receive alerts, set `ALERT_EMAIL_TO` and either the `SMTP_*` variables (Gmail: `smtp.gmail.com`, port 587, your Gmail address and a Gmail **App Password**) or `RESEND_API_KEY`, in Vercel → Settings → Environment Variables. Without them, everything is still logged and alerting is skipped. See [`.env.example`](.env.example).
+
 ## Data sources and accuracy rules
 
 | Source | Used for | Refresh |

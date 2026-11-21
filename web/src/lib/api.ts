@@ -59,7 +59,7 @@ export type Profile = {
   annual_filings: Filing[]
 }
 
-export type ApiError = { kind: string; title?: string; message: string; edgar_url?: string }
+export type ApiError = { kind: string; title?: string; message: string; edgar_url?: string; ref?: string; retryable?: boolean }
 
 export type Company = {
   symbol: string; status: 'ok' | 'not_listed' | 'not_company' | 'error'; entry?: Entry; profile?: Profile | null
@@ -121,11 +121,38 @@ export type UploadResult = {
 export class RequestError extends Error {
   status: number
   kind: string
-  constructor(status: number, kind: string, message: string) {
+  ref: string
+  constructor(status: number, kind: string, message: string, ref = '') {
     super(message)
     this.status = status
     this.kind = kind
+    this.ref = ref
   }
+}
+
+// Visitor-facing wording for failures that are not the visitor's doing. Technical detail never reaches
+// the page: the server logs it privately under the reference ID shown with the message.
+export const MESSAGES = {
+  internal: 'Something went wrong. Please try again shortly.',
+  data: 'Financial data is temporarily unavailable. Please try again later.',
+  service: 'This service is temporarily unavailable. We are working to restore it.',
+  network: 'We couldn’t reach the server. Check your connection and try again.',
+  timeout: 'This is taking longer than usual. Please try again shortly.',
+}
+
+/** Error kinds whose server-written message is meant for the visitor (validation, limits, explanations). */
+const VISITOR_KINDS = new Set(['bad_request', 'bad_csv', 'access_code', 'limit', 'no_data', 'not_found', 'quota',
+  'blocked', 'empty', 'not_configured', 'unavailable', 'upstream', 'internal'])
+
+export function toVisitorError(status: number, body: unknown, headerRef = ''): RequestError {
+  const err = (body && typeof body === 'object' && 'error' in body ? (body as { error?: ApiError & { ref?: string } }).error : undefined)
+  const ref = err?.ref || headerRef
+  if (err && typeof err.message === 'string' && VISITOR_KINDS.has(err.kind)) return new RequestError(status, err.kind, err.message, ref)
+  // Anything else (platform error pages, gateway timeouts, unexpected shapes) gets a generic message.
+  if (status === 504) return new RequestError(status, 'timeout', MESSAGES.timeout, ref)
+  if (status === 502 || status === 503) return new RequestError(status, 'unavailable', MESSAGES.service, ref)
+  if (status === 404) return new RequestError(status, 'not_found', 'We couldn’t find what you were looking for.', ref)
+  return new RequestError(status, 'internal', MESSAGES.internal, ref)
 }
 
 const CONTACT_KEY = 'fip.secContact'
@@ -138,26 +165,46 @@ export function setContact(value: string) {
   try { if (value) localStorage.setItem(CONTACT_KEY, value); else localStorage.removeItem(CONTACT_KEY) } catch { /* ignore */ }
 }
 
-async function request<T>(path: string, init?: RequestInit): Promise<T> {
+const DEFAULT_TIMEOUT_MS = 30_000
+
+async function request<T>(path: string, init?: RequestInit & { timeoutMs?: number }): Promise<T> {
   const headers = new Headers(init?.headers)
   const contact = getContact()
   if (contact) headers.set('X-SEC-Contact', contact)
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), init?.timeoutMs ?? DEFAULT_TIMEOUT_MS)
   let res: Response
   try {
-    res = await fetch(path, { ...init, headers })
-  } catch {
-    throw new RequestError(0, 'network', 'Could not reach the server. Check your connection and try again.')
+    res = await fetch(path, { ...init, headers, signal: controller.signal })
+  } catch (e) {
+    clearTimeout(timer)
+    if (controller.signal.aborted) throw new RequestError(0, 'timeout', MESSAGES.timeout)
+    void e
+    throw new RequestError(0, 'network', MESSAGES.network)
   }
   let body: unknown = null
-  try { body = await res.json() } catch { /* non-JSON */ }
-  const err = (body as { error?: ApiError } | null)?.error
-  if (!res.ok && res.status !== 404) {
-    throw new RequestError(res.status, err?.kind ?? 'http', err?.message ?? `The server returned HTTP ${res.status}.`)
-  }
-  if (!res.ok && !(body && typeof body === 'object' && 'status' in body)) {
-    throw new RequestError(res.status, err?.kind ?? 'not_found', err?.message ?? 'Not found.')
-  }
+  try { body = await res.json() } catch { /* non-JSON (e.g. a platform error page) */ } finally { clearTimeout(timer) }
+  const ref = res.headers.get('X-Request-ID') ?? ''
+  // 404 for an unknown company still carries a useful, visitor-safe payload.
+  if (res.status === 404 && body && typeof body === 'object' && 'status' in body) return body as T
+  if (!res.ok) throw toVisitorError(res.status, body, ref)
+  if (body === null || typeof body !== 'object') throw new RequestError(res.status, 'internal', MESSAGES.internal, ref)
   return body as T
+}
+
+/** Fire-and-forget crash report (message and page only). Never throws, never blocks the UI. */
+export function reportClientError(message: string, kind = 'render', ref = '') {
+  try {
+    const key = `${kind}:${message.slice(0, 80)}`
+    const w = window as unknown as { __fipReported?: Set<string> }
+    w.__fipReported ??= new Set()
+    if (w.__fipReported.has(key) || w.__fipReported.size > 10) return
+    w.__fipReported.add(key)
+    void fetch('/api/client-error', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true,
+      body: JSON.stringify({ message: message.slice(0, 500), page: location.pathname, kind, ref }),
+    }).catch(() => {})
+  } catch { /* reporting must never break the page */ }
 }
 
 const q = (params: Record<string, string | number | boolean | string[] | undefined>) => {
@@ -178,17 +225,17 @@ export const api = {
     request<SearchResult>(`/api/search${q(p)}`),
   company: (symbol: string, refresh = false) =>
     request<Company>(`/api/company/${encodeURIComponent(symbol)}${refresh ? '?refresh=true' : ''}`),
-  compare: (symbols: string[]) => request<Compare>(`/api/compare${q({ symbols: symbols.join(',') })}`),
+  compare: (symbols: string[]) => request<Compare>(`/api/compare${q({ symbols: symbols.join(',') })}`, { timeoutMs: 60_000 }),
   methodology: () => request<Methodology>('/api/methodology'),
   assistantStatus: () => request<AssistantStatus>('/api/assistant/status'),
   ask: (body: { symbols: string[]; question: string; access_code: string }) =>
-    request<Answer>('/api/assistant/ask', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }),
+    request<Answer>('/api/assistant/ask', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), timeoutMs: 70_000 }),
   events: (symbol: string, all = false) =>
     request<{ symbol: string; name: string; events: FilingEvent[]; checked_at: string; error: string }>(
       `/api/events/${encodeURIComponent(symbol)}${all ? '?all=true' : ''}`),
   watchlist: (symbols: string[]) => request<{ items: WatchItem[] }>(`/api/watchlist${q({ symbols: symbols.join(',') })}`),
   screener: (p: { sort: string; order: string; sector: string[]; min_revenue: number; limit: number }) =>
-    request<Screener>(`/api/screener${q({ ...p, min_revenue: p.min_revenue || undefined })}`),
+    request<Screener>(`/api/screener${q({ ...p, min_revenue: p.min_revenue || undefined })}`, { timeoutMs: 70_000 }),
   upload: (body: { csv_text: string; scale: string; currency: string; name: string }) =>
     request<UploadResult>('/api/upload', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }),
 }
