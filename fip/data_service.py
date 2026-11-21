@@ -188,9 +188,13 @@ def load_events(cik: int, *, contact_email: str | None = None, fetcher=fetch, li
     else:
         try:
             data = json.loads(fetcher(submissions_url(cik), sec=True, contact_email=contact_email).content)
-            events = recent_events(data, limit=200, include_noise=True)
+            everything = recent_events(data, limit=100_000, include_noise=True)
+            # Big issuers (banks) file hundreds of routine offering documents a month; keep the meaningful
+            # filings separately so they are never crowded out of the cache by noise.
+            keep = [e for e in everything if e.importance != "low"][:150] +                    [e for e in everything if e.importance == "low"][:50]
+            keep.sort(key=lambda e: (e.filing_date, e.accession), reverse=True)
             raw = {"retrieved_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-                   "events": [e.to_dict() for e in events]}
+                   "events": [e.to_dict() for e in keep]}
             _write_json(path, raw)
         except (DataSourceError, ValueError) as exc:
             if cached is None:

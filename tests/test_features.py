@@ -238,3 +238,17 @@ def test_screener_never_mixes_currencies_when_verifying():
                           "revenue_growth": None, "return_on_assets": None}])
     row = screener.verify_rows(rows, int(fin.latest.end[:4]), lambda cik: fin).iloc[0]
     assert not row["verified"] and row["revenue"] == 300e9          # USD frame value kept, not JPY
+
+
+
+def test_meaningful_filings_not_crowded_out_by_routine_ones():
+    """JPMorgan files hundreds of 424B2 offering documents; its 8-Ks and 10-Qs must still show."""
+    from fip import data_service
+    n = 900
+    subs = {"cik": 19617, "filings": {"recent": {
+        "form": ["424B2"] * n + ["10-Q", "8-K"],
+        "filingDate": ["2026-11-20"] * n + ["2026-11-01", "2026-10-15"],
+        "accessionNumber": [f"n{i}" for i in range(n)] + ["q", "k"],
+        "primaryDocument": ["x"] * (n + 2), "items": [""] * n + ["", "2.02"]}}}
+    events, _, err = data_service.load_events(19617, fetcher=lambda url, **kw: FakeResponse(200, subs))
+    assert not err and [e.accession for e in events] == ["q", "k"]
