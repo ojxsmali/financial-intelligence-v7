@@ -1,0 +1,3 @@
+# Streamlit app (desktop exe / Streamlit Community Cloud) = core + Streamlit.
+-r requirements.txt
+streamlit>=1.65,<2.0

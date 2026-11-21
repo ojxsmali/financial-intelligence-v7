@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.2.0 — 2026-11-21 · Web app on Vercel
+
+- **New web front end** (`web/`): React 19 + TypeScript + Vite, same "research note" design system, all seven pages (Overview, Explorer, Compare, Statements, Insights with CSV upload, Assistant, Sources). Selected company is in the URL (`?t=AAPL`).
+- **JSON API** (`fip/api.py`, FastAPI) over the unchanged data engine; deployed on Vercel as a Python function (`api/index.py`, `vercel.json`). Edge caching for company/compare/search responses; caches in `/tmp` on Vercel.
+- Accessibility: ARIA combobox for company search, WAI-ARIA tabs, radio-group segmented controls, keyboard-focusable chart years with tooltips, data tables for every chart, skip link, focus moved to the page on navigation.
+- Fix (shared core): concurrent cache writes for the same company could crash on Windows (shared `.tmp` file); writes now use unique temp files and never fail a request.
+- Dependencies split: `requirements.txt` (core + API, what Vercel installs), `requirements-streamlit.txt`, `requirements-dev.txt`. CI gains a web job (tests + build).
+- Tests: 171 Python (11 new API tests), 12 web.
+
 ## 7.1.0 — 2026-11-20 · UI redesign
 
 - **New design system** ("research note"): light paper/ink theme with one navy accent, Source Serif 4 + IBM Plex Sans/Mono, tabular figures, hairline structure instead of cards. Tokens in `fip/ui/theme.py`, mirrored in `.streamlit/config.toml`.

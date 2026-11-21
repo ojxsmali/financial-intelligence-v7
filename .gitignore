@@ -31,3 +31,8 @@ release/
 Thumbs.db
 .vscode/
 .idea/
+
+# --- web app ---
+web/node_modules/
+web/dist/
+.vercel/

@@ -13,7 +13,10 @@ This module is Streamlit-free; the UI layer adds in-memory caching on top.
 from __future__ import annotations
 
 import json
+import os
+import threading
 import time
+import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -48,10 +51,20 @@ def _disk_path(kind: str, cik: int) -> Path:
     return directory / f"CIK{int(cik):010d}.json"
 
 
-def _write_json(path: Path, payload: dict) -> None:
-    tmp = path.with_suffix(".tmp")
-    tmp.write_text(json.dumps(payload, separators=(",", ":")), encoding="utf-8")
-    tmp.replace(path)
+def _write_json(path: Path, payload: dict, *, strict: bool = False) -> None:
+    """Atomic, best-effort cache write. Concurrent writers each use their own temp file, and a failed
+    write (another process holds the file, read-only disk) never fails the request being served."""
+    tmp = path.with_name(f"{path.stem}.{os.getpid()}.{threading.get_ident()}.{uuid.uuid4().hex[:8]}.tmp")
+    try:
+        tmp.write_text(json.dumps(payload, separators=(",", ":")), encoding="utf-8")
+        tmp.replace(path)
+    except OSError:
+        try:
+            tmp.unlink(missing_ok=True)
+        except OSError:
+            pass
+        if strict:
+            raise
 
 
 def _read_cached(path: Path):
@@ -177,7 +190,7 @@ def save_snapshot(fin: CompanyFinancials) -> Path:
     path = SNAPSHOT_DIR / f"CIK{fin.cik:010d}.json"
     payload = fin.to_dict()
     payload["origin"] = "bundled snapshot"
-    _write_json(path, payload)
+    _write_json(path, payload, strict=True)
     return path
 
 

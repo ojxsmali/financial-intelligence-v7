@@ -2,13 +2,21 @@
 
 **SEC-sourced fundamentals for every US-listed company: transparent analytics and a free-tier Gemini research assistant.**
 
-V7 rebuilds the V6 Streamlit prototype into a production-quality financial research app:
+*Designed & built by [Ojas Mali](https://github.com/ojxsmali).*
+
+**Live web app → LIVE_URL**
+
+Two front ends share one Python data engine (`fip/`):
+- **Web app** (`web/` + `fip/api.py`): React + TypeScript front end and a FastAPI JSON API, deployed together on **Vercel**.
+- **Desktop app** (`app.py` + `views/`): the Streamlit version, shipped as a one-file Windows exe.
+
+What it does:
 
 - **13,000+ US exchange-listed securities** are searchable, rebuilt daily from official exchange directories. About 5,600 of them are operating companies.
 - **Audited annual statements** come straight from SEC XBRL (10-K / 20-F / 40-F), with correct units, fiscal periods and filing links.
 - **A research-note interface** — warm paper, ink and one navy accent, serif headings, tabular figures, hairline rules instead of cards, and accessible server-rendered charts (legend, keyboard tooltips, data-table alternative, colour-blind-validated palette). Responsive down to 320 px.
 - **A secure Gemini assistant.** The key stays server-side, only free-tier models are allowlisted, and abuse limits are enforced on the server.
-- **A one-click Windows executable** and a ready-to-deploy Streamlit Community Cloud configuration.
+- **Deployed on Vercel** (static front end + Python serverless API), plus a one-click Windows executable.
 
 > Educational research tool. It shows **reported annual financial statements**, not stock prices or real-time data, and it gives no investment advice.
 
@@ -40,20 +48,23 @@ V7 rebuilds the V6 Streamlit prototype into a production-quality financial resea
 | **Assistant** | The only AI feature, clearly labelled as Gemini. Answers grounded in a structured "fact pack" of SEC figures. Answers are split into facts, calculations, hypotheses and limitations, with `[AAPL FY2025 10-K]` citations. |
 | **Sources** | Filing documents and indexes for each fiscal year used, Company Facts JSON, metric→concept definitions, formulas, timestamps and limitations. |
 
-A display-unit selector (Auto/M/B/T) and a fiscal-years slider apply across the whole app.
+A display-unit selector (Auto/M/B/T) and a fiscal-years selector apply across the whole app. In the web app the selected company lives in the URL (`?t=AAPL`), so every view is shareable.
 
 ---
 
-## Run it — three ways
+## Run it
 
-### A. Public web app (Streamlit Community Cloud) — no install for visitors
-1. Push this folder to a GitHub repository. It is safe: `.streamlit/secrets.toml` is gitignored.
-2. Go to <https://share.streamlit.io> → **Create app** → choose the repo, branch `main`, main file **`app.py`**.
-3. Under **Advanced settings → Python version**, pick 3.12 (3.10–3.12 are tested).
-4. Under **Advanced settings → Secrets**, paste the lines from [`.streamlit/secrets.toml.example`](.streamlit/secrets.toml.example) with your real values (see the next section).
-5. Click **Deploy**. Visitors open the `https://<your-app>.streamlit.app` URL directly.
+### A. Web app on Vercel
+The repository is a ready Vercel project (`vercel.json`): Vercel builds `web/` into static files and serves `api/index.py` (FastAPI over `fip/`) as a Python function; `/api/*` is rewritten to the function and every other path to the single-page app.
 
-The deployment itself needs your GitHub and Streamlit accounts, so it has not been deployed from here. The exact steps above were checked with a clean-room install from `requirements.txt` plus a headless boot test (see `VERIFICATION_REPORT.md`).
+1. On <https://vercel.com/new>, import `ojxsmali/financial-intelligence-v7` (no framework preset needed; settings come from `vercel.json`).
+2. Under **Environment Variables**, add `SEC_CONTACT_EMAIL` (required for live SEC data) and, optionally, `GEMINI_API_KEY` and the `AI_*` limits below. Type these into Vercel yourself — never into the web page or the repo.
+3. Deploy. Every push to `main` redeploys automatically.
+
+Notes for Vercel:
+- Function caches (SEC responses, the AI guard's SQLite) live in `/tmp`, so they are per instance and reset on cold starts. API responses are also cached at Vercel's edge (`s-maxage=1800`). For a public link, set `AI_ACCESS_CODE` so the shared Gemini quota can't be drained.
+- On Vercel the listing universe comes from the bundled `data/universe.csv` (refreshed in the repo), so cold starts stay fast.
+- Without `SEC_CONTACT_EMAIL`, companies in the bundled snapshot still work and visitors can supply a contact e-mail for their own browser session.
 
 ### B. Windows desktop — one click
 Download **`FinancialIntelligenceV7.exe`** and double-click it. There is no ZIP to extract, no Python, and no BAT file.
@@ -76,10 +87,24 @@ python -m venv .venv
 ```bash
 .venv\Scripts\pip install -r requirements-dev.txt
 ```
+Web app — run the API and the front end (Vite proxies `/api` to port 8531):
+```bash
+.venv\Scripts\python scripts\dev_api.py --port 8531
+```
+```bash
+npm install --prefix web
+```
+```bash
+npm run dev --prefix web
+```
+Then open <http://localhost:5190>.
+
+Desktop (Streamlit) version:
 ```bash
 .venv\Scripts\python desktop\launcher.py
 ```
-Or run `streamlit run app.py` from the project folder. Streamlit reads `.streamlit/` from the working directory.
+
+Dependency files: `requirements.txt` is the core + API (what Vercel installs), `requirements-streamlit.txt` adds Streamlit, `requirements-dev.txt` adds test and build tools.
 
 Configuration: copy `.env.example` to `.env` (gitignored) and fill in `SEC_CONTACT_EMAIL` and, optionally, `GEMINI_API_KEY`. The app loads `.env` at start-up without overriding real environment variables.
 
@@ -99,7 +124,7 @@ Configuration: copy `.env.example` to `.env` (gitignored) and fill in `SEC_CONTA
 |---|---|
 | Local, from source | `.env`: copy [`.env.example`](.env.example) (gitignored). Or `.streamlit/secrets.toml` from `.streamlit/secrets.toml.example`. Real environment variables take precedence over both. |
 | Windows exe | `%LOCALAPPDATA%\FinancialIntelligenceV7\config.toml`. The exe creates a commented template on first run; open it with Notepad, uncomment the lines, add your values and restart the app. |
-| Streamlit Community Cloud | App → **Settings → Secrets**: paste the same `KEY = "value"` lines. |
+| Vercel (web app) | Project → **Settings → Environment Variables**: `SEC_CONTACT_EMAIL`, `GEMINI_API_KEY`, optional `AI_*`. |
 
 **Getting a free Gemini key:** create one at <https://aistudio.google.com/apikey> in a Google Cloud project **with billing disabled**. Google decides billing by the project, not by the app. With billing off, requests can only use free-tier quota. The app also refuses to call any model that isn't on its free-tier allowlist: `gemini-3.5-flash-lite`, `gemini-3.1-flash-lite`, `gemini-2.5-flash-lite` and `gemini-3.6-flash`, checked against Google's pricing page on 2026-11-03.
 
@@ -157,8 +182,9 @@ The pipeline follows the SEC's fair-access rules: a contact User-Agent, a limit 
 
 ## Architecture
 ```
-app.py                    entry point: theme, sidebar, top navigation
-views/                    7 pages (overview, explorer, compare, statements, insights, assistant, sources)
+web/                      React + TypeScript web app (Vite): pages/, components/ (charts, combobox, tabs), lib/ (format, api)
+api/index.py              Vercel Python function entry → fip.api
+app.py, views/            Streamlit desktop app: entry point + 7 pages
 fip/
   config.py               server-side settings (env → Streamlit secrets); secrets never rendered
   http_client.py          SEC/Nasdaq HTTP: UA, rate limiter, retries/backoff, typed errors
@@ -173,7 +199,8 @@ fip/
   ai_guard.py             server-side quotas, cooldowns, access code, answer cache
   exports.py              CSV import/export (formula-injection safe)
   formatting.py           single formatting system for money/percent/pp/scales
-  ui/                     theme tokens + CSS, components, HTML/SVG charts, shared state
+  api.py                  FastAPI JSON API for the web app (company, search, compare, exports, upload, assistant)
+  ui/                     Streamlit theme tokens + CSS, components, HTML/SVG charts, shared state
 desktop/                  launcher.py, PyInstaller spec, build script, icon
 scripts/                  data refresh, release packaging, browser E2E checks
 data/                     bundled snapshots (universe, SEC profiles, 53 companies' statements)
@@ -202,9 +229,14 @@ Designed & built by [Ojas Mali](https://github.com/ojxsmali).
 ```bash
 .venv\Scripts\python -m pytest -q
 ```
-There are 158 tests, all offline. They cover unit formatting (including the spec examples), XBRL parsing edge cases, **real-filing regressions** (AAPL, MSFT, WMT, JPM, BRK.B, NVDA, TSM, TM, XOM), ticker mapping and search, HTTP retry and error handling, cache and snapshot fallbacks, Gemini failure and quota paths (mocked), the server-side AI guard, CSV import/export, secret-leakage scans, `.env` loading, the chart builders (scales, negative values, gaps, escaping, accessibility hooks), and headless rendering of all 7 pages.
+There are 171 Python tests, all offline (including 11 for the JSON API). They cover unit formatting (including the spec examples), XBRL parsing edge cases, **real-filing regressions** (AAPL, MSFT, WMT, JPM, BRK.B, NVDA, TSM, TM, XOM), ticker mapping and search, HTTP retry and error handling, cache and snapshot fallbacks, Gemini failure and quota paths (mocked), the server-side AI guard, CSV import/export, secret-leakage scans, `.env` loading, the chart builders (scales, negative values, gaps, escaping, accessibility hooks), and headless rendering of all 7 pages.
 
-Browser end-to-end check with real screenshots (needs Microsoft Edge):
+Web app tests (formatting parity with the Python rules, axis maths, CSV formula-injection safety, Markdown rendering without raw HTML, chart accessibility):
+```bash
+npm test --prefix web
+```
+
+Browser end-to-end check of the Streamlit app with real screenshots (needs Microsoft Edge):
 ```bash
 .venv\Scripts\python scripts\e2e_browser_check.py http://localhost:8517 docs\screenshots
 ```

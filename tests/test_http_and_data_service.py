@@ -140,3 +140,26 @@ def test_missing_contact_email_reports_config_error():
 def test_missing_contact_email_still_serves_labelled_snapshot():
     result = data_service.load_financials(320193, fetcher=failing(ConfigurationError("need email")))
     assert result.ok and result.origin == "bundled snapshot" and result.notices
+
+
+def test_concurrent_cache_writes_never_fail(tmp_path):
+    """Two requests for the same company used to share one .tmp file and crash on Windows."""
+    import threading as th
+    from fip.data_service import _write_json
+    target = tmp_path / "CIK0000000001.json"
+    errors = []
+
+    def writer(n):
+        try:
+            for i in range(25):
+                _write_json(target, {"writer": n, "i": i})
+        except Exception as exc:  # pragma: no cover - the regression
+            errors.append(exc)
+
+    threads = [th.Thread(target=writer, args=(n,)) for n in range(6)]
+    [t.start() for t in threads]
+    [t.join() for t in threads]
+    assert not errors
+    import json
+    assert "writer" in json.loads(target.read_text(encoding="utf-8"))
+    assert not list(tmp_path.glob("*.tmp"))

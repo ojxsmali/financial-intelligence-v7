@@ -1,0 +1,9 @@
+release/
+build/
+dist/
+.venv/
+web/node_modules/
+docs/screenshots/
+tests/fixtures/
+desktop/
+*.exe

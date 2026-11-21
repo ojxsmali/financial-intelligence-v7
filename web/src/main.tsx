@@ -1,0 +1,63 @@
+import '@fontsource-variable/source-serif-4'
+import '@fontsource/ibm-plex-sans/400.css'
+import '@fontsource/ibm-plex-sans/500.css'
+import '@fontsource/ibm-plex-sans/600.css'
+import '@fontsource/ibm-plex-mono/400.css'
+import './styles.css'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { StrictMode, useEffect } from 'react'
+import { createRoot } from 'react-dom/client'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
+import { Layout } from './components/Layout'
+import { EmptyState } from './components/ui'
+import { SettingsProvider } from './lib/settings'
+import { Assistant } from './pages/Assistant'
+import { Compare } from './pages/Compare'
+import { Explorer } from './pages/Explorer'
+import { Insights } from './pages/Insights'
+import { Overview } from './pages/Overview'
+import { Sources } from './pages/Sources'
+import { Statements } from './pages/Statements'
+
+const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } })
+
+const TITLES: Record<string, string> = {
+  '/': 'Overview', '/explorer': 'Explorer', '/compare': 'Compare', '/statements': 'Statements',
+  '/insights': 'Insights', '/assistant': 'Assistant', '/sources': 'Sources',
+}
+
+/** Per-page document title, and focus moved to <main> on navigation so screen readers announce the new page. */
+function RouteEffects() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    document.title = `${TITLES[pathname] ?? 'Not found'} · Financial Intelligence`
+    const main = document.getElementById('main')
+    if (main && document.activeElement !== document.body) main.focus({ preventScroll: true })
+    window.scrollTo(0, 0)
+  }, [pathname])
+  return null
+}
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <SettingsProvider>
+          <RouteEffects />
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Overview />} />
+              <Route path="/explorer" element={<Explorer />} />
+              <Route path="/compare" element={<Compare />} />
+              <Route path="/statements" element={<Statements />} />
+              <Route path="/insights" element={<Insights />} />
+              <Route path="/assistant" element={<Assistant />} />
+              <Route path="/sources" element={<Sources />} />
+              <Route path="*" element={<EmptyState kicker="404" title="Page not found">Use the navigation above.</EmptyState>} />
+            </Routes>
+          </Layout>
+        </SettingsProvider>
+      </BrowserRouter>
+    </QueryClientProvider>
+  </StrictMode>,
+)

@@ -40,7 +40,7 @@ jobs:
       - name: Run tests against refreshed data
         env:
           FIP_OFFLINE: "1"
-        run: pip install pytest && python -m pytest -q -p no:cacheprovider
+        run: pip install -r requirements-streamlit.txt pytest httpx && python -m pytest -q -p no:cacheprovider
       - name: Commit changed snapshots
         run: |
           git config user.name "github-actions[bot]"

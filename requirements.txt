@@ -1,4 +1,5 @@
-streamlit>=1.65,<2.0
+# Core + JSON API. This is what Vercel installs for the Python function (api/index.py).
+fastapi>=0.115,<1.0
 pandas>=2.2,<3.0
 numpy>=1.26,<3.0
 requests>=2.32,<3.0
