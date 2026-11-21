@@ -1,4 +1,4 @@
-import { Component, useId, useRef, type KeyboardEvent, type ReactNode } from 'react'
+import { Component, useEffect, useId, useRef, type KeyboardEvent, type ReactNode } from 'react'
 import { MESSAGES, RequestError, reportClientError, type Insight } from '../lib/api'
 
 export function PageHeader({ eyebrow, title, sub }: { eyebrow: string; title: string; sub?: string }) {
@@ -44,6 +44,48 @@ export function Chip({ kind = '', dot = false, children }: { kind?: string; dot?
   return <span className={`chip ${kind}`}>{dot && <span className="dot" aria-hidden="true" />}{children}</span>
 }
 
+/** Splits a formatted figure ("$478.83B", "+5.53%", "27.60%") into prefix, number and suffix. Null if it isn't one. */
+export function parseFigure(text: string): { prefix: string; value: number; decimals: number; grouped: boolean; suffix: string } | null {
+  const m = /^([^\d+\-−]*)([+\-−]?)([\d,]*\.?\d+)(.*)$/.exec(text)
+  if (!m) return null
+  const digits = m[3]
+  const value = Number(digits.replace(/,/g, '')) * (m[2] === '-' || m[2] === '−' ? -1 : 1)
+  if (!Number.isFinite(value)) return null
+  const dot = digits.indexOf('.')
+  return { prefix: m[1], value, decimals: dot === -1 ? 0 : digits.length - dot - 1, grouped: digits.includes(','), suffix: m[4] }
+}
+
+const reduceMotion = () => typeof window === 'undefined' || typeof window.matchMedia !== 'function' || window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+/**
+ * A reported figure that counts up once (≈0.9 s) when it first renders, then settles on the exact
+ * reported text. Skipped entirely for reduced motion.
+ */
+export function Figure({ text }: { text: string }) {
+  const ref = useRef<HTMLSpanElement>(null)
+  useEffect(() => {
+    const el = ref.current
+    const f = parseFigure(text)
+    if (!el || !f || reduceMotion() || typeof requestAnimationFrame !== 'function') return
+    const sign = text.match(/^[^\d]*?([+\-−])/)?.[1] ?? ''
+    const fmt = (n: number) => {
+      const abs = Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: f.decimals, maximumFractionDigits: f.decimals, useGrouping: f.grouped })
+      return f.prefix + (sign ? sign : '') + abs + f.suffix
+    }
+    let raf = 0
+    let start = 0
+    const tick = (ts: number) => {
+      if (!start) start = ts
+      const p = Math.min(1, (ts - start) / 900)
+      el.textContent = p < 1 ? fmt(f.value * (1 - Math.pow(2, -10 * p))) : text
+      if (p < 1) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => { cancelAnimationFrame(raf); el.textContent = text }
+  }, [text])
+  return <span ref={ref}>{text}</span>
+}
+
 export type Kpi = { label: string; value: string; delta?: string; direction?: 'up' | 'down' | 'flat'; foot?: string; tip?: string; available?: boolean }
 
 const GLYPH = { up: '▲', down: '▼', flat: '' }
@@ -57,7 +99,7 @@ export function KpiStrip({ items, label }: { items: Kpi[]; label: string }) {
             {k.label}
             {k.tip && <abbr className="def" title={k.tip} aria-label={`Definition: ${k.tip}`}>i</abbr>}
           </dt>
-          <dd className="kpi-value">{k.value}</dd>
+          <dd className="kpi-value"><Figure text={k.value} /></dd>
           <dd className="kpi-foot">
             {k.delta && <span className={`delta ${k.direction ?? 'flat'}`}>{k.direction && GLYPH[k.direction] && <span aria-hidden="true">{GLYPH[k.direction]} </span>}{k.delta}</span>}
             {k.foot && <span>{k.foot}</span>}

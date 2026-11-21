@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.5.0 — 2026-11-21 · Terminal theme and motion
+
+- Second theme, "Terminal": blue-black glass, cyan accent with a violet second voice, mono KPI figures. The first visit follows the OS; the masthead toggle remembers the choice, applied before first paint.
+- Chart series colours moved to theme tokens, each set colour-blind validated and ≥ 3:1 on its surface.
+- Motion with a purpose: KPI count-up to the exact reported text, bars growing from the zero line, lines wiping in, page settle on navigation, KPI hover rule. All of it is off for reduced motion.
+- Glass masthead with a cyan→violet hairline; duplicated control styles removed from `styles.css`.
+- `web/DESIGN.md` documents both themes. 212 Python tests, 26 web tests.
+
 ## 7.4.0 — 2026-11-21 · Production error handling, monitoring and alerts
 
 - Visitors never see internal errors: safe, consistent messages with a reference ID; specific validation messages kept.

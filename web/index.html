@@ -6,7 +6,16 @@
     <title>Financial Intelligence — SEC fundamentals</title>
     <meta name="description" content="Audited annual financials for every US-listed company, straight from SEC filings — statements, comparisons, a verified screener, a watchlist of new filings, a financial health check and a Gemini research assistant. Designed & built by Ojas Mali." />
     <meta name="author" content="Ojas Mali" />
-    <meta name="theme-color" content="#F5F3EE" />
+    <meta name="theme-color" content="#F5F3EE" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0A0E15" media="(prefers-color-scheme: dark)" />
+    <script>
+      // Apply the saved (or system) theme before first paint, so there is no flash.
+      try {
+        var t = localStorage.getItem('fip.theme')
+        if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        document.documentElement.dataset.theme = t
+      } catch (e) { document.documentElement.dataset.theme = 'light' }
+    </script>
     <link rel="canonical" href="https://financial-intelligence-v7.vercel.app/" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />

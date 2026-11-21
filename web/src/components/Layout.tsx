@@ -11,11 +11,11 @@ import { Segmented } from './ui'
 export function LogoMark({ size = 30 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true" focusable="false" className="brand-mark">
-      <rect width="32" height="32" rx="6" fill="#16181B" />
+      <rect width="32" height="32" rx="6" fill="#16181B" stroke="var(--logo-edge, transparent)" />
       <path d="M7.5 25.5h17" stroke="#F5F3EE" strokeWidth="1.6" strokeLinecap="round" opacity=".55" />
       <rect x="8" y="16" width="4" height="7" rx="1" fill="#F5F3EE" />
       <rect x="14" y="12" width="4" height="11" rx="1" fill="#F5F3EE" />
-      <rect x="20" y="7" width="4" height="16" rx="1" fill="#8FB8E3" />
+      <rect x="20" y="7" width="4" height="16" rx="1" fill="#5CC8EE" />
     </svg>
   )
 }
@@ -63,6 +63,7 @@ export function Layout({ children }: { children: ReactNode }) {
               <NavLink key={n.to} to={{ pathname: n.to, search }} end={n.to === '/'}>{n.label}</NavLink>
             ))}
           </nav>
+          <ThemeToggle />
         </div>
       </header>
 
@@ -94,7 +95,7 @@ export function Layout({ children }: { children: ReactNode }) {
 
       {meta.data && !meta.data.sec_contact_configured && companyPage && <ContactNotice />}
 
-      <main id="main" className="main" tabIndex={-1}>{children}</main>
+      <main id="main" className="main" tabIndex={-1}><div key={pathname} className="page-settle">{children}</div></main>
 
       <footer className="footer">
         <div className="bar-inner footer-inner">
@@ -115,6 +116,29 @@ export function Layout({ children }: { children: ReactNode }) {
       </footer>
       <div className="toast" role="status" aria-live="polite">{toast}</div>
     </>
+  )
+}
+
+type Theme = 'light' | 'dark'
+
+/** Light "research note" or dark "terminal". The choice is remembered; the first visit follows the OS. */
+function ThemeToggle() {
+  const [theme, setTheme] = useState<Theme>(() => (document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'))
+  const next: Theme = theme === 'dark' ? 'light' : 'dark'
+  const apply = () => {
+    document.documentElement.dataset.theme = next
+    try { localStorage.setItem('fip.theme', next) } catch { /* private mode: the choice lasts this visit */ }
+    setTheme(next)
+  }
+  return (
+    <button type="button" className="theme-toggle" onClick={apply} aria-label={`Switch to ${next} theme`} title={`Switch to ${next} theme`}>
+      {theme === 'dark' ? (
+        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" strokeWidth="1.8" /><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>
+      ) : (
+        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" /></svg>
+      )}
+      <span className="theme-label">{theme === 'dark' ? 'Terminal' : 'Paper'}</span>
+    </button>
   )
 }
 

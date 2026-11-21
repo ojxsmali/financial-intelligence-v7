@@ -8,7 +8,8 @@ import { niceTicks, tickText } from '../lib/scale'
 // * Layout is in CSS percentages so labels stay legible from 320 px up.
 
 // Colour-blind-validated categorical order (OKLab ΔE checks for protan/deutan/tritan, ≥3:1 on the surface).
-export const SERIES = ['#1F6FB8', '#D4602C', '#16956A', '#B07A00', '#C2507F', '#6A4FB0']
+// The hex values live in styles.css (--s1…--s6) so each theme can carry its own validated set.
+export const SERIES = ['var(--s1)', 'var(--s2)', 'var(--s3)', 'var(--s4)', 'var(--s5)', 'var(--s6)']
 
 export type ChartSeries = { label: string; color: string; values: (number | null)[]; texts: string[] }
 
@@ -102,7 +103,7 @@ export function ColumnChart({ title, categories, series: all, kind = 'bar', unit
           </svg>
         )}
         {kind === 'line' && series.flatMap(s => s.values.map((v, i) => v === null ? null : (
-          <span key={`${s.label}-${i}`} className="pt" style={{ left: `${(i + 0.5) * colW}%`, bottom: `${pct(v)}%`, background: s.color }} />
+          <span key={`${s.label}-${i}`} className="pt" style={{ left: `${(i + 0.5) * colW}%`, bottom: `${pct(v)}%`, background: s.color, color: s.color, ['--i' as string]: i }} />
         )))}
         {categories.map((cat, i) => {
           const label = `${cat}: ` + series.map(s => `${s.label} ${s.texts[i]}`).join('; ')
@@ -115,7 +116,7 @@ export function ColumnChart({ title, categories, series: all, kind = 'bar', unit
                 return (
                   <span key={s.label} className={v < 0 ? 'bar neg' : 'bar pos'} style={{
                     left: `${(100 - group) / 2 + j * barW}%`, width: `calc(${barW}% - 2px)`,
-                    bottom: `${pct(Math.min(v, 0))}%`, height: `${(Math.abs(v) / span) * 100}%`, background: s.color,
+                    bottom: `${pct(Math.min(v, 0))}%`, height: `${(Math.abs(v) / span) * 100}%`, background: s.color, ['--i' as string]: i,
                   }} />
                 )
               })}
