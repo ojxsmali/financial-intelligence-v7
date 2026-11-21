@@ -14,7 +14,7 @@ What it does:
 
 - **13,000+ US exchange-listed securities** are searchable, rebuilt daily from official exchange directories. About 5,600 of them are operating companies.
 - **Audited annual statements** come straight from SEC XBRL (10-K / 20-F / 40-F), with correct units, fiscal periods and filing links.
-- **Two themes, one grammar.** *Paper* — warm paper, ink and a navy accent, like a research note — and *Terminal* — blue-black glass with a cyan accent and a violet second voice. The first visit follows the OS; the masthead toggle remembers the choice. Serif headings, tabular figures, hairline rules, and accessible charts (legend, keyboard tooltips, data-table alternative, a colour-blind-validated palette per theme). Responsive down to 320 px.
+- **A market terminal.** *Terminal* (the default) — near-black panels, an amber signal colour and cyan data accents, with JetBrains Mono figures — and *Paper*, a light research-note theme one click away. Space Grotesk headings, Instrument Sans text, a ⌘K command palette for 13,000+ companies, and accessible charts (legend, keyboard tooltips, data-table alternative, a colour-blind-validated palette per theme). Responsive down to 320 px.
 - **Motion with a purpose.** KPIs count up to the exact reported figure, bars grow from the zero line, lines wipe in and pages settle on navigation; all of it is off under `prefers-reduced-motion`. See [web/DESIGN.md](web/DESIGN.md).
 - **A secure Gemini assistant.** The key stays server-side, only free-tier models are allowlisted, and abuse limits are enforced on the server.
 - **Deployed on Vercel** (static front end + Python serverless API), plus a one-click Windows executable.
@@ -23,9 +23,9 @@ What it does:
 
 ![Financial Intelligence — Apple Inc. overview: KPI strip, revenue and margin charts](docs/screenshots/web-overview-desktop.png)
 
-| Terminal theme — overview | Terminal theme — compare |
+| ⌘K command palette | Paper theme |
 |---|---|
-| ![The overview in the dark Terminal theme](docs/screenshots/web-overview-dark-desktop.png) | ![Side-by-side fundamentals in the Terminal theme](docs/screenshots/web-compare-dark-desktop.png) |
+| ![Command palette: search 13,000+ listed companies or jump to any page](docs/screenshots/web-cmdk-desktop.png) | ![The overview in the light Paper theme](docs/screenshots/web-overview-paper-desktop.png) |
 | **Screener (verified against annual reports)** | **Health check + live SEC filings** |
 | ![Screener ranking companies by net margin, with verification and outlier notes](docs/screenshots/web-screener-desktop.png) | ![Nine-test financial health check beside the latest SEC filings](docs/screenshots/web-health-and-filings-desktop.png) |
 | **Watchlist** | **Compare** |
@@ -37,8 +37,6 @@ What it does:
   <img src="docs/screenshots/web-overview-mobile.png" alt="Overview on a phone" width="240" />
   &nbsp;&nbsp;
   <img src="docs/screenshots/web-screener-mobile.png" alt="Screener on a phone" width="240" />
-  &nbsp;&nbsp;
-  <img src="docs/screenshots/web-overview-dark-mobile.png" alt="Overview on a phone in the Terminal theme" width="240" />
 </p>
 
 *Screenshots of the web app with live SEC data (November 2026). The `01_…`–`12_…` images in `docs/screenshots/` are the Streamlit desktop version.*
