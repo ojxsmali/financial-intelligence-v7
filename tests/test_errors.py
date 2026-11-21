@@ -246,6 +246,8 @@ def test_smtp_delivery_uses_starttls_and_login(monkeypatch):
             return self
         def __exit__(self, *a):
             return False
+        def ehlo(self):
+            pass
         def starttls(self, context):
             calls["tls"] = True
         def login(self, user, password):
@@ -272,3 +274,52 @@ def test_client_error_endpoint_logs_and_alerts_on_repeats(client, alerts):
     for _ in range(3):
         assert client.post("/api/client-error", json={"message": "TypeError: x is undefined", "page": "/compare"}).status_code == 200
     assert len(alerts) == 1 and "frontend" in alerts[0][0]
+
+
+def test_smtp_falls_back_to_ssl_port_and_strips_app_password_spaces(monkeypatch):
+    import smtplib
+    import fip.alerts as al
+    seen = {}
+
+    class Broken:
+        def __init__(self, *a, **k):
+            raise smtplib.SMTPServerDisconnected("Connection unexpectedly closed")
+
+    class FakeSSL:
+        def __init__(self, host, port, timeout, context):
+            seen["ssl"] = (host, port)
+        def __enter__(self):
+            return self
+        def __exit__(self, *a):
+            return False
+        def login(self, user, password):
+            seen["password"] = password
+        def send_message(self, msg):
+            seen["sent"] = True
+    monkeypatch.setattr(al.smtplib, "SMTP", Broken)
+    monkeypatch.setattr(al.smtplib, "SMTP_SSL", FakeSSL)
+    cfg = {"to": "owner@example.com", "from": "", "smtp_host": "smtp.gmail.com", "smtp_port": 587,
+           "smtp_user": "sender@example.com", "smtp_password": "abcd efgh ijkl mnop", "resend_key": "", "enabled": True,
+           "cooldown_s": 3600, "daily_max": 20}
+    assert al.deliver("subj", "body", cfg) == "smtp"
+    assert seen == {"ssl": ("smtp.gmail.com", 465), "password": "abcdefghijklmnop", "sent": True}
+
+
+def test_delivery_failure_log_is_diagnostic_but_secret_free(monkeypatch, tmp_path, log_lines):
+    import smtplib
+    import fip.alerts as al
+    monkeypatch.setenv("ALERT_EMAIL_TO", "owner@example.com")
+    monkeypatch.setenv("SMTP_HOST", "smtp.gmail.com")
+    monkeypatch.setenv("SMTP_USERNAME", "sender@example.com")
+    monkeypatch.setenv("SMTP_PASSWORD", "supersecretpw")
+    monkeypatch.setenv("FIP_CACHE_DIR", str(tmp_path))
+    monkeypatch.setattr(al, "_GATE", None)
+
+    def boom(*a, **k):
+        raise smtplib.SMTPAuthenticationError(535, b"Username and Password not accepted")
+    monkeypatch.setattr(al, "_send_smtp", boom)
+    assert al.maybe_alert(category="internal", service="API", summary="x", ref="FI-TEST01", threshold=1,
+                          fingerprint="diag-test") == "failed"
+    text = json.dumps(log_lines)
+    assert "alert_delivery_failed" in text and "SMTPAuthenticationError" in text and "smtp.gmail.com" in text
+    assert "supersecretpw" not in text

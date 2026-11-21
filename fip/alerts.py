@@ -151,20 +151,34 @@ def compose(*, category: str, service: str, summary: str, ref: str, severity: st
     return subject, "\n".join(lines)
 
 
+def _smtp_once(cfg: dict, port: int, msg: EmailMessage) -> None:
+    context = ssl.create_default_context()
+    # Gmail shows App Passwords in groups of four ("abcd efgh ijkl mnop"); the spaces are not part of it.
+    password = cfg["smtp_password"].replace(" ", "")
+    if port == 465:
+        with smtplib.SMTP_SSL(cfg["smtp_host"], 465, timeout=8, context=context) as s:
+            s.login(cfg["smtp_user"], password)
+            s.send_message(msg)
+    else:
+        with smtplib.SMTP(cfg["smtp_host"], port, timeout=8) as s:
+            s.ehlo()
+            s.starttls(context=context)
+            s.ehlo()
+            s.login(cfg["smtp_user"], password)
+            s.send_message(msg)
+
+
 def _send_smtp(cfg: dict, subject: str, body: str) -> None:
     msg = EmailMessage()
     msg["Subject"], msg["From"], msg["To"] = subject, cfg["from"] or cfg["smtp_user"], cfg["to"]
     msg.set_content(body)
-    context = ssl.create_default_context()
-    if cfg["smtp_port"] == 465:
-        with smtplib.SMTP_SSL(cfg["smtp_host"], 465, timeout=8, context=context) as s:
-            s.login(cfg["smtp_user"], cfg["smtp_password"])
-            s.send_message(msg)
-    else:
-        with smtplib.SMTP(cfg["smtp_host"], cfg["smtp_port"], timeout=8) as s:
-            s.starttls(context=context)
-            s.login(cfg["smtp_user"], cfg["smtp_password"])
-            s.send_message(msg)
+    port = cfg["smtp_port"]
+    try:
+        _smtp_once(cfg, port, msg)
+    except (smtplib.SMTPServerDisconnected, smtplib.SMTPConnectError, ssl.SSLError, ConnectionError, TimeoutError):
+        # Wrong transport for the port (TLS vs STARTTLS) is the usual cause; try the other standard port once.
+        # Authentication failures are not retried: a second attempt would fail the same way.
+        _smtp_once(cfg, 587 if port == 465 else 465, msg)
 
 
 def _send_resend(cfg: dict, subject: str, body: str) -> None:
@@ -212,5 +226,9 @@ def maybe_alert(*, category: str, service: str, summary: str, ref: str, severity
         log_event("info", "alert_sent", category=category, channel=ch, ref=ref)
         return "sent"
     except Exception as exc:
-        log_event("error", "alert_delivery_failed", category=category, error_type=type(exc).__name__, ref=ref)
+        from fip.observability import scrub
+        # Host, port and the server's reply are safe to log; credentials never are (scrub masks e-mails/keys too).
+        log_event("error", "alert_delivery_failed", category=category, error_type=type(exc).__name__, ref=ref,
+                  error=scrub(str(exc))[:240], smtp_host=cfg["smtp_host"], smtp_port=cfg["smtp_port"],
+                  channel=channel(cfg))
         return "failed"
