@@ -1,3 +1,4 @@
+import { motion } from 'motion/react'
 import { Component, useEffect, useId, useRef, type KeyboardEvent, type ReactNode } from 'react'
 import { MESSAGES, RequestError, reportClientError, type Insight } from '../lib/api'
 
@@ -86,6 +87,13 @@ export function Figure({ text }: { text: string }) {
   return <span ref={ref}>{text}</span>
 }
 
+/** Pointer position → --mx/--my for the KPI spotlight. */
+const spotlight = (e: React.PointerEvent<HTMLElement>) => {
+  const r = e.currentTarget.getBoundingClientRect()
+  e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`)
+  e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`)
+}
+
 export type Kpi = { label: string; value: string; delta?: string; direction?: 'up' | 'down' | 'flat'; foot?: string; tip?: string; available?: boolean }
 
 const GLYPH = { up: '▲', down: '▼', flat: '' }
@@ -93,8 +101,12 @@ const GLYPH = { up: '▲', down: '▼', flat: '' }
 export function KpiStrip({ items, label }: { items: Kpi[]; label: string }) {
   return (
     <dl className="kpis" aria-label={label}>
-      {items.map(k => (
-        <div key={k.label} className={k.available === false ? 'kpi na' : 'kpi'}>
+      {items.map((k, i) => (
+        <motion.div key={k.label} className={k.available === false ? 'kpi na' : 'kpi'}
+          drag dragSnapToOrigin dragElastic={0.45} dragTransition={{ bounceStiffness: 420, bounceDamping: 14 }}
+          whileDrag={{ scale: 1.05, zIndex: 5, boxShadow: '0 24px 50px rgba(0,0,0,.45)' }} whileHover={{ y: -3 }}
+          initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ type: 'spring', stiffness: 260, damping: 24, delay: i * 0.05 }}
+          onPointerMove={spotlight}>
           <dt className="kpi-label">
             {k.label}
             {k.tip && <abbr className="def" title={k.tip} aria-label={`Definition: ${k.tip}`}>i</abbr>}
@@ -104,7 +116,7 @@ export function KpiStrip({ items, label }: { items: Kpi[]; label: string }) {
             {k.delta && <span className={`delta ${k.direction ?? 'flat'}`}>{k.direction && GLYPH[k.direction] && <span aria-hidden="true">{GLYPH[k.direction]} </span>}{k.delta}</span>}
             {k.foot && <span>{k.foot}</span>}
           </dd>
-        </div>
+        </motion.div>
       ))}
     </dl>
   )

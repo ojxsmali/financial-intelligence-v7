@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
-import { useState, type ReactNode } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { useEffect, useState, type ReactNode } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { api, getContact, setContact } from '../lib/api'
 import type { Unit } from '../lib/format'
 import { useSettings, YEAR_OPTIONS } from '../lib/settings'
@@ -45,6 +46,21 @@ export function Layout({ children }: { children: ReactNode }) {
   const meta = useQuery({ queryKey: ['meta'], queryFn: api.meta, staleTime: 10 * 60_000 })
   const search = `?t=${encodeURIComponent(symbol)}`
   const companyPage = ['/', '/statements', '/insights', '/sources'].includes(pathname)
+  const [palette, setPalette] = useState(false)
+  const navigate = useNavigate()
+
+  // ⌘K / Ctrl+K (or "/" outside a field) opens the command palette.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const typing = e.target instanceof HTMLElement && ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)
+      if ((e.key === 'k' && (e.metaKey || e.ctrlKey)) || (e.key === '/' && !typing)) {
+        e.preventDefault()
+        setPalette(p => !p)
+      } else if (e.key === 'Escape') setPalette(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
 
   return (
     <>
@@ -60,9 +76,20 @@ export function Layout({ children }: { children: ReactNode }) {
           </NavLink>
           <nav aria-label="Pages" className="nav">
             {NAV.map(n => (
-              <NavLink key={n.to} to={{ pathname: n.to, search }} end={n.to === '/'}>{n.label}</NavLink>
+              <NavLink key={n.to} to={{ pathname: n.to, search }} end={n.to === '/'}>
+                {({ isActive }) => (
+                  <>
+                    {isActive && <motion.span layoutId="fi-nav-pill" className="nav-pill" transition={{ type: 'spring', stiffness: 500, damping: 38 }} />}
+                    {n.label}
+                  </>
+                )}
+              </NavLink>
             ))}
           </nav>
+          <button type="button" className="cmdk-hint" onClick={() => setPalette(true)} aria-label="Search companies and pages" aria-keyshortcuts="Control+K Meta+K">
+            <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" strokeWidth="2" /><path d="m20 20-3.5-3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+            <span className="cmdk-text">Search</span><kbd>⌘K</kbd>
+          </button>
           <ThemeToggle />
         </div>
       </header>
@@ -115,6 +142,27 @@ export function Layout({ children }: { children: ReactNode }) {
         </div>
       </footer>
       <div className="toast" role="status" aria-live="polite">{toast}</div>
+
+      <AnimatePresence>
+        {palette && (
+          <>
+            <motion.div key="bd" className="cmdk-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setPalette(false)} />
+            <motion.div key="cmdk" className="cmdk" role="dialog" aria-modal="true" aria-label="Search companies and pages"
+              initial={{ opacity: 0, y: -16, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -10, scale: 0.98 }}
+              transition={{ type: 'spring', stiffness: 420, damping: 32 }}>
+              <CompanyPicker label="Open a company" autoFocus placeholder="Type a ticker or company name — 13,000+ listed" onPick={s => { setSymbol(s); setPalette(false) }} />
+              <p className="cmdk-label">Go to</p>
+              <nav className="cmdk-pages" aria-label="Pages">
+                {NAV.map(n => (
+                  <a key={n.to} href={n.to + search} onClick={e => { e.preventDefault(); navigate({ pathname: n.to, search }); setPalette(false) }}>
+                    <span aria-hidden="true">→</span>{n.label}
+                  </a>
+                ))}
+              </nav>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   )
 }

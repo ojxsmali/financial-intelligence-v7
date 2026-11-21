@@ -1,43 +1,41 @@
 # Financial Intelligence — web design system
 
-Two themes, one grammar. The data rules never change between them: one scale per chart, exact values one click away, direction shown by ▲ ▼ and a sign as well as colour, and nothing estimated presented as reported.
+A market terminal for audited fundamentals. The data rules never change: one scale per chart, exact values one click away, direction shown by ▲ ▼ and a sign as well as colour, nothing estimated presented as reported.
 
 ## Themes (tokens in `src/styles.css`)
 
-| Token | Paper (light, research note) | Terminal (dark) |
+| Token | Terminal (default) | Paper |
 |---|---|---|
-| `--paper` background | `#F5F3EE` | `#0A0E15` |
-| `--surface` | `#FBFAF7` | `#0F1520` |
-| `--rule` hairline | `#D8D3C8` | `#243044` |
-| `--ink` text | `#16181B` | `#E7ECF3` |
-| `--muted` | `#62656B` | `#8792A5` (5.8:1) |
-| `--accent` | navy `#1D3B5A` | cyan `#5CC8EE` |
-| `--accent-2` / `--accent-3` | cyan `#0E7490` / violet `#5B4BB7` | cyan / violet `#A78BFA` |
-| `--up` / `--down` | `#1F6A3A` / `#A2352A` | `#45C486` / `#F07A66` |
-| Series `--s1…--s6` | blue, orange, green, amber, pink, purple | brighter set, each ≥ 3:1 on the dark surface |
+| `--paper` background | `#06080C` | `#F5F3EE` |
+| `--surface` panels | `#0C1016` | `#FBFAF7` |
+| `--rule` hairline | `#1D2530` | `#D8D3C8` |
+| `--ink` text | `#EAEDF2` | `#16181B` |
+| `--muted` | `#828DA0` | `#62656B` |
+| `--accent` signal | amber `#FFB224` | burnt amber `#9A5B00` |
+| `--accent-2` data | cyan `#2DD4EE` | `#0E7490` |
+| `--up` / `--down` | `#3DDC84` / `#FF6B5E` | `#1F6A3A` / `#A2352A` |
 
-The first visit follows the OS colour scheme; the toggle in the masthead remembers the choice (`localStorage['fip.theme']`). An inline script in `index.html` applies it before first paint, so there is no flash.
+Terminal is the default. The masthead toggle switches to Paper and remembers the choice (`localStorage['fip.theme']`); an inline script in `index.html` applies it before first paint.
 
 ## Type
 
-- **Source Serif 4** for page, company and section titles.
-- **IBM Plex Sans** with tabular, lining figures for UI and numbers. In Terminal, headline KPI values switch to **IBM Plex Mono**.
-- Eyebrows and labels: 0.7 rem, uppercase, 0.08–0.12 em tracking.
+- **Space Grotesk** for page, company and section titles.
+- **Instrument Sans** for text, with tabular, lining figures.
+- **JetBrains Mono** for headline figures, dates, tickers and eyebrows.
 
-## Motion
+## Interaction
 
 | Pattern | Where |
 |---|---|
-| Page settle (8 px rise, 450 ms) | every route change |
-| KPI stagger + count-up to the exact reported text | KPI strips |
-| KPI hover: cyan→violet top rule draws in | KPI strips |
-| Bars grow from the zero line, staggered per fiscal year | column charts |
-| Lines wipe in left→right, points pop in | line charts |
-| Horizontal bars grow from the axis | Compare, Screener |
-| Gradient hairline under the glass masthead | always |
+| ⌘K / Ctrl+K / `/` command palette — company search + page jump | everywhere |
+| Nav pill slides between pages on a spring (`layoutId`) | masthead |
+| KPI tiles: drag and release, they spring back; cursor spotlight; hover lift | KPI strips |
+| KPI count-up to the exact reported text | KPI strips |
+| Bars grow from zero, lines wipe in, points pop | charts |
+| Page settle on navigation; buttons squash on press | everywhere |
 
-`prefers-reduced-motion: reduce` removes all of it.
+Built with `motion`; `<MotionConfig reducedMotion="user">` plus CSS media queries switch it all off for reduced motion.
 
 ## Layout
 
-Max width 1240 px. KPI strip: 6 columns → 3 under 1100 px → 2 under 768 px. Two-column sections collapse under 1100 px. Checked at 1440, 1280, 768, 390 and 375 px in both themes with no horizontal overflow.
+Max width 1240 px. Panels with 18 px radius on a near-black page. KPI strip: 6 → 3 (under 1100 px) → 2 (under 768 px). Checked at 1440, 1280, 768, 390 and 375 px with no horizontal overflow.

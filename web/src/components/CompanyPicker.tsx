@@ -3,8 +3,8 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { api } from '../lib/api'
 
 // WAI-ARIA combobox (list autocomplete). Type a ticker or name; ↑/↓ to move, Enter to pick, Esc to close.
-export function CompanyPicker({ label, onPick, placeholder = 'Search ticker or company', exclude = [], compact = false }: {
-  label: string; onPick: (symbol: string) => void; placeholder?: string; exclude?: string[]; compact?: boolean
+export function CompanyPicker({ label, onPick, placeholder = 'Search ticker or company', exclude = [], compact = false, autoFocus = false }: {
+  label: string; onPick: (symbol: string) => void; placeholder?: string; exclude?: string[]; compact?: boolean; autoFocus?: boolean
 }) {
   const id = useId()
   const [text, setText] = useState('')
@@ -47,7 +47,7 @@ export function CompanyPicker({ label, onPick, placeholder = 'Search ticker or c
     <div className={compact ? 'picker compact' : 'picker'} ref={wrap}>
       <label htmlFor={`${id}-in`} className={compact ? 'sr-only' : 'field-label'}>{label}</label>
       <input
-        id={`${id}-in`} type="text" role="combobox" autoComplete="off" spellCheck={false} value={text} placeholder={placeholder}
+        id={`${id}-in`} autoFocus={autoFocus} type="text" role="combobox" autoComplete="off" spellCheck={false} value={text} placeholder={placeholder}
         aria-expanded={showList} aria-controls={`${id}-list`} aria-autocomplete="list"
         aria-activedescendant={showList && results[active] ? `${id}-opt-${active}` : undefined}
         onChange={e => { setText(e.target.value); setOpen(true) }}
