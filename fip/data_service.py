@@ -27,7 +27,10 @@ from fip.http_client import ConfigurationError, DataSourceError, NotFoundError, 
 from fip.xbrl import CompanyFinancials, NoAnnualDataError, companyfacts_url, extract_financials
 
 FINANCIALS_TTL = 12 * 3600
+FIN_SCHEMA = 2                # bump when extraction adds metrics; older cached copies are re-fetched
 PROFILE_TTL = 24 * 3600
+EVENTS_TTL = 3600            # latest-filings feed: re-checked hourly
+MIN_FORCE_INTERVAL = 600     # a forced refresh is honoured at most every 10 min per company
 SNAPSHOT_DIR = BUNDLED_DATA_DIR / "financials_snapshot"
 
 
@@ -89,7 +92,10 @@ def load_financials(cik: int, *, force_refresh: bool = False, contact_email: str
     path = _disk_path("financials", cik)
     cached, age = _read_cached(path)
 
-    if cached is not None and not force_refresh and age is not None and age < FINANCIALS_TTL:
+    if force_refresh and age is not None and age < MIN_FORCE_INTERVAL:
+        force_refresh = False    # protects SEC fair access: repeated "re-check" clicks reuse a fresh copy
+    outdated = cached is not None and "no_annual_data" not in cached and cached.get("schema") != FIN_SCHEMA
+    if cached is not None and not force_refresh and not outdated and age is not None and age < FINANCIALS_TTL:
         if "no_annual_data" in cached:
             result.error, result.error_kind, result.origin = cached["no_annual_data"], "no_annual_data", "disk cache"
             return result
@@ -109,7 +115,7 @@ def load_financials(cik: int, *, force_refresh: bool = False, contact_email: str
             result.error, result.error_kind, result.origin = exc.user_message, "no_annual_data", "live"
             return result
         fin.origin = "live"
-        _write_json(path, fin.to_dict())
+        _write_json(path, {**fin.to_dict(), "schema": FIN_SCHEMA})
         result.financials, result.origin = fin, "live"
         return result
     except NotFoundError:
@@ -168,6 +174,32 @@ def load_profile(cik: int, *, contact_email: str | None = None, fetcher=fetch) -
         if cached is not None:
             return CompanyProfile(**cached), f"Profile refresh failed ({message}); showing cached profile."
         return None, message
+
+
+def load_events(cik: int, *, contact_email: str | None = None, fetcher=fetch, limit: int = 40,
+                include_noise: bool = False):
+    """Return (events, retrieved_at_iso, error). Cached for an hour; stale copy used if SEC is unreachable."""
+    from fip.events import Event, recent_events
+    cik = int(cik)
+    path = _disk_path("events", cik)
+    cached, age = _read_cached(path)
+    if cached is not None and age is not None and age < EVENTS_TTL:
+        raw = cached
+    else:
+        try:
+            data = json.loads(fetcher(submissions_url(cik), sec=True, contact_email=contact_email).content)
+            events = recent_events(data, limit=200, include_noise=True)
+            raw = {"retrieved_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                   "events": [e.to_dict() for e in events]}
+            _write_json(path, raw)
+        except (DataSourceError, ValueError) as exc:
+            if cached is None:
+                return [], "", getattr(exc, "user_message", str(exc))
+            raw = cached
+    events = [Event(**e) for e in raw.get("events", [])]
+    if not include_noise:
+        events = [e for e in events if e.importance != "low"]
+    return events[:limit], raw.get("retrieved_at", ""), ""
 
 
 def newer_annual_filing_note(fin: CompanyFinancials, profile: CompanyProfile | None) -> str:

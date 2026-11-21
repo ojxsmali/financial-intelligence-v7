@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ColumnChart } from '../components/Charts'
 import { CompanyGate } from '../components/Company'
+import { FilingsList, HealthPanel } from '../components/Panels'
 import { InsightList, KpiStrip, PageHeader, Section, type Kpi } from '../components/ui'
 import { direction, formatMoney, formatPerShare, formatPercent, formatPp, isMissing } from '../lib/format'
 import { fyLabels, moneySeries, ratioSeries } from '../lib/series'
@@ -64,6 +65,19 @@ export function Overview() {
                 <Section title="Key observations" sub="Rule-based calculations and flags — not AI-generated">
                   <InsightList items={observations} />
                   <Link className="more" to={{ pathname: '/insights', search: `?t=${symbol}` }}>All insights and their rules →</Link>
+                </Section>
+              </div>
+              <div className="grid-2">
+                <Section title="Financial health check" sub="Nine plain yes/no tests on the latest two annual reports">
+                  {company.health ? <HealthPanel health={company.health} /> : <p className="caption">Not available.</p>}
+                </Section>
+                <Section title="Latest from SEC" sub={company.events_checked_at
+                  ? `Live filing feed — checked ${company.events_checked_at.slice(0, 16).replace('T', ' ')} UTC, refreshed hourly`
+                  : 'Live filing feed'}>
+                  {company.events_error && !(company.events ?? []).length
+                    ? <p className="caption">The filing feed is unavailable right now: {company.events_error}</p>
+                    : <FilingsList events={(company.events ?? []).slice(0, 8)} />}
+                  <Link className="more" to={{ pathname: '/watchlist', search: `?t=${symbol}` }}>Follow companies on your watchlist →</Link>
                 </Section>
               </div>
               <Section title="Balance sheet" sub={`As of ${last.period_end} (${fy} ${last.form})`}>

@@ -9,6 +9,8 @@ export const MAX_COMPARE = 6
 export const DEFAULT_COMPARE = ['AAPL', 'MSFT', 'GOOGL', 'NVDA']
 export const DEFAULT_SYMBOL = 'AAPL'
 export const YEAR_OPTIONS = [3, 4, 5, 6, 7, 8, 10]
+export const MAX_WATCH = 15
+export const DEFAULT_WATCH = ['AAPL', 'MSFT', 'NVDA']
 
 function read<T>(key: string, fallback: T): T {
   try {
@@ -34,6 +36,10 @@ type Settings = {
   addToCompare: (s: string) => 'added' | 'exists'
   toast: string
   notify: (message: string) => void
+  watchlist: string[]
+  toggleWatch: (s: string) => 'added' | 'removed' | 'full'
+  lastSeen: Record<string, string>      // symbol -> newest filing date the visitor has seen
+  markSeen: (entries: Record<string, string>) => void
 }
 
 const Ctx = createContext<Settings | null>(null)
@@ -47,6 +53,8 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   const [years, setYearsState] = useState<number>(() => read('fip.years', 5))
   const [compare, setCompareState] = useState<string[]>(() => read('fip.compare', DEFAULT_COMPARE))
   const [toast, setToast] = useState('')
+  const [watchlist, setWatchlist] = useState<string[]>(() => read('fip.watchlist', DEFAULT_WATCH))
+  const [lastSeen, setLastSeen] = useState<Record<string, string>>(() => read('fip.lastSeen', {}))
 
   useEffect(() => { if (urlSymbol) { setStoredSymbol(urlSymbol); write('fip.symbol', urlSymbol) } }, [urlSymbol])
   useEffect(() => {
@@ -76,9 +84,31 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     return 'added' as const
   }, [compare, setCompare])
 
+  const toggleWatch = useCallback((s: string) => {
+    const sym = s.toUpperCase()
+    if (watchlist.includes(sym)) {
+      const next = watchlist.filter(x => x !== sym)
+      setWatchlist(next); write('fip.watchlist', next)
+      return 'removed' as const
+    }
+    if (watchlist.length >= MAX_WATCH) return 'full' as const
+    const next = [...watchlist, sym]
+    setWatchlist(next); write('fip.watchlist', next)
+    return 'added' as const
+  }, [watchlist])
+  const markSeen = useCallback((entries: Record<string, string>) => {
+    setLastSeen(prev => {
+      const next = { ...prev, ...entries }
+      write('fip.lastSeen', next)
+      return next
+    })
+  }, [])
+
   const value = useMemo(() => ({
     symbol, setSymbol, unit, setUnit, years, setYears, compare, setCompare, addToCompare, toast, notify: setToast,
-  }), [symbol, setSymbol, unit, setUnit, years, setYears, compare, setCompare, addToCompare, toast])
+    watchlist, toggleWatch, lastSeen, markSeen,
+  }), [symbol, setSymbol, unit, setUnit, years, setYears, compare, setCompare, addToCompare, toast,
+    watchlist, toggleWatch, lastSeen, markSeen])
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>
 }
 

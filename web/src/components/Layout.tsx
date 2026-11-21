@@ -11,6 +11,8 @@ export const AUTHOR = { name: 'Ojas Mali', url: 'https://github.com/ojxsmali' }
 
 const NAV = [
   { to: '/', label: 'Overview' },
+  { to: '/watchlist', label: 'Watchlist' },
+  { to: '/screener', label: 'Screener' },
   { to: '/explorer', label: 'Explorer' },
   { to: '/compare', label: 'Compare' },
   { to: '/statements', label: 'Statements' },
@@ -24,7 +26,8 @@ const UNITS: { id: Unit; label: string }[] = [
 ]
 
 export function Layout({ children }: { children: ReactNode }) {
-  const { symbol, setSymbol, unit, setUnit, years, setYears, addToCompare, toast, notify } = useSettings()
+  const { symbol, setSymbol, unit, setUnit, years, setYears, addToCompare, toast, notify, watchlist, toggleWatch } = useSettings()
+  const following = watchlist.includes(symbol)
   const { pathname } = useLocation()
   const meta = useQuery({ queryKey: ['meta'], queryFn: api.meta, staleTime: 10 * 60_000 })
   const search = `?t=${encodeURIComponent(symbol)}`
@@ -55,6 +58,11 @@ export function Layout({ children }: { children: ReactNode }) {
               const r = addToCompare(symbol)
               notify(r === 'added' ? `${symbol} added to the comparison` : `${symbol} is already in the comparison`)
             }}>Add {symbol} to compare</button>
+            <button className={following ? 'btn ghost on' : 'btn ghost'} type="button" aria-pressed={following} onClick={() => {
+              const r = toggleWatch(symbol)
+              notify(r === 'added' ? `Following ${symbol}: new SEC filings will show on your watchlist`
+                : r === 'removed' ? `Stopped following ${symbol}` : 'Your watchlist is full (15 companies)')
+            }}>{following ? `Following ${symbol}` : `Follow ${symbol}`}</button>
           </div>
           <div className="tool-display">
             <Segmented label="Display units" options={UNITS} value={unit} onChange={setUnit} size="sm" />

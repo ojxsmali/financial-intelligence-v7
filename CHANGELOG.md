@@ -1,5 +1,15 @@
 # Changelog
 
+## 7.3.0 — 2026-11-21 · Watchlist, screener, health check, plain English
+
+- **Watchlist + live filings feed**: follow companies; every SEC filing is explained in plain English (8-K item numbers decoded: earnings, executive changes, deals, restatements, cyber incidents) with "New since last visit" badges. Auto-refreshes.
+- **Market screener** over all SEC filers via XBRL frames, with every displayed row verified against the company's own annual report. Found and handled real SEC data errors (a quarter tagged as a full year; impossible margins). Never mixes currencies.
+- **Financial health check**: Piotroski F-score (9 tests) with plain-language questions, numbers and "why it matters"; skipped tests never count as failures. Extraction adds current assets/liabilities, long-term debt and diluted share count.
+- **Plain-English insights**: every observation says how it was worked out and where the numbers come from; formulas tucked behind "Formula".
+- **Auto-update**: financials refresh as soon as a newer annual report appears on EDGAR; versioned cache; daily listings refresh commits under the owner's name.
+- **Fixes from stress testing**: `BRK-B`-style tickers resolve; consistent friendly API errors (422/404); empty symbol search; "Re-check SEC" throttled (10 min per company) so the site can't be used to hammer SEC; screener returns a clear 503 when SEC is unreachable; leftover CSS overriding segmented controls; compact mobile toolbar.
+- Tests: 190 Python, 16 web.
+
 ## 7.2.0 — 2026-11-21 · Web app on Vercel
 
 - **New web front end** (`web/`): React 19 + TypeScript + Vite, same "research note" design system, all seven pages (Overview, Explorer, Compare, Statements, Insights with CSV upload, Assistant, Sources). Selected company is in the URL (`?t=AAPL`).

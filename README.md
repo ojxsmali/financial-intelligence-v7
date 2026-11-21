@@ -40,7 +40,9 @@ What it does:
 
 | Page | What it does |
 |---|---|
-| **Overview** | Company masthead (exchange, CIK, SIC sector, fiscal year-end, latest 10-K/20-F, data-provenance tag), a six-figure KPI strip with YoY deltas (▲/▼ + sign, never colour alone), revenue & profit bars, margin profile, cash generation, rule-based observations and a balance-sheet strip. |
+| **Overview** | Company masthead (exchange, CIK, SIC sector, fiscal year-end, latest 10-K/20-F, data-provenance tag), a six-figure KPI strip with YoY deltas (▲/▼ + sign, never colour alone), revenue & profit bars, margin profile, cash generation, rule-based observations, a **financial health check** (Piotroski F-score: nine plain yes/no tests with what each number was and why it matters), the **latest SEC filings feed**, and a balance-sheet strip. |
+| **Watchlist** | Follow up to 15 companies. Every new SEC filing — earnings releases, annual and quarterly reports, executive changes, deals, restatement or cybersecurity warnings — appears in plain English with a "New" badge since your last visit. Refreshes itself every 15 minutes while open. |
+| **Screener** | Rank thousands of SEC filers at once by revenue, net income, net margin, revenue growth, return on assets or assets, with size and sector filters. Built on SEC XBRL frames; every company shown is then **cross-checked against its own annual report** (✓), mistagged bulk figures are corrected, and impossible ratios are excluded and counted. |
 | **Explorer** | Ranked search by ticker or name across the full listing universe. `BRK.B`, `BRK-B` and `brkb` all work. Filters for exchange, instrument type (common stock, ADR, ETF, fund, preferred, warrant, unit, right, notes) and SIC-derived sector. Paginated results. |
 | **Compare** | Up to 6 companies side by side, with automatic warnings for different currencies, fiscal year-ends and GAAP vs IFRS. Ratio and amount charts, multi-year trends, and a CSV export with full provenance. |
 | **Statements** | Income statement, balance sheet, cash flow, ratios and an XBRL concept map. Derived and restated values are marked, and every table uses a single unit scale. |
@@ -156,6 +158,17 @@ Visitors are identified by a salted hash of their IP, so raw IPs are never store
 
 ---
 
+## Staying up to date automatically
+
+| What | How it updates |
+|---|---|
+| Filings feed / Watchlist | Read from SEC's live submissions data, re-checked every hour per company (EDGAR posts filings within minutes). |
+| Company financials | Cached 12 h, **and** refreshed immediately when the filings feed shows a newer annual report than the cached copy. |
+| Cached data after an app update | Versioned: copies saved by an older version of the extractor are re-fetched, never shown. |
+| Screener | SEC frames cached 24 h; results cached at Vercel's edge for 6 h. |
+| Listings (new IPOs, delistings) | `.github/workflows/refresh-data.yml` rebuilds the bundled listing and snapshot files every weekday and commits them; the push redeploys Vercel. Needs the repository secret `SEC_CONTACT_EMAIL`. |
+| "Re-check SEC" button | Forces a refresh, rate-limited to once per 10 minutes per company to respect SEC fair-access rules. |
+
 ## Data sources and accuracy rules
 
 | Source | Used for | Refresh |
@@ -229,7 +242,7 @@ Designed & built by [Ojas Mali](https://github.com/ojxsmali).
 ```bash
 .venv\Scripts\python -m pytest -q
 ```
-There are 171 Python tests, all offline (including 11 for the JSON API). They cover unit formatting (including the spec examples), XBRL parsing edge cases, **real-filing regressions** (AAPL, MSFT, WMT, JPM, BRK.B, NVDA, TSM, TM, XOM), ticker mapping and search, HTTP retry and error handling, cache and snapshot fallbacks, Gemini failure and quota paths (mocked), the server-side AI guard, CSV import/export, secret-leakage scans, `.env` loading, the chart builders (scales, negative values, gaps, escaping, accessibility hooks), and headless rendering of all 7 pages.
+There are 190 Python tests, all offline (API, filings feed, health score, screener verification, plain-English insights included). They cover unit formatting (including the spec examples), XBRL parsing edge cases, **real-filing regressions** (AAPL, MSFT, WMT, JPM, BRK.B, NVDA, TSM, TM, XOM), ticker mapping and search, HTTP retry and error handling, cache and snapshot fallbacks, Gemini failure and quota paths (mocked), the server-side AI guard, CSV import/export, secret-leakage scans, `.env` loading, the chart builders (scales, negative values, gaps, escaping, accessibility hooks), and headless rendering of all 7 pages.
 
 Web app tests (formatting parity with the Python rules, axis maths, CSV formula-injection safety, Markdown rendering without raw HTML, chart accessibility):
 ```bash

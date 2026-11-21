@@ -5,7 +5,9 @@ come from. Nothing here is a forecast, valuation or recommendation.
 """
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
+from datetime import date
 
 import pandas as pd
 
@@ -21,8 +23,67 @@ class Insight:
     tone: str            # positive | negative | neutral | caution
     title: str
     detail: str
-    rule: str
-    evidence: str        # fiscal years / filings used
+    rule: str            # technical formula (kept for transparency)
+    evidence: str        # fiscal years / filings used (technical)
+    how: str = ""        # plain-English: how it was worked out
+    source: str = ""     # plain-English: where the numbers come from
+
+
+# Plain-English versions of each rule, for readers who don't speak spreadsheet.
+PLAIN_RULES = {
+    "Reported value": "Taken straight from the company's annual report — no calculation.",
+    "revenue_t / revenue_(t−1) − 1": "This year's revenue compared with last year's revenue.",
+    "Growth requires consecutive fiscal years": "Growth is only worked out between two back-to-back years.",
+    "(revenue_end / revenue_start)^(1/years) − 1":
+        "The steady yearly growth rate that would turn the first year's revenue into the latest year's.",
+    "net_income / revenue": "Net income divided by revenue: how many cents of profit the company kept from each dollar of sales.",
+    "operating_income / revenue":
+        "Operating income divided by revenue: profit from the core business for each dollar of sales.",
+    "net_income − operating_income > 10 % of operating income":
+        "Flagged when net income is more than 10% higher than profit from the core business.",
+    "OperatingIncomeLoss / ProfitLossFromOperatingActivities absent":
+        "The filing has no separate line for operating income.",
+    "operating_cash_flow − capex (derived)":
+        "Cash brought in by the business, minus money spent on equipment, buildings and other long-term assets.",
+    "operating_cash_flow / net_income < 0.8": "Flagged when the cash brought in is less than 80% of reported profit.",
+    "operating_cash_flow / net_income": "Cash brought in by the business divided by reported profit.",
+    "total_liabilities / total_assets": "Everything the company owes divided by everything it owns.",
+    "net_income < 0": "Flagged when the company's profit for the year is below zero.",
+    "Automated data validation": "Found by automatic consistency checks on the filing data.",
+    "Methodology": "Applies to every figure in this app.",
+}
+_FORM_WORDS = {"10-K": "annual report (10-K)", "10-K/A": "amended annual report (10-K/A)", "10-KT": "annual report (10-KT)",
+               "20-F": "annual report (20-F)", "40-F": "annual report (40-F)"}
+
+
+def _nice_date(iso: str) -> str:
+    try:
+        d = date.fromisoformat(iso)
+        return f"{d.day} {d.strftime('%b')} {d.year}"
+    except ValueError:
+        return iso
+
+
+def plain_source(evidence: str) -> str:
+    """'FY2026 10-K filed 2026-11-03' -> 'FY2026 annual report (10-K), filed 3 Nov 2026'."""
+    m = re.fullmatch(r"FY(\d{4}) (\S+) filed (\d{4}-\d{2}-\d{2})", evidence or "")
+    if m:
+        return f"FY{m[1]} {_FORM_WORDS.get(m[2], m[2])}, filed {_nice_date(m[3])}"
+    m = re.fullmatch(r"FY(\d{4})[–-]FY(\d{4})", evidence or "")
+    if m:
+        return f"Fiscal years {m[1]} to {m[2]}"
+    m = re.fullmatch(r"FY(\d{4}), FY(\d{4})", evidence or "")
+    if m:
+        return f"Fiscal years {m[1]} and {m[2]}"
+    return {"XBRL record": "The company's SEC filing data", "—": ""}.get(evidence, evidence)
+
+
+def _with_plain(item: "Insight") -> "Insight":
+    if not item.how:
+        item.how = PLAIN_RULES.get(item.rule, "")
+    if not item.source:
+        item.source = plain_source(item.evidence)
+    return item
 
 
 def _fy(row) -> str:
@@ -32,7 +93,7 @@ def _fy(row) -> str:
 def generate_insights(df: pd.DataFrame, currency: str, warnings: list[str] | None = None) -> list[Insight]:
     out: list[Insight] = []
     if df is None or df.empty:
-        return [Insight(FLAG, "caution", "No annual data", "No audited annual figures are available.", "—", "—")]
+        return [_with_plain(Insight(FLAG, "caution", "No annual data", "No audited annual figures are available.", "—", "—"))]
     last = df.iloc[-1]
     prev = df.iloc[-2] if len(df) > 1 else None
     fy = _fy(last)
@@ -130,4 +191,4 @@ def generate_insights(df: pd.DataFrame, currency: str, warnings: list[str] | Non
                        "Figures come from audited annual statements in SEC XBRL data. They cannot explain causes, "
                        "segment mix or one-time items without reading the filing's notes and MD&A.",
                        "Methodology", "—"))
-    return out
+    return [_with_plain(i) for i in out]

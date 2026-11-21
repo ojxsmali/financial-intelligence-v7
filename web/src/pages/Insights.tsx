@@ -18,7 +18,9 @@ function Filtered({ items }: { items: Insight[] }) {
   const shown = items.filter(i => filter === 'All' || i.category === filter)
   return (
     <>
-      <Segmented label="Show" value={filter} onChange={setFilter} options={(['All', 'Fact', 'Calculation', 'Flag'] as Filter[]).map(id => ({ id, label: id }))} />
+      <Segmented label="Show" value={filter} onChange={setFilter} options={[
+        { id: 'All', label: 'All' }, { id: 'Fact', label: 'Reported figures' }, { id: 'Calculation', label: 'Worked out' }, { id: 'Flag', label: 'Worth a look' },
+      ] as { id: Filter; label: string }[]} />
       {shown.length ? <div className="cols-2"><InsightList items={shown} /></div>
         : <EmptyState kicker="Filtered out" title="No observations in this category">Choose another filter above.</EmptyState>}
     </>
@@ -96,7 +98,7 @@ export function Insights() {
           <CompanyGate>
             {({ fin }) => (
               <>
-                <p className="caption">Facts are reported values. Calculations show their formula. Flags highlight data caveats or patterns worth checking in the filing. No forecasts, valuations or recommendations.</p>
+                <p className="caption">“Reported” figures come straight from the annual report. “Worked out” figures are simple calculations, explained in plain words. “Worth a look” points to patterns or data caveats to check in the filing. No forecasts or recommendations.</p>
                 <Filtered items={fin.insights} />
               </>
             )}

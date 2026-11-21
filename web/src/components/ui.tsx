@@ -134,9 +134,17 @@ export function InsightList({ items }: { items: Insight[] }) {
     <ul className="insights">
       {items.map((it, i) => (
         <li key={i} className="insight">
-          <div className="insight-head"><span className={it.category === 'Flag' ? 'cat flag' : 'cat'}>{it.category}</span><h3>{it.title}</h3></div>
+          <div className="insight-head"><span className={it.category === 'Flag' ? 'cat flag' : 'cat'}>{it.category === 'Calculation' ? 'Worked out' : it.category === 'Flag' ? 'Worth a look' : 'Reported'}</span><h3>{it.title}</h3></div>
           <p>{it.detail}</p>
-          <div className="rule"><span>Rule <code>{it.rule}</code></span><span>Evidence: {it.evidence}</span></div>
+          {(it.how || it.source) && (
+            <dl className="explain">
+              {it.how && <div><dt>How it's worked out</dt><dd>{it.how}</dd></div>}
+              {it.source && <div><dt>Source</dt><dd>{it.source}</dd></div>}
+            </dl>
+          )}
+          {it.rule && it.rule !== '—' && it.rule !== 'Methodology' && (
+            <details className="formula"><summary>Formula</summary><code>{it.rule}</code></details>
+          )}
         </li>
       ))}
     </ul>

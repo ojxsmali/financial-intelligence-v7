@@ -16,14 +16,16 @@ import { Compare } from './pages/Compare'
 import { Explorer } from './pages/Explorer'
 import { Insights } from './pages/Insights'
 import { Overview } from './pages/Overview'
+import { Screener } from './pages/Screener'
 import { Sources } from './pages/Sources'
 import { Statements } from './pages/Statements'
+import { Watchlist } from './pages/Watchlist'
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } })
 
 const TITLES: Record<string, string> = {
   '/': 'Overview', '/explorer': 'Explorer', '/compare': 'Compare', '/statements': 'Statements',
-  '/insights': 'Insights', '/assistant': 'Assistant', '/sources': 'Sources',
+  '/insights': 'Insights', '/assistant': 'Assistant', '/sources': 'Sources', '/screener': 'Screener', '/watchlist': 'Watchlist',
 }
 
 /** Per-page document title, and focus moved to <main> on navigation so screen readers announce the new page. */
@@ -47,6 +49,8 @@ createRoot(document.getElementById('root')!).render(
           <Layout>
             <Routes>
               <Route path="/" element={<Overview />} />
+              <Route path="/watchlist" element={<Watchlist />} />
+              <Route path="/screener" element={<Screener />} />
               <Route path="/explorer" element={<Explorer />} />
               <Route path="/compare" element={<Compare />} />
               <Route path="/statements" element={<Statements />} />

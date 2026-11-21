@@ -122,7 +122,9 @@ def insight_card(item: Insight) -> None:
     render(
         f'<article class="fi-insight"><div class="fi-insight-head"><span class="{cat_cls}">{esc(item.category)}</span>'
         f'<h4>{esc(item.title)}</h4></div><p>{esc(item.detail)}</p>'
-        f'<div class="fi-rule"><span>Rule <code>{esc(item.rule)}</code></span><span>Evidence: {esc(item.evidence)}</span></div>'
+        f'<div class="fi-rule"><span>How it&#39;s worked out: {esc(item.how or item.rule)}</span>'
+        + (f'<span>Source: {esc(item.source)}</span>' if getattr(item, "source", "") else "")
+        + f'<span title="{esc(item.rule)}">Formula <code>{esc(item.rule)}</code></span></div>'
         '</article>'
     )
 

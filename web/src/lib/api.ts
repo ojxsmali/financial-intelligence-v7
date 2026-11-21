@@ -1,6 +1,34 @@
 // Typed client for the FastAPI layer (fip/api.py). All requests are same-origin /api/*.
 
-export type Insight = { category: 'Fact' | 'Calculation' | 'Flag'; tone: string; title: string; detail: string; rule: string; evidence: string }
+export type Insight = {
+  category: 'Fact' | 'Calculation' | 'Flag'; tone: string; title: string; detail: string; rule: string; evidence: string
+  how?: string; source?: string
+}
+
+export type FilingEvent = {
+  form: string; filing_date: string; report_date: string; accession: string; title: string; detail: string
+  kind: string; importance: 'alert' | 'high' | 'normal' | 'low'; items: string[]; url: string
+}
+
+export type HealthCheck = { key: string; group: string; question: string; passed: boolean | null; detail: string; why: string }
+export type Health = {
+  fiscal_year: number | null; prior_year: number | null; checks: HealthCheck[]; passed: number; available: number
+  verdict: 'Strong' | 'Average' | 'Weak' | 'Not enough data'; summary: string
+}
+
+export type WatchItem = { symbol: string; ok: boolean; name: string; exchange?: string; events: FilingEvent[]; checked_at?: string; error?: string }
+
+export type ScreenerRow = {
+  cik: number; symbol: string; name: string; exchange: string; sector: string
+  revenue: number | null; net_income: number | null; total_assets: number | null
+  net_margin: number | null; revenue_growth: number | null; return_on_assets: number | null
+  verified: boolean; corrected: boolean; fiscal_year: number | null
+}
+export type Screener = {
+  year: number; sort: string; order: 'asc' | 'desc'; total: number; excluded: number; universe_size: number
+  verified: number; corrected: number
+  rows: ScreenerRow[]; metrics: Record<string, { label: string; kind: 'money' | 'ratio' }>
+}
 
 export type FactMeta = {
   concept: string; derived: boolean; formula: string; restated: boolean; original_value: number | null
@@ -37,6 +65,7 @@ export type Company = {
   symbol: string; status: 'ok' | 'not_listed' | 'not_company' | 'error'; entry?: Entry; profile?: Profile | null
   profile_error?: string; share_classes?: string[]; error?: ApiError; financials?: Financials; notices?: string[]
   newer_filing_note?: string
+  events?: FilingEvent[]; events_checked_at?: string; events_error?: string; health?: Health
 }
 
 export type Meta = {
@@ -154,6 +183,12 @@ export const api = {
   assistantStatus: () => request<AssistantStatus>('/api/assistant/status'),
   ask: (body: { symbols: string[]; question: string; access_code: string }) =>
     request<Answer>('/api/assistant/ask', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }),
+  events: (symbol: string, all = false) =>
+    request<{ symbol: string; name: string; events: FilingEvent[]; checked_at: string; error: string }>(
+      `/api/events/${encodeURIComponent(symbol)}${all ? '?all=true' : ''}`),
+  watchlist: (symbols: string[]) => request<{ items: WatchItem[] }>(`/api/watchlist${q({ symbols: symbols.join(',') })}`),
+  screener: (p: { sort: string; order: string; sector: string[]; min_revenue: number; limit: number }) =>
+    request<Screener>(`/api/screener${q({ ...p, min_revenue: p.min_revenue || undefined })}`),
   upload: (body: { csv_text: string; scale: string; currency: string; name: string }) =>
     request<UploadResult>('/api/upload', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }),
 }

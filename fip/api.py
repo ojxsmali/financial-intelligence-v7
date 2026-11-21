@@ -27,23 +27,29 @@ if os.environ.get("VERCEL"):                               # read-only bundle: c
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 from fastapi import FastAPI, Query, Request  # noqa: E402
+from fastapi.exceptions import RequestValidationError  # noqa: E402
+from starlette.exceptions import HTTPException as StarletteHTTPException  # noqa: E402
 from fastapi.responses import JSONResponse, Response  # noqa: E402
 from pydantic import BaseModel, Field  # noqa: E402
 
 from fip import APP_NAME, VERSION, config  # noqa: E402
 from fip.ai_guard import AiGuard  # noqa: E402
-from fip.data_service import load_financials, load_profile, newer_annual_filing_note  # noqa: E402
+from fip.data_service import load_events, load_financials, load_profile, newer_annual_filing_note  # noqa: E402
+from fip.events import latest_annual_filing_date  # noqa: E402
+from fip.health import health_score  # noqa: E402
+from fip import screener as screener_mod  # noqa: E402
 from fip.exports import (MAX_UPLOAD_BYTES, CsvImportError, long_format, read_user_csv, to_csv_bytes,  # noqa: E402
                          user_csv_to_financials)
 from fip.filings import FORM_DESCRIPTIONS, CompanyProfile  # noqa: E402
 from fip.formatting import CURRENCY_SYMBOLS  # noqa: E402
+from fip.http_client import DataSourceError  # noqa: E402
 from fip.gemini import (DEFAULT_CHAIN, FREE_TIER_MODELS, MAX_COMPANIES, MAX_QUESTION_CHARS,  # noqa: E402
                         GeminiError, build_fact_pack, generate, resolve_models)
 from fip.insights import generate_insights  # noqa: E402
 from fip.metrics import RATIO_DEFINITIONS, annual_table, comparison_frame, comparison_warnings, revenue_cagr  # noqa: E402
 from fip.sectors import SECTORS  # noqa: E402
 from fip.universe import (COMPANY_TYPES, INSTRUMENT_TYPES, NASDAQ_LISTED_URL, OTHER_LISTED_URL,  # noqa: E402
-                          SEC_TICKERS_URL, add_search_columns, load_universe, search, share_classes)
+                          SEC_TICKERS_URL, add_search_columns, load_universe, search, share_classes, symbol_key)
 from fip.xbrl import METRICS, filing_index_url  # noqa: E402
 
 log = logging.getLogger("fip.api")
@@ -62,7 +68,7 @@ PRESETS = {
                              "non-operating items might explain the gap?",
     "Cash quality": "Assess how well net income is backed by operating cash flow and free cash flow.",
 }
-CACHE_PUBLIC = "public, max-age=60, s-maxage=1800, stale-while-revalidate=86400"
+CACHE_PUBLIC = "public, max-age=60, s-maxage=1800, stale-while-revalidate=3600"
 
 app = FastAPI(title=f"{APP_NAME} API", version=VERSION, docs_url="/api/docs", openapi_url="/api/openapi.json",
               redoc_url=None)
@@ -92,6 +98,18 @@ def ok(payload, *, cache: str | None = CACHE_PUBLIC, status: int = 200) -> JSONR
 def fail(status: int, kind: str, message: str) -> JSONResponse:
     return JSONResponse({"error": {"kind": kind, "message": message}}, status_code=status,
                         headers={"Cache-Control": "no-store"})
+
+
+@app.exception_handler(RequestValidationError)
+async def _invalid(request: Request, exc: RequestValidationError):
+    fields = ", ".join(str(e.get("loc", ["", "?"])[-1]) for e in exc.errors()[:3])
+    return fail(422, "bad_request", f"Some request values are invalid ({fields}). Check the input and try again.")
+
+
+@app.exception_handler(StarletteHTTPException)
+async def _http(request: Request, exc: StarletteHTTPException):
+    message = "This API route does not exist." if exc.status_code == 404 else "The request could not be handled."
+    return fail(exc.status_code, "not_found" if exc.status_code == 404 else "http", message)
 
 
 @app.exception_handler(Exception)
@@ -143,6 +161,20 @@ def get_universe() -> Universe:
             _UNIVERSE = Universe(frame, {r["symbol"]: r for r in records}, state.meta, state.origin, state.warning,
                                  time.time())
         return _UNIVERSE
+
+
+def resolve_symbol(raw: str) -> str:
+    """Exact symbol, else the listing whose normalised key matches (BRK-B, brk/b, BRKB -> BRK.B)."""
+    u = get_universe()
+    sym = (raw or "").upper().strip()[:12]
+    if sym in u.by_symbol:
+        return sym
+    key = symbol_key(sym)
+    if key:
+        hit = u.frame[u.frame["_key"] == key]
+        if not hit.empty:
+            return str(hit.sort_values("is_company", ascending=False).iloc[0]["symbol"])
+    return sym
 
 
 def _fye_label(value) -> str:
@@ -212,7 +244,7 @@ ERROR_TITLES = {"no_annual_data": "Annual financial statements unavailable",
 
 def company_payload(symbol: str, request: Request | None, *, refresh: bool = False) -> dict:
     universe = get_universe()
-    symbol = (symbol or "").upper().strip()[:12]
+    symbol = resolve_symbol(symbol)
     row = universe.by_symbol.get(symbol)
     if row is None:
         return {"symbol": symbol, "status": "not_listed", "error": {
@@ -233,9 +265,16 @@ def company_payload(symbol: str, request: Request | None, *, refresh: bool = Fal
             "kind": "not_company", "title": "No SEC financial statements for this security", "message": message}}
 
     contact = contact_email(request) or None
+    events, events_at, events_error = load_events(entry["cik"], contact_email=contact, limit=12)
     result = load_financials(entry["cik"], force_refresh=refresh, contact_email=contact)
+    # Auto-update: an annual report on EDGAR that is newer than our copy of the data triggers a refresh.
+    latest_annual = latest_annual_filing_date(events)
+    if (result.ok and not refresh and latest_annual and result.financials.retrieved_at
+            and latest_annual > result.financials.retrieved_at[:10] and latest_annual > result.financials.latest.filed):
+        result = load_financials(entry["cik"], force_refresh=True, contact_email=contact)
     profile, profile_error = load_profile(entry["cik"], contact_email=contact)
     payload = {**base, "profile": profile_json(profile), "profile_error": profile_error if profile is None else "",
+               "events": [e.to_dict() for e in events], "events_checked_at": events_at, "events_error": events_error,
                "share_classes": [s for s in share_classes(universe.frame, entry["cik"]) if s != symbol]}
     if profile is not None:
         entry["sector"] = profile.sector or entry["sector"]
@@ -249,6 +288,7 @@ def company_payload(symbol: str, request: Request | None, *, refresh: bool = Fal
             "edgar_url": f"https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK={entry['cik']:010d}"}}
     fin = result.financials
     return {**payload, "status": "ok", "financials": financials_json(fin), "notices": list(result.notices),
+            "health": health_score(annual_table(fin)).to_dict(),
             "newer_filing_note": newer_annual_filing_note(fin, profile)}
 
 
@@ -282,6 +322,8 @@ def meta():
 @app.get("/api/symbols")
 def symbols(q: str = Query("", max_length=80), limit: int = Query(12, ge=1, le=30)):
     u = get_universe()
+    if not q.strip():
+        return ok({"results": []})
     found = search(u.frame, q, types=list(COMPANY_TYPES), only_with_filings=True).head(limit)
     return ok({"results": [{"symbol": r["symbol"], "name": r["name"], "exchange": r["exchange"]}
                            for r in found.to_dict("records")]})
@@ -312,13 +354,13 @@ def company(symbol: str, request: Request, refresh: bool = False):
               status=status)
 
 
-def _parse_symbols(raw: str) -> list[str]:
+def _parse_symbols(raw: str, limit: int = MAX_COMPARE) -> list[str]:
     out = []
     for s in (raw or "").split(","):
-        s = s.strip().upper()[:12]
+        s = resolve_symbol(s) if s.strip() else ""
         if s and s not in out:
             out.append(s)
-    return out[:MAX_COMPARE]
+    return out[:limit]
 
 
 def _load_many(symbols: list[str], request: Request | None):
@@ -533,3 +575,80 @@ def assistant_ask(body: AskIn, request: Request):
                "at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}
     g.store_answer(key, payload)
     return ok({**payload, "from_cache": False, "skipped": skipped}, cache=None)
+
+
+# ---------------------------------------------------------------- routes: filings, watchlist, screener
+@app.get("/api/events/{symbol}")
+def events_route(symbol: str, request: Request, all: bool = False, limit: int = Query(40, ge=1, le=100)):  # noqa: A002
+    u = get_universe()
+    sym = resolve_symbol(symbol)
+    row = u.by_symbol.get(sym)
+    if not row or entry_json(row)["cik"] is None:
+        return fail(404, "not_found", "No SEC registrant for this symbol.")
+    entry = entry_json(row)
+    events, checked_at, error = load_events(entry["cik"], contact_email=contact_email(request) or None,
+                                            limit=limit, include_noise=all)
+    return ok({"symbol": sym, "name": entry["name"], "events": [e.to_dict() for e in events],
+               "checked_at": checked_at, "error": error}, cache="public, max-age=60, s-maxage=600")
+
+
+MAX_WATCHLIST = 15
+
+
+@app.get("/api/watchlist")
+def watchlist(request: Request, symbols: str = Query("", max_length=300)):
+    u = get_universe()
+    wanted = _parse_symbols(symbols, MAX_WATCHLIST)
+    contact = contact_email(request) or None
+
+    def one(sym):
+        row = u.by_symbol.get(sym)
+        if not row:
+            return {"symbol": sym, "ok": False, "name": sym, "events": [], "error": "Not in current listings."}
+        entry = entry_json(row)
+        if entry["cik"] is None:
+            return {"symbol": sym, "ok": False, "name": entry["name"], "events": [],
+                    "error": "No SEC registrant for this listing."}
+        events, checked_at, error = load_events(entry["cik"], contact_email=contact, limit=4)
+        return {"symbol": sym, "ok": bool(events) or not error, "name": entry["name"], "exchange": entry["exchange"],
+                "events": [e.to_dict() for e in events], "checked_at": checked_at, "error": error}
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        items = list(pool.map(one, wanted))
+    return ok({"items": items}, cache="public, max-age=60, s-maxage=600")
+
+
+@app.get("/api/screener")
+def screener(request: Request, year: int | None = Query(None, ge=2010, le=2100),
+             sort: str = Query("revenue", max_length=30), order: str = Query("desc", pattern="^(asc|desc)$"),
+             sector: list[str] = Query(default=[]), min_revenue: float = Query(0, ge=0),
+             limit: int = Query(25, ge=1, le=50)):
+    contact = contact_email(request) or None
+    y = year or screener_mod.default_year()
+    try:
+        table = screener_mod.build_table(y, contact_email=contact)
+        if table.empty and year is None:                  # newest year's frames not published yet
+            y -= 1
+            table = screener_mod.build_table(y, contact_email=contact)
+    except DataSourceError as exc:
+        return fail(503, "upstream", "The screener needs live SEC data, which is unavailable right now: "
+                    + exc.user_message)
+    sort_key = sort if sort in screener_mod.METRICS else "revenue"
+    # Rank on frames, then verify a margin of extra candidates against each company's annual report.
+    candidates, total, excluded = screener_mod.screen(table, get_universe().frame, sort=sort_key,
+                                                      descending=order == "desc", sectors=sector,
+                                                      min_revenue=min_revenue, limit=limit + 12)
+
+    def loader(cik):
+        res = load_financials(cik, contact_email=contact)
+        return res.financials if res.ok else None
+    checked = screener_mod.verify_rows(candidates, y, loader)
+    if min_revenue > 0 and not checked.empty:
+        checked = checked[checked["revenue"].fillna(0) >= min_revenue]
+    rows, dropped = screener_mod.finalize(checked, sort=sort_key, descending=order == "desc", limit=limit)
+    return ok({"year": y, "sort": sort_key, "order": order,
+               "total": total, "excluded": excluded + dropped, "universe_size": int(len(table)),
+               "verified": int(rows["verified"].sum()) if not rows.empty else 0,
+               "corrected": int(rows["corrected"].sum()) if not rows.empty else 0,
+               "rows": rows.to_dict("records"),
+               "metrics": {k: {"label": v[0], "kind": v[1]} for k, v in screener_mod.METRICS.items()}},
+              cache="public, max-age=300, s-maxage=21600, stale-while-revalidate=86400")

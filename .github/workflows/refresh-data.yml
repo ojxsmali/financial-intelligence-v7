@@ -43,8 +43,8 @@ jobs:
         run: pip install -r requirements-streamlit.txt pytest httpx && python -m pytest -q -p no:cacheprovider
       - name: Commit changed snapshots
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "Ojas Mali"
+          git config user.email "317004398+ojxsmali@users.noreply.github.com"
           git add data/
           if git diff --cached --quiet; then echo "No data changes"; exit 0; fi
           git commit -m "Refresh bundled SEC / listing snapshots"

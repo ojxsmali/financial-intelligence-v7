@@ -24,7 +24,7 @@ Design rules (each one fixes a class of error seen in real filings):
 from __future__ import annotations
 
 from collections import Counter, defaultdict
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, fields
 from datetime import date, datetime, timezone
 
 ANNUAL_FORMS = {"10-K", "10-K/A", "10-KT", "10-KT/A", "20-F", "20-F/A", "40-F", "40-F/A"}
@@ -45,7 +45,7 @@ class MetricSpec:
     key: str
     label: str
     statement: str            # income | balance | cashflow
-    kind: str                 # duration | instant | per_share
+    kind: str                 # duration | instant | per_share | shares
     concepts: dict            # taxonomy -> tuple of concepts (priority order)
     strategy: str = "priority"  # priority | max
     description: str = ""
@@ -76,6 +76,10 @@ METRICS: dict[str, MetricSpec] = {m.key: m for m in [
     MetricSpec("eps_diluted", "Diluted EPS", "income", "per_share", {
         "us-gaap": ("EarningsPerShareDiluted",), "ifrs-full": ("DilutedEarningsLossPerShare",),
     }),
+    MetricSpec("shares_diluted", "Diluted shares (weighted average)", "income", "shares", {
+        "us-gaap": ("WeightedAverageNumberOfDilutedSharesOutstanding",),
+        "ifrs-full": ("AdjustedWeightedAverageShares",),
+    }, description="Share count used for diluted EPS; a rising count means dilution."),
     MetricSpec("total_assets", "Total assets", "balance", "instant", {
         "us-gaap": ("Assets",), "ifrs-full": ("Assets",),
     }),
@@ -91,6 +95,16 @@ METRICS: dict[str, MetricSpec] = {m.key: m for m in [
                     "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents", "CashAndDueFromBanks"),
         "ifrs-full": ("CashAndCashEquivalents",),
     }),
+    MetricSpec("current_assets", "Current assets", "balance", "instant", {
+        "us-gaap": ("AssetsCurrent",), "ifrs-full": ("CurrentAssets",),
+    }, description="Assets expected to turn into cash within a year."),
+    MetricSpec("current_liabilities", "Current liabilities", "balance", "instant", {
+        "us-gaap": ("LiabilitiesCurrent",), "ifrs-full": ("CurrentLiabilities",),
+    }, description="Obligations due within a year."),
+    MetricSpec("long_term_debt", "Long-term debt", "balance", "instant", {
+        "us-gaap": ("LongTermDebtNoncurrent", "LongTermDebtAndCapitalLeaseObligations", "LongTermDebt"),
+        "ifrs-full": ("NoncurrentPortionOfNoncurrentBorrowings", "LongtermBorrowings"),
+    }, description="Borrowings due after more than a year (first concept the filer reports)."),
     MetricSpec("operating_cash_flow", "Operating cash flow", "cashflow", "duration", {
         "us-gaap": ("NetCashProvidedByUsedInOperatingActivities",
                     "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations"),
@@ -176,7 +190,8 @@ class CompanyFinancials:
         for p in data["periods"]:
             values = {k: Fact(**v) for k, v in p["values"].items()}
             periods.append(AnnualPeriod(**{**p, "values": values}))
-        return cls(**{**data, "periods": periods})
+        known = {f.name for f in fields(cls)}          # tolerate cache metadata such as "schema"
+        return cls(**{k: v for k, v in {**data, "periods": periods}.items() if k in known})
 
 
 def companyfacts_url(cik: int) -> str:
@@ -274,7 +289,7 @@ def _primary_periods(concepts: dict, currency: str) -> dict:
 
 
 def _select_fact(concepts: dict, names, currency: str, end: str, kind: str, strategy: str) -> Fact | None:
-    unit = currency if kind != "per_share" else f"{currency}/shares"
+    unit = f"{currency}/shares" if kind == "per_share" else "shares" if kind == "shares" else currency
     candidates = []
     for priority, concept_name in enumerate(names):
         items = concepts.get(concept_name, {}).get("units", {}).get(unit, [])

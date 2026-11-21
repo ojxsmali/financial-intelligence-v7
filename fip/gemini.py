@@ -98,6 +98,8 @@ def build_fact_pack(items: list[tuple[str, CompanyFinancials]], *, years: int = 
             for key, fact in period.values.items():
                 if key == "eps_diluted":
                     reported["eps_diluted_per_share"] = round(fact.value, 4)
+                elif key == "shares_diluted":
+                    reported["diluted_shares_millions"] = _millions(fact.value)   # a count, not money
                 else:
                     reported[key] = _millions(fact.value)
                 if fact.derived:

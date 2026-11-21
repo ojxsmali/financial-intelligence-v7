@@ -97,10 +97,35 @@ def test_live_then_disk_cache():
 
 def test_stale_cache_used_with_visible_notice_when_sec_fails():
     data_service.load_financials(320193, fetcher=live(load_fixture("AAPL")), contact_email=EMAIL)
+    _age_cache(320193, data_service.MIN_FORCE_INTERVAL + 60)     # past the re-check throttle
     result = data_service.load_financials(320193, force_refresh=True,
                                           fetcher=failing(UpstreamUnavailableError("SEC is down (HTTP 503).")))
     assert result.ok and result.origin == "disk cache (stale)"
     assert result.notices and "503" in result.notices[0]
+
+
+def _age_cache(cik, seconds):
+    import os
+    import time
+    path = data_service._disk_path("financials", cik)
+    past = time.time() - seconds
+    os.utime(path, (past, past))
+
+
+def test_forced_refresh_is_throttled_to_protect_sec():
+    """Hammering "Re-check SEC" must not hammer SEC: within 10 min the fresh cached copy is reused."""
+    data_service.load_financials(320193, fetcher=live(load_fixture("AAPL")), contact_email=EMAIL)
+    calls = []
+
+    def counting(url, **kw):
+        calls.append(url)
+        return live(load_fixture("AAPL"))(url, **kw)
+    for _ in range(5):
+        assert data_service.load_financials(320193, force_refresh=True, fetcher=counting).ok
+    assert calls == []
+    _age_cache(320193, data_service.MIN_FORCE_INTERVAL + 60)
+    data_service.load_financials(320193, force_refresh=True, fetcher=counting, contact_email=EMAIL)
+    assert len(calls) == 1
 
 
 def test_bundled_snapshot_fallback(monkeypatch, tmp_path):
@@ -163,3 +188,21 @@ def test_concurrent_cache_writes_never_fail(tmp_path):
     import json
     assert "writer" in json.loads(target.read_text(encoding="utf-8"))
     assert not list(tmp_path.glob("*.tmp"))
+
+
+def test_cache_from_older_schema_is_refetched():
+    """Cached data written before new metrics existed must not hide them for up to 12 hours."""
+    import json as _json
+    data_service.load_financials(320193, fetcher=live(load_fixture("AAPL")), contact_email=EMAIL)
+    path = data_service._disk_path("financials", 320193)
+    payload = _json.loads(path.read_text(encoding="utf-8"))
+    assert payload["schema"] == data_service.FIN_SCHEMA
+    payload.pop("schema")
+    path.write_text(_json.dumps(payload), encoding="utf-8")
+    calls = []
+
+    def counting(url, **kw):
+        calls.append(url)
+        return live(load_fixture("AAPL"))(url, **kw)
+    assert data_service.load_financials(320193, fetcher=counting, contact_email=EMAIL).origin == "live"
+    assert len(calls) == 1
