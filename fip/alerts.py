@@ -51,6 +51,8 @@ def settings() -> dict:
         "smtp_host": get_setting("SMTP_HOST"), "smtp_port": get_int_setting("SMTP_PORT", 587, minimum=1, maximum=65535),
         "smtp_user": get_setting("SMTP_USERNAME"), "smtp_password": get_setting("SMTP_PASSWORD"),
         "resend_key": get_setting("RESEND_API_KEY"),
+        # Resend's shared test sender works without a verified domain (delivers to the Resend account's own address).
+        "resend_from": get_setting("RESEND_FROM") or "Financial Intelligence V7 <onboarding@resend.dev>",
         "enabled": get_bool_setting("ALERTS_ENABLED", True),
         "cooldown_s": get_int_setting("ALERT_COOLDOWN_MIN", 60, minimum=1, maximum=24 * 60) * 60,
         "daily_max": get_int_setting("ALERT_DAILY_MAX", 20, minimum=1, maximum=500),
@@ -63,7 +65,7 @@ def channel(cfg: dict | None = None) -> str:
         return ""
     if cfg["smtp_host"] and cfg["smtp_user"] and cfg["smtp_password"]:
         return "smtp"
-    if cfg["resend_key"] and is_valid_email(cfg["from"] or ""):
+    if cfg["resend_key"]:
         return "resend"
     return ""
 
@@ -184,7 +186,7 @@ def _send_smtp(cfg: dict, subject: str, body: str) -> None:
 def _send_resend(cfg: dict, subject: str, body: str) -> None:
     r = requests.post("https://api.resend.com/emails", timeout=8,
                       headers={"Authorization": f"Bearer {cfg['resend_key']}", "Content-Type": "application/json"},
-                      data=json.dumps({"from": cfg["from"], "to": [cfg["to"]], "subject": subject, "text": body}))
+                      data=json.dumps({"from": cfg.get("resend_from") or cfg["from"], "to": [cfg["to"]], "subject": subject, "text": body}))
     if r.status_code >= 300:
         raise RuntimeError(f"Resend returned HTTP {r.status_code}")
 
@@ -194,7 +196,14 @@ def deliver(subject: str, body: str, cfg: dict | None = None) -> str:
     cfg = cfg or settings()
     ch = channel(cfg)
     if ch == "smtp":
-        _send_smtp(cfg, subject, body)
+        try:
+            _send_smtp(cfg, subject, body)
+        except Exception:
+            # Some hosts (serverless platforms included) cannot reach SMTP servers; HTTPS delivery still works there.
+            if not cfg.get("resend_key"):
+                raise
+            _send_resend(cfg, subject, body)
+            return "resend (smtp failed)"
     elif ch == "resend":
         _send_resend(cfg, subject, body)
     else:

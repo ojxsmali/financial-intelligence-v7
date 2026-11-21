@@ -323,3 +323,23 @@ def test_delivery_failure_log_is_diagnostic_but_secret_free(monkeypatch, tmp_pat
     text = json.dumps(log_lines)
     assert "alert_delivery_failed" in text and "SMTPAuthenticationError" in text and "smtp.gmail.com" in text
     assert "supersecretpw" not in text
+
+
+def test_smtp_failure_falls_back_to_resend(monkeypatch):
+    import smtplib
+    import fip.alerts as al
+    posted = {}
+
+    def broken(*a, **k):
+        raise smtplib.SMTPServerDisconnected("Connection unexpectedly closed")
+
+    class Resp:
+        status_code = 200
+    monkeypatch.setattr(al, "_send_smtp", broken)
+    monkeypatch.setattr(al.requests, "post", lambda url, **k: posted.update(url=url, data=json.loads(k["data"])) or Resp())
+    cfg = {"to": "owner@example.com", "from": "sender@example.com", "smtp_host": "smtp.gmail.com", "smtp_port": 587,
+           "smtp_user": "sender@example.com", "smtp_password": "x", "resend_key": "re_test",
+           "resend_from": "FIP <onboarding@resend.dev>", "enabled": True, "cooldown_s": 3600, "daily_max": 20}
+    assert al.deliver("subj", "body", cfg) == "resend (smtp failed)"
+    assert posted["url"] == "https://api.resend.com/emails"
+    assert posted["data"]["from"] == "FIP <onboarding@resend.dev>" and posted["data"]["to"] == ["owner@example.com"]
