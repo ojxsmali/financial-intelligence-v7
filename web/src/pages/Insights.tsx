@@ -90,7 +90,7 @@ export function Insights() {
   const [tab, setTab] = useState<'company' | 'upload'>('company')
   return (
     <>
-      <PageHeader eyebrow="Insights" title="Rule-based observations"
+      <PageHeader eyebrow="Insights" title="Rule-based" accent="observations."
         sub="Every observation is computed by a fixed rule from reported figures, and states that rule and its evidence. No AI is involved on this page." />
       <Tabs label="Insight source" value={tab} onChange={setTab} tabs={[{ id: 'company', label: 'Selected company' }, { id: 'upload', label: 'Upload your own CSV' }]} />
       <TabPanel id={tab}>

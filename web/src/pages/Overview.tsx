@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
 import { ColumnChart } from '../components/Charts'
 import { CompanyGate } from '../components/Company'
+import { Ledger } from '../components/Ledger'
 import { FilingsList, HealthPanel } from '../components/Panels'
-import { InsightList, KpiStrip, PageHeader, Section, type Kpi } from '../components/ui'
+import { InsightList, KpiStrip, Section, type Kpi } from '../components/ui'
 import { direction, formatMoney, formatPerShare, formatPercent, formatPp, isMissing } from '../lib/format'
 import { fyLabels, moneySeries, ratioSeries } from '../lib/series'
 import { useSettings } from '../lib/settings'
@@ -11,9 +12,8 @@ export function Overview() {
   const { unit, symbol } = useSettings()
   return (
     <>
-      <PageHeader eyebrow="Overview" title="Annual performance"
-        sub="Audited annual results from SEC filings: revenue, profitability, cash generation and balance sheet." />
-      <CompanyGate>
+      <h1 className="sr-only">Overview: audited annual performance</h1>
+      <CompanyGate hero={({ company, fin, shown }) => <Ledger company={company} fin={fin} years={shown} unit={unit} />}>
         {({ company, fin, all, shown }) => {
           const cur = fin.currency
           const last = all[all.length - 1]

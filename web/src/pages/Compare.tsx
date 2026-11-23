@@ -32,7 +32,7 @@ export function Compare() {
 
   return (
     <>
-      <PageHeader eyebrow="Compare" title="Side-by-side fundamentals"
+      <PageHeader eyebrow="Compare" title="Side by side," accent="figure for figure."
         sub="Latest audited fiscal year for each company, with currency, period and accounting-basis checks." />
       <div className="compare-pick">
         <ul className="pills-list" aria-label="Companies in the comparison">

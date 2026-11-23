@@ -49,7 +49,7 @@ export function Explorer() {
 
   return (
     <>
-      <PageHeader eyebrow="Explorer" title="Search every US-listed security"
+      <PageHeader eyebrow="Explorer" title="Search every US‑listed" accent="security."
         sub={u ? `${u.total.toLocaleString('en-US')} securities from Nasdaq, NYSE, NYSE American, NYSE Arca, Cboe BZX and IEX — ${u.companies.toLocaleString('en-US')} operating companies. Rebuilt from official exchange directories.` : 'Securities from Nasdaq, NYSE, NYSE American, NYSE Arca, Cboe BZX and IEX.'} />
       <div className="search-bar">
         <label htmlFor="ex-q" className="sr-only">Search by ticker or company name</label>

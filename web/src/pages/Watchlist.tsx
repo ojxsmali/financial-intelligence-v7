@@ -35,7 +35,7 @@ export function Watchlist() {
 
   return (
     <>
-      <PageHeader eyebrow="Watchlist" title="What's new at the companies you follow"
+      <PageHeader eyebrow="Watchlist" title="What’s new at the companies" accent="you follow."
         sub="Every filing a company makes with the SEC — results, annual and quarterly reports, executive changes, deals, warnings — explained in plain English and updated automatically. Your list is saved in this browser." />
       <div className="compare-pick">
         <ul className="pills-list" aria-label="Companies on your watchlist">

@@ -53,7 +53,9 @@ function Masthead({ company }: { company: Company }) {
 }
 
 /** Loads the selected company and renders the masthead plus every non-happy state; children get the data. */
-export function CompanyGate({ children, masthead = true }: { children: (ctx: CompanyCtx) => ReactNode; masthead?: boolean }) {
+export function CompanyGate({ children, masthead = true, hero }: {
+  children: (ctx: CompanyCtx) => ReactNode; masthead?: boolean; hero?: (ctx: CompanyCtx) => ReactNode
+}) {
   const { symbol, years } = useSettings()
   const q = useCompany(symbol)
   const client = useQueryClient()
@@ -106,13 +108,14 @@ export function CompanyGate({ children, masthead = true }: { children: (ctx: Com
   }
 
   const fin = company.financials
+  const ctx = { company, fin, all: fin.years, shown: fin.years.slice(-years) }
   return (
     <>
-      {head}
+      {hero ? hero(ctx) : head}
       {(company.notices ?? []).map((n, i) => <Notice key={i}>{n}</Notice>)}
       {company.newer_filing_note && <Notice kind="info">{company.newer_filing_note}</Notice>}
       {fin.excluded_note && <Notice kind="info">{fin.excluded_note}</Notice>}
-      {children({ company, fin, all: fin.years, shown: fin.years.slice(-years) })}
+      {children(ctx)}
       <div className="freshness">
         <p>Source: SEC XBRL Company Facts for CIK {fin.cik} · retrieved {fin.retrieved_at.slice(0, 16).replace('T', ' ')} UTC · {fin.years.length} annual periods available · amounts are reported values in {fin.currency}, scaled for display only. Not real-time market data.</p>
         <button className="btn ghost" onClick={refresh} disabled={refreshing}>{refreshing ? 'Checking SEC…' : 'Re-check SEC'}</button>

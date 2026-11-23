@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.7.0 — 2026-11-23 · Editorial redesign
+
+- New look: ink and bone with a single cobalt signal colour (green/red stay reserved for direction), Geist with a serif-italic accent phrase per page title, Geist Mono labels and a dot-matrix year readout. Dark "Ink" by default, light "Paper" one click away.
+- Overview hero: the company name at poster size and a sculpture of its reported history. Drag across the fiscal years (or use the arrow keys); the figure rolls to the selected year and the handle springs onto the nearest year on release. Switch between revenue, net income, operating cash flow and free cash flow.
+- Numbered report sections that rise into view, pull-and-release figure cards, press ripples on every button, sliding nav and metric pills.
+- Stylesheet rewritten from three stacked generations into one system; old font packages removed.
+- Fixes: navigation no longer clips on laptop widths, indented statement rows keep the table size.
+
 ## 7.5.0 — 2026-11-21 · Terminal theme and motion
 
 - Second theme, "Terminal": blue-black glass, cyan accent with a violet second voice, mono KPI figures. The first visit follows the OS; the masthead toggle remembers the choice, applied before first paint.

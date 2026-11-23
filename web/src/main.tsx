@@ -1,6 +1,7 @@
-import '@fontsource-variable/space-grotesk'
-import '@fontsource-variable/instrument-sans'
-import '@fontsource-variable/jetbrains-mono'
+import '@fontsource-variable/geist'
+import '@fontsource-variable/geist-mono'
+import '@fontsource/libre-caslon-condensed/latin-400-italic.css'
+import '@fontsource-variable/doto/wght.css'
 import './styles.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MotionConfig } from 'motion/react'
@@ -44,6 +45,21 @@ function RoutedBoundary({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation()
   return <ErrorBoundary resetKey={pathname}>{children}</ErrorBoundary>
 }
+
+// Press feedback: every button-like control gets a ripple from the exact point it was pressed.
+document.addEventListener('pointerdown', e => {
+  const el = (e.target as HTMLElement | null)?.closest<HTMLElement>('.btn, .segmented button, .tabs button, .theme-toggle, .cmdk-hint, .metric-tabs button')
+  if (!el || (el as HTMLButtonElement).disabled) return
+  const r = el.getBoundingClientRect()
+  el.style.setProperty('--rx', `${e.clientX - r.left}px`)
+  el.style.setProperty('--ry', `${e.clientY - r.top}px`)
+  el.classList.remove('rippling')
+  void el.offsetWidth // restart the animation on repeated presses
+  el.classList.add('rippling')
+}, { passive: true })
+document.addEventListener('animationend', e => {
+  if (e.animationName === 'fi-ripple') (e.target as HTMLElement).closest('.rippling')?.classList.remove('rippling')
+})
 
 // Uncaught errors and promise rejections are reported privately; the page keeps working.
 window.addEventListener('error', e => reportClientError(String(e.message || 'Script error'), 'window'))

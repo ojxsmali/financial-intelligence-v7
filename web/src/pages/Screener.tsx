@@ -43,7 +43,7 @@ export function Screener() {
 
   return (
     <>
-      <PageHeader eyebrow="Screener" title="Rank every US-listed company"
+      <PageHeader eyebrow="Screener" title="Rank every US‑listed" accent="company."
         sub="Find the most profitable, fastest-growing or largest companies across thousands of SEC filers at once — straight from audited annual reports, refreshed daily." />
       <div className="screener-controls">
         <div>

@@ -8,15 +8,14 @@ import { useSettings, YEAR_OPTIONS } from '../lib/settings'
 import { CompanyPicker } from './CompanyPicker'
 import { Segmented } from './ui'
 
-/** Mark: three rising bars on an ink tile — audited figures, year after year. */
+/** Mark: three rising bars, the newest in the signal colour — audited figures, year after year. */
 export function LogoMark({ size = 30 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true" focusable="false" className="brand-mark">
-      <rect width="32" height="32" rx="6" fill="#16181B" stroke="var(--logo-edge, transparent)" />
-      <path d="M7.5 25.5h17" stroke="#F5F3EE" strokeWidth="1.6" strokeLinecap="round" opacity=".55" />
-      <rect x="8" y="16" width="4" height="7" rx="1" fill="#F5F3EE" />
-      <rect x="14" y="12" width="4" height="11" rx="1" fill="#F5F3EE" />
-      <rect x="20" y="7" width="4" height="16" rx="1" fill="#5CC8EE" />
+      <rect width="32" height="32" rx="7" fill="var(--ink)" />
+      <rect x="7" y="17" width="5" height="8" rx="1" fill="var(--bg)" />
+      <rect x="13.5" y="12" width="5" height="13" rx="1" fill="var(--bg)" />
+      <rect x="20" y="6" width="5" height="19" rx="1" fill="var(--accent)" />
     </svg>
   )
 }
@@ -126,6 +125,7 @@ export function Layout({ children }: { children: ReactNode }) {
 
       <footer className="footer">
         <div className="bar-inner footer-inner">
+          <p className="footer-statement" aria-hidden="true">Audited figures, <em>plainly told.</em></p>
           <div>
             <p className="credit">Designed &amp; built by <a href={AUTHOR.url} target="_blank" rel="noopener noreferrer">{AUTHOR.name}</a></p>
             <p>Data: SEC EDGAR XBRL Company Facts and the Nasdaq Trader symbol directory. Reported annual statements — not real-time market data and not investment advice.</p>
@@ -169,7 +169,7 @@ export function Layout({ children }: { children: ReactNode }) {
 
 type Theme = 'light' | 'dark'
 
-/** Light "research note" or dark "terminal". The choice is remembered; the first visit follows the OS. */
+/** Light "paper" or dark "ink". The choice is remembered; the first visit follows the OS. */
 function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>(() => (document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'))
   const next: Theme = theme === 'dark' ? 'light' : 'dark'
@@ -185,7 +185,7 @@ function ThemeToggle() {
       ) : (
         <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" /></svg>
       )}
-      <span className="theme-label">{theme === 'dark' ? 'Terminal' : 'Paper'}</span>
+      <span className="theme-label">{theme === 'dark' ? 'Ink' : 'Paper'}</span>
     </button>
   )
 }

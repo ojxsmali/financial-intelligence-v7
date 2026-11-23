@@ -24,7 +24,7 @@ export function Assistant() {
 
   return (
     <>
-      <PageHeader eyebrow="Assistant" title="Ask Google Gemini about the reported figures"
+      <PageHeader eyebrow="Assistant" title="Ask Gemini about" accent="the reported figures."
         sub="This is the only AI feature in the app. Gemini receives just the structured SEC figures shown elsewhere, and must keep facts, calculations and hypotheses apart and cite each fiscal year." />
       <div className="tags">
         <Chip kind={s.configured ? 'ok' : 'warn'} dot>{s.configured ? 'Gemini configured' : 'Gemini not configured'}</Chip>

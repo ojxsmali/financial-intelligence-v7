@@ -2,26 +2,33 @@ import { motion } from 'motion/react'
 import { Component, useEffect, useId, useRef, type KeyboardEvent, type ReactNode } from 'react'
 import { MESSAGES, RequestError, reportClientError, type Insight } from '../lib/api'
 
-export function PageHeader({ eyebrow, title, sub }: { eyebrow: string; title: string; sub?: string }) {
+/** Poster-sized page title: a plain statement, optionally closed by one serif-italic phrase. */
+export function PageHeader({ eyebrow, title, accent, sub }: { eyebrow: string; title: string; accent?: string; sub?: string }) {
   return (
     <header className="page-head">
       <div className="eyebrow">{eyebrow}</div>
-      <h1>{title}</h1>
+      <motion.h1 initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }}
+        transition={{ type: 'spring', stiffness: 200, damping: 24 }}>
+        {title}{accent && <> <em>{accent}</em></>}
+      </motion.h1>
       {sub && <p className="sub">{sub}</p>}
     </header>
   )
 }
 
+/** A numbered report section; it rises into place the first time it scrolls into view. */
 export function Section({ title, sub, children, aside }: { title: string; sub?: string; children: ReactNode; aside?: ReactNode }) {
   const id = useId()
   return (
-    <section className="section" aria-labelledby={id}>
+    <motion.section className="section" aria-labelledby={id}
+      initial={{ opacity: 0, y: 30, filter: 'blur(4px)' }} whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      viewport={{ once: true, margin: '0px 0px -8% 0px' }} transition={{ type: 'spring', stiffness: 120, damping: 20 }}>
       <div className="section-head">
         <div><h2 id={id}>{title}</h2>{sub && <p className="section-sub">{sub}</p>}</div>
         {aside}
       </div>
       {children}
-    </section>
+    </motion.section>
   )
 }
 
@@ -62,7 +69,7 @@ const reduceMotion = () => typeof window === 'undefined' || typeof window.matchM
  * A reported figure that counts up once (≈0.9 s) when it first renders, then settles on the exact
  * reported text. Skipped entirely for reduced motion.
  */
-export function Figure({ text }: { text: string }) {
+export function Figure({ text, duration = 900 }: { text: string; duration?: number }) {
   const ref = useRef<HTMLSpanElement>(null)
   useEffect(() => {
     const el = ref.current
@@ -77,13 +84,13 @@ export function Figure({ text }: { text: string }) {
     let start = 0
     const tick = (ts: number) => {
       if (!start) start = ts
-      const p = Math.min(1, (ts - start) / 900)
+      const p = Math.min(1, (ts - start) / duration)
       el.textContent = p < 1 ? fmt(f.value * (1 - Math.pow(2, -10 * p))) : text
       if (p < 1) raf = requestAnimationFrame(tick)
     }
     raf = requestAnimationFrame(tick)
     return () => { cancelAnimationFrame(raf); el.textContent = text }
-  }, [text])
+  }, [text, duration])
   return <span ref={ref}>{text}</span>
 }
 
@@ -104,7 +111,7 @@ export function KpiStrip({ items, label }: { items: Kpi[]; label: string }) {
       {items.map((k, i) => (
         <motion.div key={k.label} className={k.available === false ? 'kpi na' : 'kpi'}
           drag dragSnapToOrigin dragElastic={0.45} dragTransition={{ bounceStiffness: 420, bounceDamping: 14 }}
-          whileDrag={{ scale: 1.05, zIndex: 5, boxShadow: '0 24px 50px rgba(0,0,0,.45)' }} whileHover={{ y: -3 }}
+          whileDrag={{ scale: 1.06, rotate: -1.5, zIndex: 5 }} whileHover={{ y: -4 }} whileTap={{ scale: 0.97 }}
           initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ type: 'spring', stiffness: 260, damping: 24, delay: i * 0.05 }}
           onPointerMove={spotlight}>
           <dt className="kpi-label">

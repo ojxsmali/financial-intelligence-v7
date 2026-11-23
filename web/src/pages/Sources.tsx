@@ -13,7 +13,7 @@ export function Sources() {
   const m = useQuery({ queryKey: ['methodology'], queryFn: api.methodology, staleTime: Infinity })
   return (
     <>
-      <PageHeader eyebrow="Sources" title="Where every number comes from" sub="Filing links, fiscal periods, XBRL concepts, formulas, timestamps and limitations." />
+      <PageHeader eyebrow="Sources" title="Where every number" accent="comes from." sub="Filing links, fiscal periods, XBRL concepts, formulas, timestamps and limitations." />
       <Tabs label="Sources" value={tab} onChange={setTab} tabs={[{ id: 'company', label: 'Selected company' }, { id: 'method', label: 'Methodology' }, { id: 'platform', label: 'Platform data sources' }]} />
       <TabPanel id={tab}>
         {tab === 'company' && (

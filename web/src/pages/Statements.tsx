@@ -60,7 +60,7 @@ export function Statements() {
   const ratioDefs = Object.fromEntries((method.data?.ratios ?? []).map(r => [r.key, r]))
   return (
     <>
-      <PageHeader eyebrow="Statements" title="Income statement, balance sheet & cash flow"
+      <PageHeader eyebrow="Statements" title="Income, balance sheet" accent="& cash flow."
         sub="Annual figures from 10-K / 20-F / 40-F XBRL data. Each column is the company's own fiscal year." />
       <CompanyGate>
         {({ fin, shown }) => (
