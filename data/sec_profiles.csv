@@ -3800,7 +3800,6 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 1788060,"Voyager Technologies, Inc./TX",3760,Guided Missiles & Space Vehicles & Parts,04 Manufacturing,United States,TX,1231,operating,<br>Emerging growth company,2
 1788230,"IP STRATEGY HOLDINGS, INC.",2080,Beverages,04 Manufacturing,United States,DE,1231,operating,<br>Emerging growth company,2
 1788257,"BETTERWARE DE MEXICO, S.A.P.I. DE C.V",5961,Retail-Catalog & Mail-Order Houses,07 Trade & Services,Mexico,O5,1231,other,Accelerated filer,2
-1788348,Brookfield Infrastructure Corp,4923,Natural Gas Transmisison & Distribution,01 Energy & Transportation,United States,A1,1231,other,Large accelerated filer,2
 1788451,Ethos Technologies Inc.,6411,"Insurance Agents, Brokers & Service",02 Finance,United States,DE,1231,operating,<br>Emerging growth company,2
 1788882,"Root, Inc.",6331,"Fire, Marine & Casualty Insurance",02 Finance,United States,DE,1231,operating,Large accelerated filer,2
 1788999,Xperi Inc.,7372,Services-Prepackaged Software,06 Technology,United States,DE,1231,operating,<br>Emerging growth company,2
@@ -5368,6 +5367,7 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 2093912,Praetorian Acquisition Corp.,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,<br>Emerging growth company,2
 2094073,Clearthink 1 Acquisition Corp.,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2094076,Starlink AI Acquisition Corp,6770,Blank Checks,05 Real Estate & Construction,United States,E9,0131,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
+2094256,"BEACON TOPCO, INC.",2834,Pharmaceutical Preparations,03 Life Sciences,United States,DE,1231,operating,<br>Emerging growth company,2
 2094265,Mountain Lake Acquisition Corp. II,6770,Blank Checks,05 Real Estate & Construction,United States,E9,1231,operating,Non-accelerated filer<br>Smaller reporting company<br>Emerging growth company,2
 2094433,"Suncrete, Inc.",3272,"Concrete Products, Except Block & Brick",04 Manufacturing,United States,,1231,operating,Non-accelerated filer<br>Emerging growth company,2
 2094496,Securitize Corp.,6199,Finance Services,09 Crypto Assets,United States,DE,1231,operating,<br>Emerging growth company,2
@@ -5540,3 +5540,4 @@ cik,sec_name,sic,sic_description,owner_org,country,state_of_incorporation,fiscal
 2149916,TCGX Acquisition Corp. II,6770,Blank Checks,06 Technology,Cayman Islands,E9,1231,other,<br>Emerging growth company,2
 2152623,"Navient Holdings, Inc.",6211,"Security Brokers, Dealers & Flotation Companies",02 Finance,United States,DE,1231,other,,2
 2153598,Frazier Life Sciences Acquisition Corp. II,6770,Blank Checks,01 Energy & Transportation,United States,E9,1231,other,<br>Emerging growth company,2
+2155396,Brookfield Infrastructure Partners Inc.,4923,Natural Gas Transmisison & Distribution,01 Energy & Transportation,United States,A1,1231,other,,2

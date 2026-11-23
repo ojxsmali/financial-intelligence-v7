@@ -512,6 +512,7 @@ AVTX,AVTX,"Avalo Therapeutics, Inc.","Avalo Therapeutics, Inc. - Common Stock",N
 AVX,AVX,Avax One Technology Ltd.,Avax One Technology Ltd. - Common Shares,Nasdaq,Nasdaq Capital Market,Common stock,True,1826397,AVAX ONE TECHNOLOGY LTD.,6199,Finance Services,Financials,United States,1231,Normal,Nasdaq Trader
 AVXL,AVXL,Anavex Life Sciences Corp.,Anavex Life Sciences Corp. - Common Stock,Nasdaq,Nasdaq Global Select,Common stock,True,1314052,ANAVEX LIFE SCIENCES CORP.,2836,"Biological Products, (No Diagnostic Substances)",Health Care,United States,0930,Normal,Nasdaq Trader
 AVY,AVY,Avery Dennison Corporation,Avery Dennison Corporation Common Stock,NYSE,,Common stock,True,8818,Avery Dennison Corp,2670,Converted Paper & Paperboard Prods (No Contaners/Boxes),Materials,United States,1231,,Nasdaq Trader
+AVZO,AVZO,"Avenzo Therapeutics, Inc.","Avenzo Therapeutics, Inc. - Common Stock",Nasdaq,Nasdaq Capital Market,Common stock,True,1739410,Rallybio Corp,2834,Pharmaceutical Preparations,Health Care,United States,1231,Normal,Nasdaq Trader
 AWI,AWI,Armstrong World Industries Inc,Armstrong World Industries Inc Common Stock,NYSE,,Common stock,True,7431,ARMSTRONG WORLD INDUSTRIES INC,3089,"Plastics Products, NEC",Consumer Discretionary,United States,1231,,Nasdaq Trader
 AWK,AWK,"American Water Works Company, Inc.","American Water Works Company, Inc. Common Stock",NYSE,,Common stock,True,1410636,"American Water Works Company, Inc.",4941,Water Supply,Utilities,United States,1231,,Nasdaq Trader
 AWR,AWR,American States Water Company,American States Water Company Common Stock,NYSE,,Common stock,True,1056903,AMERICAN STATES WATER CO,4941,Water Supply,Utilities,United States,1231,,Nasdaq Trader
@@ -687,7 +688,7 @@ BIO.B,BIO-B,"Bio-Rad Laboratories, Inc.","Bio-Rad Laboratories, Inc. Class B  Co
 BIOA,BIOA,"BioAge Labs, Inc.","BioAge Labs, Inc. - Common Stock",Nasdaq,Nasdaq Global Select,Common stock,True,1709941,"BioAge Labs, Inc.",2834,Pharmaceutical Preparations,Health Care,United States,1231,Normal,Nasdaq Trader
 BIOT,BIOT,Instinct Bio Technical Company Holdings Inc.,Instinct Bio Technical Company Holdings Inc. - Common stock,Nasdaq,Nasdaq Global Market,ADR / foreign issuer,True,2072188,INSTINCT BIO TECHNICAL CO HOLDINGS INC.,2844,"Perfumes, Cosmetics & Other Toilet Preparations",Materials,Japan,1130,Deficient,Nasdaq Trader
 BIOX,BIOX,Bioceres Crop Solutions Corp.,Bioceres Crop Solutions Corp. - Ordinary Shares,Nasdaq,Nasdaq Capital Market,ADR / foreign issuer,True,1769484,Bioceres Crop Solutions Corp.,2870,Agricultural Chemicals,Materials,Cayman Islands,0630,Deficient,Nasdaq Trader
-BIPC,BIPC,Brookfield Infrastructure Corporation Brookfield Infrastructure Corporation,Brookfield Infrastructure Corporation Brookfield Infrastructure Corporation,NYSE,,Common stock,True,1788348,Brookfield Infrastructure Corp,4923,Natural Gas Transmisison & Distribution,Energy,United States,1231,,Nasdaq Trader
+BIP,BIP,Brookfield Infrastructure Partners Inc.,Brookfield Infrastructure Partners Inc. Class A Subordinate Voting Shares,NYSE,,Common stock,True,2155396,Brookfield Infrastructure Partners Inc.,4923,Natural Gas Transmisison & Distribution,Energy,United States,1231,,Nasdaq Trader
 BIRD,BIRD,"Smartbird, Inc.","Smartbird, Inc. - Class A Common Stock",Nasdaq,Nasdaq Global Select,Common stock,True,1653909,"Smartbird, Inc.",7374,Services-Computer Processing & Data Preparation,Technology,United States,1231,Normal,Nasdaq Trader
 BIRK,BIRK,Birkenstock Holding plc,Birkenstock Holding plc Ordinary Shares,NYSE,,ADR / foreign issuer,True,1977102,Birkenstock Holding plc,3140,"Footwear, (No Rubber)",Consumer Discretionary,United Kingdom,0930,,Nasdaq Trader
 BIVI,BIVI,BioVie Inc.,BioVie Inc. - Common stock,Nasdaq,Nasdaq Capital Market,Common stock,True,1580149,BIOVIE INC.,2834,Pharmaceutical Preparations,Health Care,United States,0630,Normal,Nasdaq Trader
@@ -698,7 +699,6 @@ BJDX,BJDX,"Bluejay Diagnostics, Inc.","Bluejay Diagnostics, Inc. - Common Stock"
 BJRI,BJRI,"BJ's Restaurants, Inc.","BJ's Restaurants, Inc. - Common Stock",Nasdaq,Nasdaq Global Select,Common stock,True,1013488,BJs RESTAURANTS INC,5812,Retail-Eating  Places,Consumer Discretionary,United States,0103,Normal,Nasdaq Trader
 BKD,BKD,Brookdale Senior Living Inc.,Brookdale Senior Living Inc. Common Stock,NYSE,,Common stock,True,1332349,Brookdale Senior Living Inc.,8050,Services-Nursing & Personal Care Facilities,Health Care,United States,1231,,Nasdaq Trader
 BKE,BKE,"Buckle, Inc. (The)","Buckle, Inc. (The) Common Stock",NYSE,,Common stock,True,885245,BUCKLE INC,5651,Retail-Family Clothing Stores,Consumer Discretionary,United States,0130,,Nasdaq Trader
-BKHA,BKHA,Black Hawk Acquisition Corporation,Black Hawk Acquisition Corporation - Class A Ordinary Shares,Nasdaq,Nasdaq Global Market,Common stock,True,2000775,Black Hawk Acquisition Corp,2836,"Biological Products, (No Diagnostic Substances)",Health Care,United States,1130,Normal,Nasdaq Trader
 BKKT,BKKT,"Bakkt, Inc.","Bakkt, Inc. Class A Common Stock",NYSE,,Common stock,True,1820302,"Bakkt, Inc.",6199,Finance Services,Financials,United States,1231,,Nasdaq Trader
 BKNG,BKNG,Booking Holdings Inc.,Booking Holdings Inc. - Common Stock,Nasdaq,Nasdaq Global Select,Common stock,True,1075531,Booking Holdings Inc.,4700,Transportation Services,Industrials,United States,1231,Normal,Nasdaq Trader
 BKR,BKR,Baker Hughes Company,Baker Hughes Company - Common Stock,Nasdaq,Nasdaq Global Select,Common stock,True,1701605,Baker Hughes Co,3533,Oil & Gas Field Machinery & Equipment,Industrials,United States,1231,Normal,Nasdaq Trader
@@ -1129,6 +1129,7 @@ CLVT,CLVT,Clarivate Plc,Clarivate Plc Ordinary Shares,NYSE,,ADR / foreign issuer
 CLW,CLW,Clearwater Paper Corporation,Clearwater Paper Corporation Common Stock,NYSE,,Common stock,True,1441236,Clearwater Paper Corp,2631,Paperboard Mills,Materials,United States,1231,,Nasdaq Trader
 CLWT,CLWT,Euro Tech Holdings Company Limited,Euro Tech Holdings Company Limited - Ordinary Shares,Nasdaq,Nasdaq Capital Market,ADR / foreign issuer,True,1026662,EURO TECH HOLDINGS CO LTD,5040,Wholesale-Professional & Commercial Equipment & Supplies,Industrials,China,1231,Normal,Nasdaq Trader
 CLX,CLX,Clorox Company (The),Clorox Company (The) Common Stock,NYSE,,Common stock,True,21076,CLOROX CO /DE/,2842,"Specialty Cleaning, Polishing and Sanitation Preparations",Materials,United States,0630,,Nasdaq Trader
+CLYD,CLYD,"Clywedog Therapeutics Holdings, Inc.","Clywedog Therapeutics Holdings, Inc. - Common Stock",Nasdaq,Nasdaq Capital Market,Common stock,True,2094256,"BEACON TOPCO, INC.",2834,Pharmaceutical Preparations,Health Care,United States,1231,Normal,Nasdaq Trader
 CLYM,CLYM,"Climb Bio, Inc.","Climb Bio, Inc. - Common Stock",Nasdaq,Nasdaq Global Market,Common stock,True,1768446,"Climb Bio, Inc.",2834,Pharmaceutical Preparations,Health Care,United States,1231,Normal,Nasdaq Trader
 CM,CM,Canadian Imperial Bank of Commerce,Canadian Imperial Bank of Commerce Common Stock,NYSE,,ADR / foreign issuer,True,1045520,CANADIAN IMPERIAL BANK OF COMMERCE /CAN/,6029,"Commercial Banks, NEC",Financials,"Ontario, Canada",1031,,Nasdaq Trader
 CMBT,CMBT,CMB.TECH NV,CMB.TECH NV Ordinary Shares,NYSE,,ADR / foreign issuer,True,1604481,CMB.TECH NV,4412,Deep Sea Foreign Transportation of  Freight,Industrials,Belgium,1231,,Nasdaq Trader
@@ -1774,6 +1775,7 @@ EVO,EVO,Evotec SE,Evotec SE - American Depositary Shares each representing 1/2 o
 EVOX,EVOX,Evolution Global Acquisition Corp,Evolution Global Acquisition Corp - Class A Ordinary Shares,Nasdaq,Nasdaq Global Market,ADR / foreign issuer,True,2077954,Evolution Global Acquisition Corp,6770,Blank Checks,Shell Companies / SPACs,Cayman Islands,1231,Normal,Nasdaq Trader
 EVR,EVR,Evercore Inc.,Evercore Inc. Class A Common Stock,NYSE,,Common stock,True,1360901,Evercore Inc.,6282,Investment Advice,Financials,United States,1231,,Nasdaq Trader
 EVRG,EVRG,"Evergy, Inc.","Evergy, Inc. - Common Stock",Nasdaq,Nasdaq Global Select,Common stock,True,1711269,"Evergy, Inc.",4931,Electric & Other Services Combined,Utilities,United States,1231,Normal,Nasdaq Trader
+EVRL,EVRL,Everli Global Holdings,Everli Global Holdings - Class A Ordinary Shares,Nasdaq,Nasdaq Global Market,Common stock,True,2016221,Melar Acquisition Corp. I/Cayman,7389,"Services-Business Services, NEC",Industrials,United States,1231,Normal,Nasdaq Trader
 EVTC,EVTC,"Evertec, Inc.","Evertec, Inc. Common Stock",NYSE,,Common stock,True,1559865,"EVERTEC, Inc.",7374,Services-Computer Processing & Data Preparation,Technology,United States,1231,,Nasdaq Trader
 EVTL,EVTL,Vertical Aerospace Ltd.,Vertical Aerospace Ltd. Ordinary Shares,NYSE,,ADR / foreign issuer,True,1867102,Vertical Aerospace Ltd.,3721,Aircraft,Industrials,United Kingdom,1231,,Nasdaq Trader
 EW,EW,Edwards Lifesciences Corporation,Edwards Lifesciences Corporation Common Stock,NYSE,,Common stock,True,1099800,Edwards Lifesciences Corp,3842,"Orthopedic, Prosthetic & Surgical Appliances & Supplies",Health Care,United States,1231,,Nasdaq Trader
@@ -2095,7 +2097,7 @@ GEOS,GEOS,Geospace Technologies Corporation,Geospace Technologies Corporation - 
 GERN,GERN,Geron Corporation,Geron Corporation - Common Stock,Nasdaq,Nasdaq Global Select,Common stock,True,886744,GERON CORP,2834,Pharmaceutical Preparations,Health Care,United States,1231,Normal,Nasdaq Trader
 GEV,GEV,GE Vernova Inc.,GE Vernova Inc. Common Stock,NYSE,,Common stock,True,1996810,GE Vernova Inc.,3600,Electronic & Other Electrical Equipment (No Computer Equip),Technology,United States,1231,,Nasdaq Trader
 GEVO,GEVO,"Gevo, Inc.","Gevo, Inc. - Common Stock",Nasdaq,Nasdaq Capital Market,Common stock,True,1392380,"Gevo, Inc.",2860,Industrial Organic Chemicals,Materials,United States,1231,Normal,Nasdaq Trader
-GFAI,GFAI,"Guardforce AI Co., Limited","Guardforce AI Co., Limited - Ordinary Shares",Nasdaq,Nasdaq Capital Market,ADR / foreign issuer,True,1804469,"Guardforce AI Co., Ltd.",7381,"Services-Detective, Guard & Armored Car Services",Industrials,Singapore,1231,Deficient,Nasdaq Trader
+GFAI,GFAI,"Guardforce AI Co., Limited","Guardforce AI Co., Limited - Class A Ordinary Shares",Nasdaq,Nasdaq Capital Market,ADR / foreign issuer,True,1804469,"Guardforce AI Co., Ltd.",7381,"Services-Detective, Guard & Armored Car Services",Industrials,Singapore,1231,Deficient,Nasdaq Trader
 GFF,GFF,Griffon Corporation,Griffon Corporation Common Stock,NYSE,,Common stock,True,50725,GRIFFON CORP,3442,"Metal Doors, Sash, Frames, Moldings & Trim",Industrials,United States,0930,,Nasdaq Trader
 GFI,GFI,Gold Fields Limited,Gold Fields Limited American Depositary Shares,NYSE,,ADR / foreign issuer,True,1172724,GOLD FIELDS LTD,1040,Gold and Silver Ores,Materials,South Africa,1231,,Nasdaq Trader
 GFL,GFL,GFL Environmental Inc.,"GFL Environmental Inc. Subordinate voting shares, no par value",NYSE,,Common stock,True,1780232,GFL Environmental Inc.,4953,Refuse Systems,Utilities,United States,1231,,Nasdaq Trader
@@ -2579,7 +2581,7 @@ INIO,INIO,INNIO N.V.,INNIO N.V. - Ordinary Shares,Nasdaq,Nasdaq Global Select,AD
 INKT,INKT,"MiNK Therapeutics, Inc.","MiNK Therapeutics, Inc. - Common Stock",Nasdaq,Nasdaq Capital Market,Common stock,True,1840229,"MiNK Therapeutics, Inc.",2836,"Biological Products, (No Diagnostic Substances)",Health Care,United States,1231,Normal,Nasdaq Trader
 INLF,INLF,INLIF LIMITED,INLIF LIMITED - Class A Ordinary shares,Nasdaq,Nasdaq Capital Market,ADR / foreign issuer,True,1991592,INLIF Ltd,3569,"General Industrial Machinery & Equipment, NEC",Industrials,China,1231,Normal,Nasdaq Trader
 INLX,INLX,"Intellinetics, Inc.","Intellinetics, Inc. Common Stock",NYSE American,,Common stock,True,1081745,"INTELLINETICS, INC.",7372,Services-Prepackaged Software,Technology,United States,1231,,Nasdaq Trader
-INMB,INMB,INmune Bio Inc.,INmune Bio Inc. - Common stock,Nasdaq,Nasdaq Capital Market,Common stock,True,1711754,"Inmune Bio, Inc.",2836,"Biological Products, (No Diagnostic Substances)",Health Care,United States,1231,Normal,Nasdaq Trader
+INMB,INMB,INmune Bio Inc.,INmune Bio Inc. - Common stock,Nasdaq,Nasdaq Capital Market,Common stock,True,1711754,Inmune Bio Inc.,2836,"Biological Products, (No Diagnostic Substances)",Health Care,United States,1231,Normal,Nasdaq Trader
 INMD,INMD,InMode Ltd.,InMode Ltd.  - Ordinary Shares,Nasdaq,Nasdaq Global Select,ADR / foreign issuer,True,1742692,InMode Ltd.,3845,Electromedical & Electrotherapeutic Apparatus,Health Care,Israel,1231,Normal,Nasdaq Trader
 INN,INN,"Summit Hotel Properties, Inc.","Summit Hotel Properties, Inc. Common Stock",NYSE,,Common stock,True,1497645,"Summit Hotel Properties, Inc.",6798,Real Estate Investment Trusts,Real Estate,United States,1231,,Nasdaq Trader
 INNV,INNV,InnovAge Holding Corp.,InnovAge Holding Corp. - Common Stock,Nasdaq,Nasdaq Global Select,Common stock,True,1834376,InnovAge Holding Corp.,8000,Services-Health Services,Health Care,United States,0630,Normal,Nasdaq Trader
@@ -3083,7 +3085,6 @@ MA,MA,Mastercard Incorporated,Mastercard Incorporated Common Stock,NYSE,,Common 
 MAA,MAA,"Mid-America Apartment Communities, Inc.","Mid-America Apartment Communities, Inc. Common Stock",NYSE,,Common stock,True,912595,MID AMERICA APARTMENT COMMUNITIES INC.,6798,Real Estate Investment Trusts,Real Estate,United States,1231,,Nasdaq Trader
 MAAS,MAAS,Maase Inc.,Maase Inc. - Class A Ordinary Shares,Nasdaq,Nasdaq Global Market,ADR / foreign issuer,True,1750264,Maase Inc.,6282,Investment Advice,Financials,China,0630,Normal,Nasdaq Trader
 MAC,MAC,Macerich Company (The),Macerich Company (The) Common Stock,NYSE,,Common stock,True,912242,MACERICH CO,6798,Real Estate Investment Trusts,Real Estate,United States,1231,,Nasdaq Trader
-MACI,MACI,Melar Acquisition Corp. I,Melar Acquisition Corp. I - Class A Ordinary Shares,Nasdaq,Nasdaq Global Market,Common stock,True,2016221,Melar Acquisition Corp. I/Cayman,7389,"Services-Business Services, NEC",Industrials,United States,1231,Normal,Nasdaq Trader
 MAGH,MAGH,Magnitude International Ltd,Magnitude International Ltd - Ordinary Shares,Nasdaq,Nasdaq Capital Market,ADR / foreign issuer,True,2046117,Magnitude International Ltd,1731,Electrical Work,Industrials,Singapore,0430,Deficient,Nasdaq Trader
 MAGN,MAGN,Magnera Corporation,Magnera Corporation Common Stock,NYSE,,Common stock,True,41719,Magnera Corp,2621,Paper Mills,Materials,United States,0926,,Nasdaq Trader
 MAIA,MAIA,"MAIA Biotechnology, Inc.","MAIA Biotechnology, Inc. Common Stock",NYSE American,,Common stock,True,1878313,"MAIA Biotechnology, Inc.",2834,Pharmaceutical Preparations,Health Care,United States,1231,,Nasdaq Trader
@@ -3348,7 +3349,7 @@ MTN,MTN,"Vail Resorts, Inc.","Vail Resorts, Inc. Common Stock",NYSE,,Common stoc
 MTNB,MTNB,"Matinas Biopharma Holdings, Inc.","Matinas Biopharma Holdings, Inc. Common Stock",NYSE American,,Common stock,True,1582554,"Matinas BioPharma Holdings, Inc.",2834,Pharmaceutical Preparations,Health Care,United States,1231,,Nasdaq Trader
 MTNE,MTNE,CH4 Natural Solutions Corporation,CH4 Natural Solutions Corporation Class A Ordinary Shares,NYSE,,Common stock,True,2044817,CH4 Natural Solutions Corp,6770,Blank Checks,Shell Companies / SPACs,United States,1231,,Nasdaq Trader
 MTR,MTR,Mesa Royalty Trust,Mesa Royalty Trust Common Stock,NYSE,,Common stock,True,313364,MESA ROYALTY TRUST/TX,6792,Oil Royalty Traders,Financials,United States,1231,,Nasdaq Trader
-MTRI,MTRI,"Mentari Therapeutics, Inc.","Mentari Therapeutics, Inc. - Common Stock",Nasdaq,Nasdaq Capital Market,ADR / foreign issuer,True,1728328,InMed Pharmaceuticals Inc.,2834,Pharmaceutical Preparations,Health Care,"British Columbia, Canada",0630,Deficient,Nasdaq Trader
+MTRI,MTRI,"Mentari Therapeutics, Inc.","Mentari Therapeutics, Inc. - Common Stock",Nasdaq,Nasdaq Capital Market,ADR / foreign issuer,True,1728328,"Mentari Therapeutics, Inc.",2834,Pharmaceutical Preparations,Health Care,"British Columbia, Canada",0630,Deficient,Nasdaq Trader
 MTRN,MTRN,Materion Corporation,Materion Corporation,NYSE,,Common stock,True,1104657,MATERION Corp,3460,Metal Forgings & Stampings,Industrials,United States,1231,,Nasdaq Trader
 MTRX,MTRX,Matrix Service Company,Matrix Service Company - Common Stock,Nasdaq,Nasdaq Global Select,Common stock,True,866273,MATRIX SERVICE CO,1700,Construction - Special Trade Contractors,Industrials,United States,0630,Normal,Nasdaq Trader
 MTSI,MTSI,"MACOM Technology Solutions Holdings, Inc.","MACOM Technology Solutions Holdings, Inc. - Common Stock",Nasdaq,Nasdaq Global Select,Common stock,True,1493594,"MACOM Technology Solutions Holdings, Inc.",3674,Semiconductors & Related Devices,Technology,United States,1003,Normal,Nasdaq Trader
@@ -4264,7 +4265,6 @@ RLGT,RLGT,"Radiant Logistics, Inc.","Radiant Logistics, Inc. Common Stock",NYSE 
 RLI,RLI,RLI Corp.,RLI Corp. Common Stock (DE),NYSE,,Common stock,True,84246,RLI CORP,6331,"Fire, Marine & Casualty Insurance",Financials,United States,1231,,Nasdaq Trader
 RLJ,RLJ,RLJ Lodging Trust,RLJ Lodging Trust Common Shares of Beneficial Interest $0.01 par value,NYSE,,Common stock,True,1511337,RLJ Lodging Trust,6798,Real Estate Investment Trusts,Real Estate,United States,1231,,Nasdaq Trader
 RLMD,RLMD,"Relmada Therapeutics, Inc.","Relmada Therapeutics, Inc. - Common Stock",Nasdaq,Nasdaq Capital Market,Common stock,True,1553643,"RELMADA THERAPEUTICS, INC.",2834,Pharmaceutical Preparations,Health Care,United States,1231,Normal,Nasdaq Trader
-RLYB,RLYB,Rallybio Corporation,Rallybio Corporation - Common Stock,Nasdaq,Nasdaq Capital Market,Common stock,True,1739410,Rallybio Corp,2834,Pharmaceutical Preparations,Health Care,United States,1231,Normal,Nasdaq Trader
 RM,RM,Regional Management Corp.,Regional Management Corp. Common Stock,NYSE,,Common stock,True,1519401,Regional Management Corp.,6141,Personal Credit Institutions,Financials,United States,1231,,Nasdaq Trader
 RMBI,RMBI,"Richmond Mutual Bancorporation, Inc.","Richmond Mutual Bancorporation, Inc. - Common Stock",Nasdaq,Nasdaq Capital Market,Common stock,True,1767837,"Richmond Mutual Bancorporation, Inc.",6022,State Commercial Banks,Financials,United States,1231,Normal,Nasdaq Trader
 RMBS,RMBS,"Rambus, Inc.","Rambus, Inc. - Common Stock",Nasdaq,Nasdaq Global Select,Common stock,True,917273,RAMBUS INC,3674,Semiconductors & Related Devices,Technology,United States,1231,Normal,Nasdaq Trader
@@ -5208,6 +5208,7 @@ VERA,VERA,"Vera Therapeutics, Inc.","Vera Therapeutics, Inc. - Class A Common St
 VERI,VERI,"Veritone, Inc.","Veritone, Inc. - Common Stock",Nasdaq,Nasdaq Global Market,Common stock,True,1615165,"Veritone, Inc.",7374,Services-Computer Processing & Data Preparation,Technology,United States,1231,Normal,Nasdaq Trader
 VERU,VERU,Veru Inc.,Veru Inc. - Common Stock,Nasdaq,Nasdaq Capital Market,Common stock,True,863894,VERU INC.,2834,Pharmaceutical Preparations,Health Care,United States,0930,Normal,Nasdaq Trader
 VERX,VERX,"Vertex, Inc.","Vertex, Inc. - Class A Common Stock",Nasdaq,Nasdaq Global Market,Common stock,True,1806837,"Vertex, Inc.",7372,Services-Prepackaged Software,Technology,United States,1231,Normal,Nasdaq Trader
+VESI,VESI,"Vesicor Therapeutics Holdings, Inc.","Vesicor Therapeutics Holdings, Inc. - Class A Ordinary Shares",Nasdaq,Nasdaq Capital Market,Common stock,True,2000775,"Vesicor Therapeutics Holdings, Inc.",2836,"Biological Products, (No Diagnostic Substances)",Health Care,United States,1130,Normal,Nasdaq Trader
 VET,VET,Vermilion Energy Inc. Common (Canada),Vermilion Energy Inc. Common (Canada),NYSE,,ADR / foreign issuer,True,1293135,VERMILION ENERGY INC.,1311,Crude Petroleum & Natural Gas,Energy,"Alberta, Canada",1231,,Nasdaq Trader
 VFC,VFC,V.F. Corporation,V.F. Corporation Common Stock,NYSE,,Common stock,True,103379,V F CORP,2320,"Men's & Boys' Furnishgs, Work Clothg, & Allied Garments",Consumer Discretionary,United States,0328,,Nasdaq Trader
 VFF,VFF,"Village Farms International, Inc.","Village Farms International, Inc. - Common Shares",Nasdaq,Nasdaq Capital Market,Common stock,True,1584549,"Village Farms International, Inc.",0100,Agricultural Production-Crops,Consumer Staples,United States,1231,Normal,Nasdaq Trader
@@ -5822,6 +5823,7 @@ AIHY,AIHY,Defiance AI Hyperscale Leaders ETF,Defiance AI Hyperscale Leaders ETF,
 AIIA.R,AIIA-RT,"AI Infrastructure Acquisition Corp. Rights, each entitling the holder to receive one-fifth (1/5) of one","AI Infrastructure Acquisition Corp. Rights, each entitling the holder to receive one-fifth (1/5) of one Class A Ordinary Share",NYSE,,Right,False,,,,,Unclassified,,,,Nasdaq Trader
 AIIA.U,AIIA-UN,"AI Infrastructure Acquisition Corp. Units, each consisting of one","AI Infrastructure Acquisition Corp. Units, each consisting of one Class A Ordinary Share and one Right",NYSE,,Unit,False,2073553,AI Infrastructure Acquisition Corp.,6770,Blank Checks,Shell Companies / SPACs,United States,1231,,Nasdaq Trader
 AIIOW,AIIOW,Robo.ai Inc.,Robo.ai Inc. - Warrant,Nasdaq,Nasdaq Capital Market,Warrant,False,1932737,ROBO.AI INC.,3711,Motor Vehicles & Passenger Car Bodies,Consumer Discretionary,United Arab Emirates,1231,Normal,Nasdaq Trader
+AIL,AIL,GraniteShares 2x Long Anthropic Daily ETF,GraniteShares 2x Long Anthropic Daily ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
 AIMDW,AIMDW,"Ainos, Inc.","Ainos, Inc. - warrants",Nasdaq,Nasdaq Capital Market,Warrant,False,1014763,"Ainos, Inc.",3577,"Computer Peripheral Equipment, NEC",Technology,United States,1231,Normal,Nasdaq Trader
 AIMG,AIMG,Defiance AI Magnificent 10 ETF,Defiance AI Magnificent 10 ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
 AIMS,AIMS,Acuitas Small Cap Active ETF,Acuitas Small Cap Active ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
@@ -5866,6 +5868,7 @@ ALL$H,ALL-PH,"Allstate Corporation (The) Depositary Shares each representing a 1
 ALL$I,ALL-PI,"Allstate Corporation (The) Depositary Shares each representing a 1/1,000th interest in a share of Fixed Rate Noncumulative Perpetual Preferred Stock, Series I","Allstate Corporation (The) Depositary Shares each representing a 1/1,000th interest in a share of Fixed Rate Noncumulative Perpetual Preferred Stock, Series I",NYSE,,Preferred / depositary,False,899051,ALLSTATE CORP,6331,"Fire, Marine & Casualty Insurance",Financials,United States,1231,,Nasdaq Trader
 ALL$J,ALL-PJ,"Allstate Corporation (The) Depositary Shares each representing a 1/1,000th interest in a share of Fixed Rate Noncumulative Perpetual Preferred Stock, Series J","Allstate Corporation (The) Depositary Shares each representing a 1/1,000th interest in a share of Fixed Rate Noncumulative Perpetual Preferred Stock, Series J",NYSE,,Preferred / depositary,False,899051,ALLSTATE CORP,6331,"Fire, Marine & Casualty Insurance",Financials,United States,1231,,Nasdaq Trader
 ALLW,ALLW,State Street Bridgewater All Weather ETF,State Street Bridgewater All Weather ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
+ALLZ,ALLZ,Zacks All-Cap Core ETF,Zacks All-Cap Core ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 ALOVU,ALOVU,"Aldabra 4 Liquidity Opportunity Vehicle, Inc.","Aldabra 4 Liquidity Opportunity Vehicle, Inc. - Units",Nasdaq,Nasdaq Global Market,Unit,False,2083989,"Aldabra 4 Liquidity Opportunity Vehicle, Inc.",6770,Blank Checks,Shell Companies / SPACs,United States,1231,Normal,Nasdaq Trader
 ALOVW,ALOVW,"Aldabra 4 Liquidity Opportunity Vehicle, Inc.","Aldabra 4 Liquidity Opportunity Vehicle, Inc. - Warrants",Nasdaq,Nasdaq Global Market,Warrant,False,2083989,"Aldabra 4 Liquidity Opportunity Vehicle, Inc.",6770,Blank Checks,Shell Companies / SPACs,United States,1231,Normal,Nasdaq Trader
 ALPXR,ALPXR,Alpex Acquisition Corporation,Alpex Acquisition Corporation - Rights,Nasdaq,Nasdaq Global Market,Right,False,2125551,Alpex Acquisition Corp,6770,Blank Checks,Shell Companies / SPACs,United States,1231,Normal,Nasdaq Trader
@@ -5919,6 +5922,7 @@ AMZU,AMZU,Direxion Daily AMZN Bull 2X ETF,Direxion Daily AMZN Bull 2X ETF,Nasdaq
 AMZW,AMZW,Roundhill AMZN WeeklyPay ETF,Roundhill AMZN WeeklyPay ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 AMZY,AMZY,YieldMax AMZN Option Income Strategy ETF,YieldMax AMZN Option Income Strategy ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 AMZZ,AMZZ,GraniteShares 2x Long AMZN Daily ETF,GraniteShares 2x Long AMZN Daily ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
+ANDD,ANDD,Leverage Shares 2X Short Anthropic Daily ETF,Leverage Shares 2X Short Anthropic Daily ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 ANEL,ANEL,Defiance Daily Target 2x Long ANET ETF,Defiance Daily Target 2x Long ANET ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
 ANG,ANG,Corgi FTSE Fallen Angels Bond ETF,Corgi FTSE Fallen Angels Bond ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 ANG$D,ANG-PD,"American National Group Inc. Depositary Shares, each representing a 1/1000th interest in a share of 7.375% Fixed-Rate Non-Cumulative Preferred Stock, Series D","American National Group Inc. Depositary Shares, each representing a 1/1000th interest in a share of 7.375% Fixed-Rate Non-Cumulative Preferred Stock, Series D",NYSE,,Preferred / depositary,False,1039828,American National Group Inc.,,,Unclassified,,,,Nasdaq Trader
@@ -5926,7 +5930,18 @@ ANGHW,ANGHW,Anghami Inc.,Anghami Inc. - Warrants,Nasdaq,Nasdaq Capital Market,Wa
 ANGL,ANGL,VanEck Fallen Angel High Yield Bond ETF,VanEck Fallen Angel High Yield Bond ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
 ANGU,ANGU,SEI Ang Research Enhanced U.S. Large Cap ETF,SEI Ang Research Enhanced U.S. Large Cap ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
 ANNAW,ANNAW,"AleAnna, Inc.","AleAnna, Inc. - Warrant",Nasdaq,Nasdaq Capital Market,Warrant,False,1845123,"AleAnna, Inc.",1311,Crude Petroleum & Natural Gas,Energy,United States,1231,Normal,Nasdaq Trader
+ANS,ANS,GraniteShares 2x Short Anthropic Daily ETF,GraniteShares 2x Short Anthropic Daily ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
+ANSS,ANSS,Leverage Shares 1X Short Anthropic Daily ETF,Leverage Shares 1X Short Anthropic Daily ETF,Cboe BZX,,ETF,False,1013462,ANSYS INC,,,Unclassified,,,,Nasdaq Trader
+ANTC,ANTC,Defiance 2X ANT Long Daily ETF,Defiance 2X ANT Long Daily ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
+ANTD,ANTD,Direxion Daily Anthropic Bear 2X ETF,Direxion Daily Anthropic Bear 2X ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
+ANTO,ANTO,Direxion Daily Anthropic Bull 2X ETF,Direxion Daily Anthropic Bull 2X ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
+ANTQ,ANTQ,Defiance 2X ANT Short Daily ETF,Defiance 2X ANT Short Daily ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
+ANTT,ANTT,Tradr 2X Long Anthropic Daily ETF,Tradr 2X Long Anthropic Daily ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
+ANTU,ANTU,ProShares Ultra Anthropic,ProShares Ultra Anthropic,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
 ANTW,ANTW,Anthropic AI Lab Ecosystem ETF,Anthropic AI Lab Ecosystem ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
+ANTY,ANTY,ProShares UltraShort Anthropic,ProShares UltraShort Anthropic,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
+ANTZ,ANTZ,Tradr 2X Short Anthropic Daily ETF,Tradr 2X Short Anthropic Daily ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
+ANUU,ANUU,Leverage Shares 2X Long Anthropic Daily ETF,Leverage Shares 2X Long Anthropic Daily ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 ANV,ANV,GraniteShares Autocallable NVDA ETF,GraniteShares Autocallable NVDA ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
 AOA,AOA,iShares Core 80/20 Aggressive Allocation ETF,iShares Core 80/20 Aggressive Allocation ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 AOCT,AOCT,Innovator Equity Defined Protection ETF,Innovator Equity Defined Protection ETF - 2 Yr to October 2028,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
@@ -6059,6 +6074,7 @@ ATH$B,ATH-PB,"Athene Holding Ltd. Depositary Shares, Each Representing a 1/1,000
 ATH$D,ATH-PD,"Athene Holding Ltd. Depositary Shares, Each Representing a 1/1,000th Interest in a 4.875% Fixed-Rate Perpetual Non-Cumulative Preference Share, Series D","Athene Holding Ltd. Depositary Shares, Each Representing a 1/1,000th Interest in a 4.875% Fixed-Rate Perpetual Non-Cumulative Preference Share, Series D",NYSE,,Preferred / depositary,False,1527469,Athene Holding Ltd.,,,Unclassified,,,,Nasdaq Trader
 ATH$E,ATH-PE,"Athene Holding Ltd. Depositary Shares, Each Representing a 1/1,000th Interest in a 7.750% Fixed-Rate Reset Perpetual Non-Cumulative Preference Share, Series E","Athene Holding Ltd. Depositary Shares, Each Representing a 1/1,000th Interest in a 7.750% Fixed-Rate Reset Perpetual Non-Cumulative Preference Share, Series E",NYSE,,Preferred / depositary,False,1527469,Athene Holding Ltd.,,,Unclassified,,,,Nasdaq Trader
 ATHS,ATHS,Athene Holding Ltd. 7.250% Fixed-Rate Reset Junior Subordinated Debentures due 2064,Athene Holding Ltd. 7.250% Fixed-Rate Reset Junior Subordinated Debentures due 2064,NYSE,,Notes / debt,False,1527469,Athene Holding Ltd.,,,Unclassified,,,,Nasdaq Trader
+ATHX,ATHX,2x Anthropic ETF,2x Anthropic ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 ATLCL,ATLCL,Atlanticus Holdings Corporation,Atlanticus Holdings Corporation - 6.125% Senior Notes due 2026,Nasdaq,Nasdaq Global Market,Notes / debt,False,1464343,Atlanticus Holdings Corp,6141,Personal Credit Institutions,Financials,United States,1231,Normal,Nasdaq Trader
 ATLCP,ATLCP,Atlanticus Holdings Corporation,"Atlanticus Holdings Corporation - 7.625% Series B Cumulative Perpetual Preferred Stock, no par value per share",Nasdaq,Nasdaq Global Select,Preferred / depositary,False,1464343,Atlanticus Holdings Corp,6141,Personal Credit Institutions,Financials,United States,1231,Normal,Nasdaq Trader
 ATLCZ,ATLCZ,Atlanticus Holdings Corporation,Atlanticus Holdings Corporation - 9.25% Senior Notes due 2029,Nasdaq,Nasdaq Global Market,Notes / debt,False,1464343,Atlanticus Holdings Corp,6141,Personal Credit Institutions,Financials,United States,1231,Normal,Nasdaq Trader
@@ -6361,9 +6377,8 @@ BINT,BINT,Bluemonte Global Equity ETF,Bluemonte Global Equity ETF,NYSE Arca,,ETF
 BINV,BINV,Brandes International ETF,Brandes International ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 BIOTW,BIOTW,Instinct Bio Technical Company Holdings Inc.,Instinct Bio Technical Company Holdings Inc. - Warrants,Nasdaq,Nasdaq Global Market,Warrant,False,2072188,INSTINCT BIO TECHNICAL CO HOLDINGS INC.,2844,"Perfumes, Cosmetics & Other Toilet Preparations",Materials,Japan,1130,Deficient,Nasdaq Trader
 BIOY,BIOY,GraniteShares YieldBOOST Biotech ETF,GraniteShares YieldBOOST Biotech ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
-BIP,BIP,Brookfield Infrastructure Partners LP Limited Partnership Units,Brookfield Infrastructure Partners LP Limited Partnership Units,NYSE,,Unit,False,2155396,Brookfield Infrastructure Partners Inc.,,,Unclassified,,,,Nasdaq Trader
-BIP$A,BIP-PA,Brookfield Infrastructure Partners LP 5.125%,"Brookfield Infrastructure Partners LP 5.125% Class A Preferred Limited Partnership Units, Series 13",NYSE,,Preferred / depositary,False,1406234,Brookfield Infrastructure Partners L.P.,,,Unclassified,,,,Nasdaq Trader
-BIP$B,BIP-PB,Brookfield Infrastructure Partners LP 5.000%,"Brookfield Infrastructure Partners LP 5.000% Class A Preferred Limited Partnership Units, Series 14",NYSE,,Preferred / depositary,False,1406234,Brookfield Infrastructure Partners L.P.,,,Unclassified,,,,Nasdaq Trader
+BIPF$A,BIPF-PA,Brookfield Infrastructure Partners LP 5.125%,"Brookfield Infrastructure Partners LP 5.125% Class A Preferred Limited Partnership Units, Series 13",NYSE,,Preferred / depositary,False,1406234,Brookfield Infrastructure Partners L.P.,,,Unclassified,,,,Nasdaq Trader
+BIPF$B,BIPF-PB,Brookfield Infrastructure Partners LP 5.000%,"Brookfield Infrastructure Partners LP 5.000% Class A Preferred Limited Partnership Units, Series 14",NYSE,,Preferred / depositary,False,1406234,Brookfield Infrastructure Partners L.P.,,,Unclassified,,,,Nasdaq Trader
 BIPH,BIPH,Brookfield Infrastructure Corporation 5.000% Subordinated Notes due 2081,Brookfield Infrastructure Corporation 5.000% Subordinated Notes due 2081,NYSE,,Notes / debt,False,1406234,Brookfield Infrastructure Partners L.P.,,,Unclassified,,,,Nasdaq Trader
 BIPI,BIPI,BIP Bermuda Holdings I Limited 5.125% Perpetual Subordinated Notes,BIP Bermuda Holdings I Limited 5.125% Perpetual Subordinated Notes,NYSE,,Notes / debt,False,1406234,Brookfield Infrastructure Partners L.P.,,,Unclassified,,,,Nasdaq Trader
 BIPJ,BIPJ,Brookfield Infrastructure Corporation 7.250% Subordinated Notes due 2084,Brookfield Infrastructure Corporation 7.250% Subordinated Notes due 2084,NYSE,,Notes / debt,False,1406234,Brookfield Infrastructure Partners L.P.,,,Unclassified,,,,Nasdaq Trader
@@ -6397,8 +6412,6 @@ BKEM,BKEM,BNY Mellon Emerging Markets Equity ETF,BNY Mellon Emerging Markets Equ
 BKF,BKF,iShares MSCI BIC ETF,iShares MSCI BIC ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 BKFI,BKFI,BNY Mellon Active Core Bond ETF,BNY Mellon Active Core Bond ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 BKGI,BKGI,BNY Mellon Global Infrastructure Income ETF,BNY Mellon Global Infrastructure Income ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
-BKHAR,BKHAR,Black Hawk Acquisition Corporation,Black Hawk Acquisition Corporation - Rights,Nasdaq,Nasdaq Global Market,Right,False,2000775,Black Hawk Acquisition Corp,2836,"Biological Products, (No Diagnostic Substances)",Health Care,United States,1130,Normal,Nasdaq Trader
-BKHAU,BKHAU,Black Hawk Acquisition Corporation,Black Hawk Acquisition Corporation - Units,Nasdaq,Nasdaq Global Market,Unit,False,2000775,Black Hawk Acquisition Corp,2836,"Biological Products, (No Diagnostic Substances)",Health Care,United States,1130,Normal,Nasdaq Trader
 BKHY,BKHY,BNY Mellon High Yield ETF,BNY Mellon High Yield ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 BKIE,BKIE,BNY Mellon International Equity ETF,BNY Mellon International Equity ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 BKLC,BKLC,BNY Mellon US Large Cap Core Equity ETF,BNY Mellon US Large Cap Core Equity ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
@@ -6865,6 +6878,7 @@ CIR,CIR,Corgi CRCL 2x Daily ETF,Corgi CRCL 2x Daily ETF,Cboe BZX,,ETF,False,,,,,
 CIVG,CIVG,Corgi 1-5 Year Investment Grade Corporate Bond ETF,Corgi 1-5 Year Investment Grade Corporate Bond ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 CJUL,CJUL,Corgi U.S. Equities 15% Structured Buffer ETF,Corgi U.S. Equities 15% Structured Buffer ETF - July Series,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 CJUN,CJUN,Corgi U.S. Equities 15% Structured Buffer ETF,Corgi U.S. Equities 15% Structured Buffer ETF - June Series,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
+CLAU,CLAU,T-REX 2X Long Anthropic Daily Target ETF,T-REX 2X Long Anthropic Daily Target ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 CLBR.U,CLBR-UN,"Colombier Acquisition Corp. III Units, each consisting of one","Colombier Acquisition Corp. III Units, each consisting of one Class A ordinary share and one-eighth of one warrant",NYSE,,Unit,False,2091024,Colombier Acquisition Corp. III,6770,Blank Checks,Shell Companies / SPACs,United States,1231,,Nasdaq Trader
 CLBR.W,CLBR-WT,"Colombier Acquisition Corp. III Warrants, each whole warrant exercisable for one","Colombier Acquisition Corp. III Warrants, each whole warrant exercisable for one Class A ordinary share at an exercise price of $11.50 per share",NYSE,,Warrant,False,2091024,Colombier Acquisition Corp. III,6770,Blank Checks,Shell Companies / SPACs,United States,1231,,Nasdaq Trader
 CLCG,CLCG,Crossmark Large Cap Growth ETF,Crossmark Large Cap Growth ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
@@ -7293,6 +7307,7 @@ DIPS,DIPS,YieldMax Short NVDA Option Income Strategy ETF,YieldMax Short NVDA Opt
 DISK,DISK,Tema Memory ETF,Tema Memory ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 DISV,DISV,Dimensional International Small Cap Value ETF,Dimensional International Small Cap Value ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 DIV,DIV,Global X Super Dividend ETF,Global X Super Dividend ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
+DIVA,DIVA,AB Equity Income ETF,AB Equity Income ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 DIVB,DIVB,iShares Core Dividend ETF,iShares Core Dividend ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 DIVD,DIVD,Altrius Global Dividend ETF,Altrius Global Dividend ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
 DIVE,DIVE,Dana Concentrated Dividend ETF,Dana Concentrated Dividend ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
@@ -7627,6 +7642,7 @@ ENGNW,ENGNW,enGene Therapeutics Inc.,enGene Therapeutics Inc. - Warrants,Nasdaq,
 ENHE,ENHE,iShares Enhanced Emerging Markets Active ETF,iShares Enhanced Emerging Markets Active ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
 ENHI,ENHI,iShares Enhanced International Active ETF,iShares Enhanced International Active ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
 ENHU,ENHU,iShares Enhanced Large Cap Core Active ETF,iShares Enhanced Large Cap Core Active ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
+ENHV,ENHV,iShares Enhanced Large Cap Value Active ETF,iShares Enhanced Large Cap Value Active ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
 ENOR,ENOR,iShares MSCI Norway ETF,iShares MSCI Norway ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 ENRDW,ENRDW,Einride AB,Einride AB - Warrants,Nasdaq,Nasdaq Capital Market,Warrant,False,2095096,Einride AB,7373,Services-Computer Integrated Systems Design,Technology,Sweden,1231,Normal,Nasdaq Trader
 ENRG,ENRG,Ninepoint North American Energy Independence ETF,Ninepoint North American Energy Independence ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
@@ -7756,6 +7772,7 @@ EVNT,EVNT,AltShares Event-Driven ETF,AltShares Event-Driven ETF,NYSE Arca,,ETF,F
 EVOXU,EVOXU,Evolution Global Acquisition Corp,Evolution Global Acquisition Corp - Units,Nasdaq,Nasdaq Global Market,Unit,False,2077954,Evolution Global Acquisition Corp,6770,Blank Checks,Shell Companies / SPACs,Cayman Islands,1231,Normal,Nasdaq Trader
 EVOXW,EVOXW,Evolution Global Acquisition Corp,Evolution Global Acquisition Corp - Warrants,Nasdaq,Nasdaq Global Market,Warrant,False,2077954,Evolution Global Acquisition Corp,6770,Blank Checks,Shell Companies / SPACs,Cayman Islands,1231,Normal,Nasdaq Trader
 EVPF,EVPF,Eaton Vance Preferred Securities and Income ETF,Eaton Vance Preferred Securities and Income ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
+EVRLW,EVRLW,Everli Global Holdings,Everli Global Holdings - Warrant,Nasdaq,Nasdaq Capital Market,Warrant,False,2016221,Melar Acquisition Corp. I/Cayman,7389,"Services-Business Services, NEC",Industrials,United States,1231,Normal,Nasdaq Trader
 EVSB,EVSB,Eaton Vance Ultra-Short Income ETF,Eaton Vance Ultra-Short Income ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 EVSD,EVSD,Eaton Vance Short Duration Income ETF,Eaton Vance Short Duration Income ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
 EVSM,EVSM,Eaton Vance Short Duration Municipal Income ETF,Eaton Vance Short Duration Municipal Income ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
@@ -9720,8 +9737,6 @@ LYRI,LYRI,Lyrical International Value Equity ETF,Lyrical International Value Equ
 LYTE,LYTE,Roundhill Photonics & Optics ETF,Roundhill Photonics & Optics ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 LZM.W,LZM-WT,Lifezone Metals Limited Warrants,Lifezone Metals Limited Warrants,NYSE,,Warrant,False,1958217,Lifezone Metals Ltd,1000,Metal Mining,Materials,Isle of Man,1231,,Nasdaq Trader
 MAAY,MAAY,GraniteShares YieldBOOST MARA ETF,GraniteShares YieldBOOST MARA ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
-MACIU,MACIU,Melar Acquisition Corp. I,Melar Acquisition Corp. I - Unit,Nasdaq,Nasdaq Global Market,Unit,False,2016221,Melar Acquisition Corp. I/Cayman,7389,"Services-Business Services, NEC",Industrials,United States,1231,Normal,Nasdaq Trader
-MACIW,MACIW,Melar Acquisition Corp. I,Melar Acquisition Corp. I - Warrant,Nasdaq,Nasdaq Global Market,Warrant,False,2016221,Melar Acquisition Corp. I/Cayman,7389,"Services-Business Services, NEC",Industrials,United States,1231,Normal,Nasdaq Trader
 MADE,MADE,iShares U.S. Manufacturing ETF,iShares U.S. Manufacturing ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 MAGA,MAGA,Truth Social America First ETF,Truth Social America First ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 MAGC,MAGC,Roundhill China Magnificent Seven ETF,Roundhill China Magnificent Seven ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
@@ -11312,7 +11327,6 @@ RJDI,RJDI,RJ Eagle GCM Dividend Select Income ETF,RJ Eagle GCM Dividend Select I
 RJMI,RJMI,RJ Eagle Municipal Income ETF,RJ Eagle Municipal Income ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 RJVI,RJVI,RJ Eagle Vertical Income ETF,RJ Eagle Vertical Income ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 RKLX,RKLX,Defiance Daily Target 2X Long RKLB ETF,Defiance Daily Target 2X Long RKLB ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
-RKNG,RKNG,Defiance Retail Kings ETF,Defiance Retail Kings ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
 RKSG,RKSG,Ruk Strategic Growth ETF,Ruk Strategic Growth ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 RKX,RKX,Corgi RKLB 2x Daily ETF,Corgi RKLB 2x Daily ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 RLJ$A,RLJ-PA,RLJ Lodging Trust $1.95 Series A Cumulative Convertible Preferred Shares,RLJ Lodging Trust $1.95 Series A Cumulative Convertible  Preferred Shares,NYSE,,Preferred / depositary,False,1511337,RLJ Lodging Trust,6798,Real Estate Investment Trusts,Real Estate,United States,1231,,Nasdaq Trader
@@ -11948,7 +11962,6 @@ SRHQ,SRHQ,SRH U.S. Quality GARP ETF,SRH U.S. Quality GARP ETF,NYSE Arca,,ETF,Fal
 SRHR,SRHR,SRH REIT Covered Call ETF,SRH REIT Covered Call ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 SRJN,SRJN,Spire Inc. 6.375% Junior Subordinated Notes due 2086,Spire Inc. 6.375% Junior Subordinated Notes due 2086,NYSE,,Notes / debt,False,1126956,SPIRE INC,4924,Natural Gas Distribution,Energy,United States,0930,,Nasdaq Trader
 SRLN,SRLN,State Street Blackstone Senior Loan ETF,State Street Blackstone Senior Loan ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
-SROI,SROI,Calamos Antetokounmpo Global Sustainable Equities ETF,Calamos Antetokounmpo Global Sustainable Equities ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 SRS,SRS,ProShares UltraShort Real Estate,ProShares UltraShort Real Estate,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 SRTY,SRTY,ProShares UltraPro Short Russell2000,ProShares UltraPro Short Russell2000,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 SRV,SRV,NXG Cushing Midstream Energy Fund,NXG Cushing Midstream Energy Fund Common Shares of Beneficial Interest,NYSE,,Closed-end fund / trust,False,1400897,NXG Cushing Midstream Energy Fund,,,Unclassified,,,,Nasdaq Trader
@@ -13221,6 +13234,7 @@ ZALT,ZALT,Innovator U.S. Equity 10 Buffer ETF,Innovator U.S. Equity 10 Buffer ET
 ZAP,ZAP,Global X U.S. Electrification ETF,Global X U.S. Electrification ETF,Nasdaq,Nasdaq Global Market,ETF,False,,,,,Unclassified,,,Normal,Nasdaq Trader
 ZAPR,ZAPR,Innovator Equity Defined Protection ETF,Innovator Equity Defined Protection ETF - 1 Yr April,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 ZAUG,ZAUG,Innovator Equity Defined Protection ETF,Innovator Equity Defined Protection ETF - 1 Yr August,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
+ZCAP,ZCAP,Zacks Small-Cap Core ETF,Zacks Small-Cap Core ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 ZCBA,ZCBA,Global X Zero Coupon Bond 2030 ETF,Global X Zero Coupon Bond 2030 ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 ZCBB,ZCBB,Global X Zero Coupon Bond 2031 ETF,Global X Zero Coupon Bond 2031 ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 ZCBC,ZCBC,Global X Zero Coupon Bond 2032 ETF,Global X Zero Coupon Bond 2032 ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
@@ -13232,6 +13246,7 @@ ZDAY,ZDAY,Bitwise AI Cyber Defense ETF,Bitwise AI Cyber Defense ETF,NYSE Arca,,E
 ZDEK,ZDEK,Innovator Equity Defined Protection ETF,Innovator Equity Defined Protection ETF - 1 Yr December,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 ZDIS,ZDIS,Virtus Zevenbergen Discovery Growth ETF,Virtus Zevenbergen Discovery Growth ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 ZECP,ZECP,Zacks Earnings Consistent Portfolio ETF,Zacks Earnings Consistent Portfolio ETF,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
+ZECX,ZECX,2x ZCSH ETF,2x ZCSH ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 ZEOWW,ZEOWW,Zeo Energy Corporation,Zeo Energy Corporation - Warrants,Nasdaq,Nasdaq Capital Market,Warrant,False,1865506,Zeo Energy Corp.,1700,Construction - Special Trade Contractors,Industrials,United States,1231,Normal,Nasdaq Trader
 ZFEB,ZFEB,Innovator Equity Defined Protection ETF,Innovator Equity Defined Protection ETF - 1 Yr February,Cboe BZX,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
 ZHDG,ZHDG,ZEGA Buy and Hedge ETF,ZEGA Buy and Hedge ETF,NYSE Arca,,ETF,False,,,,,Unclassified,,,,Nasdaq Trader
