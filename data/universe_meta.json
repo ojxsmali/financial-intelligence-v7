@@ -1,22 +1,22 @@
 {
-  "built_at": "2026-11-24T21:16:48+00:00",
-  "nasdaq_file_created": "1124202615:41",
-  "other_file_created": "1124202615:41",
+  "built_at": "2026-11-25T20:29:39+00:00",
+  "nasdaq_file_created": "1125202614:01",
+  "other_file_created": "1125202614:01",
   "total_securities": 13274,
-  "companies": 5598,
-  "with_cik": 7612,
+  "companies": 5597,
+  "with_cik": 7609,
   "by_exchange": {
     "Nasdaq": 5601,
     "NYSE": 2878,
-    "NYSE Arca": 2780,
+    "NYSE Arca": 2779,
     "Cboe BZX": 1681,
     "NYSE American": 309,
     "Texas Stock Exchange": 14,
-    "Other US exchange (F)": 11
+    "Other US exchange (F)": 12
   },
   "by_type": {
-    "ETF": 5829,
-    "Common stock": 4238,
+    "ETF": 5830,
+    "Common stock": 4237,
     "ADR / foreign issuer": 1360,
     "Preferred / depositary": 506,
     "Warrant": 418,
