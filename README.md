@@ -15,12 +15,15 @@ What it does:
 - **13,000+ US exchange-listed securities** are searchable, rebuilt daily from official exchange directories. About 5,600 of them are operating companies.
 - **Audited annual statements** come straight from SEC XBRL (10-K / 20-F / 40-F), with correct units, fiscal periods and filing links.
 - **"Cobalt Blueprint" design (v7.8).** Ink and bone with full-bleed cobalt poster slabs, Geist at billboard sizes with one serif-italic phrase per headline, and a logo of three isometric columns (three audited years, the newest in cobalt). Dark *Ink* by default, light *Paper* one click away, a ⌘K palette for 13,000+ companies, and a full-screen menu on phones and tablets.
+- **Landing first, three ways in.** The site opens on a 3D landing page with *Create account*, *Log in* and *Continue as guest* (in the hero and again under "How it works"). Guest mode is one click: the full app with a sample watchlist and comparison, kept only in this tab (`sessionStorage`) and never sent anywhere, under a "Guest mode — nothing is saved" banner. Accounts use Supabase e-mail + password and sync settings to an owner-only row (`supabase/migrations/`); they switch on when `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` are set, and the live site currently runs guest-only.
 - **A 3D hero you can pick up.** On the Overview, each fiscal year is a column on a blueprint floor (three.js / react-three-fiber): one scale, zero at the floor, losses hanging below it. Drag to turn it (it springs back), tap a column to read that year. three.js loads lazily, phones get a lighter scene, rendering pauses off screen, and browsers without WebGL get a flat bar chart instead.
 - **Motion with a purpose.** Spring-loaded headlines, KPIs that count up to the exact reported figure and can be pulled and let go (mouse only; touch always scrolls), bars that grow from zero, press ripples on every control. All of it is off under `prefers-reduced-motion`. See [web/DESIGN.md](web/DESIGN.md) and the in-app [brand kit](https://financial-intelligence-v7.vercel.app/brand).
 - **A secure Gemini assistant.** The key stays server-side, only free-tier models are allowlisted, and abuse limits are enforced on the server.
 - **Deployed on Vercel** (static front end + Python serverless API), plus a one-click Windows executable.
 
 > Educational research tool. It shows **reported annual financial statements**, not stock prices or real-time data, and it gives no investment advice.
+
+![The Financial Intelligence landing page: a cobalt poster headline, a 3D skyline of Apple's revenue, and Create account / Log in / Continue as guest](docs/screenshots/web-landing-desktop.png)
 
 ![Financial Intelligence — Apple Inc. on a cobalt poster with a 3D skyline of its fiscal years](docs/screenshots/web-overview-desktop.png)
 
@@ -33,8 +36,8 @@ What it does:
 | ![Watchlist of followed companies with plain-English filings](docs/screenshots/web-watchlist-desktop.png) | ![Side-by-side ratios, amounts and trends](docs/screenshots/web-compare-desktop.png) |
 | **Statements** | **Plain-English insights** |
 | ![Income statement with one scale, derived and restated markers](docs/screenshots/web-statements-desktop.png) | ![Insights that explain how each number is worked out](docs/screenshots/web-insights-desktop.png) |
-| **Brand kit** | |
-| ![The brand kit: the logo in 3D on cobalt, logo variants, colours and type](docs/screenshots/web-brand-desktop.png) | |
+| **Brand kit** | **How it works: three ways in** |
+| ![The brand kit: the logo in 3D on cobalt, logo variants, colours and type](docs/screenshots/web-brand-desktop.png) | ![How it works: three steps and the Create account, Log in and Continue as guest cards](docs/screenshots/web-entry-desktop.png) |
 
 <p align="center">
   <img src="docs/screenshots/web-overview-mobile.png" alt="Overview on a phone with the lighter 3D skyline" width="220" />
@@ -42,6 +45,10 @@ What it does:
   <img src="docs/screenshots/web-screener-mobile.png" alt="Screener on a phone" width="220" />
   &nbsp;&nbsp;
   <img src="docs/screenshots/web-menu-mobile.png" alt="Full-screen cobalt menu on a phone" width="220" />
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/web-login-mobile.png" alt="Log in on a phone, with Continue as guest" width="220" />
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/web-guest-mobile.png" alt="Guest mode banner on a phone" width="220" />
 </p>
 
 *Screenshots of the web app with live SEC data (November 2026). The `01_…`–`12_…` images in `docs/screenshots/` are the Streamlit desktop version.*

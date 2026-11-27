@@ -1,9 +1,14 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { useAuth } from './auth'
 import type { Unit } from './format'
+import { loadRemoteSettings, saveRemoteSettings, type RemoteSettings } from './supabase'
 
-// App-wide view settings. The selected company lives in the URL (?t=AAPL) so links are shareable;
-// everything else is a per-browser preference kept in localStorage (wrapped: storage can be unavailable).
+// App-wide view settings. The selected company lives in the URL (?t=AAPL) so links are shareable.
+// Where the rest is kept depends on how the visitor entered:
+//  - guest: sessionStorage only (this tab), starting from sample values; nothing leaves the browser.
+//  - signed in: a per-user localStorage cache, synced to the user's own row in Supabase (RLS: owner only).
+// Storage access is wrapped: it can be unavailable (private mode, blocked cookies).
 
 export const MAX_COMPARE = 6
 export const DEFAULT_COMPARE = ['AAPL', 'MSFT', 'GOOGL', 'NVDA']
@@ -12,16 +17,29 @@ export const YEAR_OPTIONS = [3, 4, 5, 6, 7, 8, 10]
 export const MAX_WATCH = 15
 export const DEFAULT_WATCH = ['AAPL', 'MSFT', 'NVDA']
 
+type Store = { area: 'local' | 'session'; prefix: string }
+let store: Store = { area: 'local', prefix: 'fip.' }
+const area = () => (store.area === 'session' ? sessionStorage : localStorage)
+
 function read<T>(key: string, fallback: T): T {
   try {
-    const raw = localStorage.getItem(key)
+    const raw = area().getItem(store.prefix + key.replace(/^fip\./, ''))
     return raw === null ? fallback : (JSON.parse(raw) as T)
   } catch {
     return fallback
   }
 }
 function write(key: string, value: unknown) {
-  try { localStorage.setItem(key, JSON.stringify(value)) } catch { /* private mode etc. */ }
+  try { area().setItem(store.prefix + key.replace(/^fip\./, ''), JSON.stringify(value)) } catch { /* private mode etc. */ }
+}
+
+/** The guest's current values, if this tab has a guest session — used to seed a brand-new account. */
+function guestSnapshot(): RemoteSettings | null {
+  try {
+    const get = (k: string) => { const v = sessionStorage.getItem('fip.g.' + k); return v === null ? undefined : JSON.parse(v) }
+    const snap: RemoteSettings = { watchlist: get('watchlist'), compare: get('compare'), unit: get('unit'), years: get('years'), symbol: get('symbol') }
+    return Object.values(snap).some(v => v !== undefined) ? snap : null
+  } catch { return null }
 }
 
 type Settings = {
@@ -44,7 +62,15 @@ type Settings = {
 
 const Ctx = createContext<Settings | null>(null)
 
+/** Picks the storage for the current entry mode and remounts the settings when it changes (sign in / out). */
 export function SettingsProvider({ children }: { children: ReactNode }) {
+  const { mode, user } = useAuth()
+  const ns = mode === 'user' && user ? `u:${user.id}` : mode === 'guest' ? 'guest' : 'none'
+  store = mode === 'user' && user ? { area: 'local', prefix: `fip.u.${user.id}.` } : mode === 'guest' ? { area: 'session', prefix: 'fip.g.' } : { area: 'local', prefix: 'fip.' }
+  return <SettingsState key={ns} userId={mode === 'user' ? user?.id : undefined}>{children}</SettingsState>
+}
+
+function SettingsState({ children, userId }: { children: ReactNode; userId?: string }) {
   const [params, setParams] = useSearchParams()
   const urlSymbol = (params.get('t') ?? '').toUpperCase().slice(0, 12)
   const [storedSymbol, setStoredSymbol] = useState<string>(() => read('fip.symbol', DEFAULT_SYMBOL))
@@ -103,6 +129,33 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       return next
     })
   }, [])
+
+  // Signed in: pull the user's row once, then push changes (debounced). A new account starts from the guest's values.
+  const synced = useRef(false)
+  useEffect(() => {
+    if (!userId) return
+    let alive = true
+    loadRemoteSettings(userId).then(remote => {
+      if (!alive) return
+      const seed = remote ?? guestSnapshot()
+      if (seed) {
+        if (seed.watchlist) { setWatchlist(seed.watchlist); write('fip.watchlist', seed.watchlist) }
+        if (seed.compare) { setCompareState(seed.compare); write('fip.compare', seed.compare) }
+        if (seed.unit) { setUnitState(seed.unit as Unit); write('fip.unit', seed.unit) }
+        if (seed.years) { setYearsState(seed.years); write('fip.years', seed.years) }
+        if (seed.lastSeen) { setLastSeen(seed.lastSeen); write('fip.lastSeen', seed.lastSeen) }
+      }
+      synced.current = true
+    }).catch(() => { synced.current = true })
+    return () => { alive = false }
+  }, [userId])
+  useEffect(() => {
+    if (!userId || !synced.current) return
+    const id = window.setTimeout(() => {
+      saveRemoteSettings(userId, { watchlist, compare, unit, years, lastSeen, symbol }).catch(() => setToast('Couldn’t save to your account just now — your changes are kept in this browser'))
+    }, 800)
+    return () => window.clearTimeout(id)
+  }, [userId, watchlist, compare, unit, years, lastSeen, symbol])
 
   const value = useMemo(() => ({
     symbol, setSymbol, unit, setUnit, years, setYears, compare, setCompare, addToCompare, toast, notify: setToast,

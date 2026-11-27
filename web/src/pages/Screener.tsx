@@ -39,7 +39,7 @@ export function Screener() {
     const v = r[k]
     return METRICS.find(m => m.id === k)!.kind === 'money' ? formatMoney(v, 'USD', unit) : formatPercent(v, 1)
   }
-  const open = (s: string) => { setSymbol(s); navigate({ pathname: '/', search: `?t=${s}` }) }
+  const open = (s: string) => { setSymbol(s); navigate({ pathname: '/overview', search: `?t=${s}` }) }
 
   return (
     <>

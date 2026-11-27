@@ -59,7 +59,7 @@ export function Watchlist() {
                 <header>
                   <span className="ticker">{item.symbol}</span>
                   <h2 id={`w-${item.symbol}`}>{item.name}</h2>
-                  {item.ok && <Link className="more" to={{ pathname: '/', search: `?t=${item.symbol}` }} onClick={() => setSymbol(item.symbol)}>Open →</Link>}
+                  {item.ok && <Link className="more" to={{ pathname: '/overview', search: `?t=${item.symbol}` }} onClick={() => setSymbol(item.symbol)}>Open →</Link>}
                 </header>
                 {item.ok ? <FilingsList events={item.events} since={seenAtLoad.current?.[item.symbol]} compact />
                   : <p className="caption">{item.error}</p>}

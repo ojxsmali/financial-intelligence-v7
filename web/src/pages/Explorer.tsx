@@ -87,7 +87,7 @@ export function Explorer() {
                           <td className="name">{r.name}</td><td>{r.exchange}</td><td>{r.instrument_type}</td>
                           <td>{r.sector === 'Unclassified' ? '—' : r.sector}</td><td>{r.country || '—'}</td><td className="mono">{r.cik ?? '—'}</td>
                           <td className="actions">
-                            <button className="btn sm" onClick={() => { setSymbol(r.symbol); navigate({ pathname: '/', search: `?t=${r.symbol}` }) }} aria-label={`Open ${r.symbol} in Overview`}>Open</button>
+                            <button className="btn sm" onClick={() => { setSymbol(r.symbol); navigate({ pathname: '/overview', search: `?t=${r.symbol}` }) }} aria-label={`Open ${r.symbol} in Overview`}>Open</button>
                             {usable && <button className="btn ghost sm" aria-label={`Add ${r.symbol} to comparison`}
                               onClick={() => notify(addToCompare(r.symbol) === 'added' ? `${r.symbol} added to the comparison` : `${r.symbol} is already in the comparison`)}>Compare</button>}
                           </td>

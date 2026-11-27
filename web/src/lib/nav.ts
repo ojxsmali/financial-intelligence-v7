@@ -1,6 +1,6 @@
 /** Site map: the masthead, the mobile menu, the ⌘K palette and the page headers' "03 / 10" index all read this. */
 export const NAV = [
-  { to: '/', label: 'Overview' },
+  { to: '/overview', label: 'Overview' },
   { to: '/watchlist', label: 'Watchlist' },
   { to: '/screener', label: 'Screener' },
   { to: '/explorer', label: 'Explorer' },

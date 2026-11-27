@@ -1,7 +1,7 @@
 {
   "name": "fip-web",
   "private": true,
-  "version": "7.8.0",
+  "version": "7.9.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -17,6 +17,7 @@
     "@fontsource/libre-caslon-condensed": "^5.3.1",
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.2",
+    "@supabase/supabase-js": "^2.119.2",
     "@tanstack/react-query": "^5.108.2",
     "motion": "^12.43.0",
     "react": "^19.3.1",

@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState, type ReactNode } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { api, getContact, setContact } from '../lib/api'
+import { useAuth } from '../lib/auth'
 import type { Unit } from '../lib/format'
 import { useSettings, YEAR_OPTIONS } from '../lib/settings'
 import { NAV } from '../lib/nav'
@@ -24,9 +25,11 @@ export function Layout({ children }: { children: ReactNode }) {
   const { pathname } = useLocation()
   const meta = useQuery({ queryKey: ['meta'], queryFn: api.meta, staleTime: 10 * 60_000 })
   const search = `?t=${encodeURIComponent(symbol)}`
-  const companyPage = ['/', '/statements', '/insights', '/sources'].includes(pathname)
+  const companyPage = ['/overview', '/statements', '/insights', '/sources'].includes(pathname)
   const [palette, setPalette] = useState(false)
   const [menu, setMenu] = useState(false)
+  const { mode, user, signOut, leaveGuest } = useAuth()
+  const leave = async () => { if (mode === 'user') await signOut(); else leaveGuest(); navigate('/', { state: { home: true } }) }
   useEffect(() => { setMenu(false) }, [pathname])
   useEffect(() => {
     document.documentElement.classList.toggle('menu-open', menu)
@@ -51,13 +54,13 @@ export function Layout({ children }: { children: ReactNode }) {
       <a className="skip" href="#main">Skip to content</a>
       <header className="masthead-bar">
         <div className="bar-inner">
-          <NavLink to={{ pathname: '/', search }} className="brand" aria-label="Financial Intelligence — home">
+          <NavLink to="/" state={{ home: true }} className="brand" aria-label="Financial Intelligence — home page">
             <LogoMark />
             <Wordmark className="brand-name" />
           </NavLink>
           <nav aria-label="Pages" className="nav">
             {MAIN_NAV.map(n => (
-              <NavLink key={n.to} to={{ pathname: n.to, search }} end={n.to === '/'}>
+              <NavLink key={n.to} to={{ pathname: n.to, search }} end>
                 {({ isActive }) => (
                   <>
                     {isActive && <motion.span layoutId="fi-nav-pill" className="nav-pill" transition={{ type: 'spring', stiffness: 500, damping: 38 }} />}
@@ -88,12 +91,16 @@ export function Layout({ children }: { children: ReactNode }) {
               {NAV.map((n, i) => (
                 <motion.li key={n.to} initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }}
                   transition={{ type: 'spring', stiffness: 320, damping: 24, delay: 0.06 + i * 0.035 }}>
-                  <NavLink to={{ pathname: n.to, search }} end={n.to === '/'} onClick={() => setMenu(false)}>
+                  <NavLink to={{ pathname: n.to, search }} end onClick={() => setMenu(false)}>
                     <span className="menu-no">{String(i + 1).padStart(2, '0')}</span>{n.label}
                   </NavLink>
                 </motion.li>
               ))}
             </ol>
+            <div className="menu-acct">
+              {mode === 'guest' && <><Link className="btn bone" to="/signup" onClick={() => setMenu(false)}>Create account</Link><Link className="btn ghost-bone" to="/login" onClick={() => setMenu(false)}>Log in</Link></>}
+              {mode !== 'none' && <button type="button" className="btn ghost-bone" onClick={() => { setMenu(false); void leave() }}>{mode === 'user' ? `Sign out${user ? ` (${user.email})` : ''}` : 'Exit guest mode'}</button>}
+            </div>
             <p className="menu-foot">Designed &amp; built by {AUTHOR.name} · SEC EDGAR data, not advice</p>
           </motion.nav>
         )}
@@ -115,6 +122,13 @@ export function Layout({ children }: { children: ReactNode }) {
           </div>
           <div className="tool-display">
             <Segmented label="Display units" options={UNITS} value={unit} onChange={setUnit} size="sm" />
+            <div className="acct">
+              {mode === 'none' ? <Link className="btn sm primary" to="/">Get started</Link> : <>
+                {mode === 'user' && user ? <span className="acct-id" title={user.email}><span className="acct-dot" aria-hidden="true">{user.email.slice(0, 1).toUpperCase()}</span><span className="acct-mail">{user.email}</span></span>
+                  : <span className="acct-id guest"><span className="acct-dot" aria-hidden="true">G</span>Guest</span>}
+                <button type="button" className="btn sm ghost" onClick={leave}>{mode === 'user' ? 'Sign out' : 'Exit guest'}</button>
+              </>}
+            </div>
             <label className="years">
               <span>Years</span>
               <select value={years} onChange={e => setYears(Number(e.target.value))} aria-label="Fiscal years shown">
@@ -124,6 +138,18 @@ export function Layout({ children }: { children: ReactNode }) {
           </div>
         </div>
       </div>
+
+      {mode === 'guest' && (
+        <div className="guest-banner" role="status">
+          <div className="bar-inner guest-inner">
+            <p><b>Guest mode</b> — nothing is saved. Create an account to keep your work.</p>
+            <div className="guest-actions">
+              <Link className="btn sm bone" to="/signup">Create account</Link>
+              <Link className="btn sm ghost-bone" to="/login">Log in</Link>
+            </div>
+          </div>
+        </div>
+      )}
 
       {meta.data && !meta.data.sec_contact_configured && companyPage && <ContactNotice />}
 

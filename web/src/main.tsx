@@ -7,12 +7,15 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MotionConfig } from 'motion/react'
 import React, { StrictMode, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Link, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, Link, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import { Layout } from './components/Layout'
 import { EmptyState, ErrorBoundary } from './components/ui'
 import { reportClientError } from './lib/api'
+import { AuthProvider, useAuth } from './lib/auth'
 import { SettingsProvider } from './lib/settings'
 import { Assistant } from './pages/Assistant'
+import { AuthPage } from './pages/AuthPage'
+import { Landing } from './pages/Landing'
 import { Brand } from './pages/Brand'
 import { Compare } from './pages/Compare'
 import { Explorer } from './pages/Explorer'
@@ -26,7 +29,7 @@ import { Watchlist } from './pages/Watchlist'
 const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } })
 
 const TITLES: Record<string, string> = {
-  '/': 'Overview', '/explorer': 'Explorer', '/compare': 'Compare', '/statements': 'Statements',
+  '/overview': 'Overview', '/explorer': 'Explorer', '/compare': 'Compare', '/statements': 'Statements',
   '/insights': 'Insights', '/assistant': 'Assistant', '/sources': 'Sources', '/screener': 'Screener', '/watchlist': 'Watchlist', '/brand': 'Brand kit',
 }
 
@@ -34,7 +37,9 @@ const TITLES: Record<string, string> = {
 function RouteEffects() {
   const { pathname } = useLocation()
   useEffect(() => {
-    document.title = `${TITLES[pathname] ?? 'Not found'} · Financial Intelligence`
+    document.title = pathname === '/' ? 'Financial Intelligence — audited fundamentals for every US-listed company'
+      : pathname === '/login' ? 'Log in · Financial Intelligence' : pathname === '/signup' ? 'Create account · Financial Intelligence'
+      : `${TITLES[pathname] ?? 'Not found'} · Financial Intelligence`
     const main = document.getElementById('main')
     if (main && document.activeElement !== document.body) main.focus({ preventScroll: true })
     window.scrollTo(0, 0)
@@ -45,6 +50,15 @@ function RouteEffects() {
 function RoutedBoundary({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation()
   return <ErrorBoundary resetKey={pathname}>{children}</ErrorBoundary>
+}
+
+/** The app itself: open to guests and signed-in users. Anyone else starts on the landing page, then comes back here. */
+function AppShell() {
+  const { ready, mode } = useAuth()
+  const { pathname, search } = useLocation()
+  if (!ready) return <div className="entry-wait" role="status"><span className="loader" aria-hidden="true">{[0, 1, 2, 3, 4].map(i => <i key={i} style={{ ['--i' as string]: i }} />)}</span><span className="sr-only">Loading…</span></div>
+  if (mode === 'none' && pathname !== '/brand') return <Navigate to={`/?next=${encodeURIComponent(pathname + search)}`} replace />
+  return <Layout><RoutedBoundary><Outlet /></RoutedBoundary></Layout>
 }
 
 // Press feedback: every button-like control gets a ripple from the exact point it was pressed.
@@ -74,12 +88,15 @@ createRoot(document.getElementById('root')!).render(
     <MotionConfig reducedMotion="user">
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+        <AuthProvider>
         <SettingsProvider>
           <RouteEffects />
-          <Layout>
-            <RoutedBoundary>
-            <Routes>
-              <Route path="/" element={<Overview />} />
+          <Routes>
+            <Route path="/" element={<RoutedBoundary><Landing /></RoutedBoundary>} />
+            <Route path="/login" element={<RoutedBoundary><AuthPage kind="login" /></RoutedBoundary>} />
+            <Route path="/signup" element={<RoutedBoundary><AuthPage kind="signup" /></RoutedBoundary>} />
+            <Route element={<AppShell />}>
+              <Route path="/overview" element={<Overview />} />
               <Route path="/watchlist" element={<Watchlist />} />
               <Route path="/screener" element={<Screener />} />
               <Route path="/explorer" element={<Explorer />} />
@@ -90,12 +107,12 @@ createRoot(document.getElementById('root')!).render(
               <Route path="/sources" element={<Sources />} />
               <Route path="/brand" element={<Brand />} />
               <Route path="*" element={<EmptyState kicker="404 · no such page" title="This page isn’t in the filing."
-                action={<><Link className="btn primary" to="/">Back to the overview</Link><Link className="btn" to="/screener">Open the screener</Link></>}>
+                action={<><Link className="btn primary" to="/overview">Back to the overview</Link><Link className="btn" to="/screener">Open the screener</Link></>}>
                 The address may be mistyped, or the page has moved. Every company is one search away: press <kbd>/</kbd>.</EmptyState>} />
-            </Routes>
-            </RoutedBoundary>
-          </Layout>
+            </Route>
+          </Routes>
         </SettingsProvider>
+        </AuthProvider>
       </BrowserRouter>
     </QueryClientProvider>
     </MotionConfig>

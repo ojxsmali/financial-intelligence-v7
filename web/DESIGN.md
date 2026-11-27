@@ -4,7 +4,14 @@ The annual report as a poster you can pick up. Ink and bone, with full-bleed cob
 
 The live reference is the in-app brand kit at `/brand`.
 
-## Mark
+## Entry flow (shared with PayFlow and FinTrack)
+
+`/` is a landing page: cobalt hero with the 3D skyline (Apple's reported revenue, loaded from the API), and three actions — **Create account**, **Log in**, **Continue as guest** — in the hero and again as cards under "How it works". The app lives at `/overview`, `/screener`, … behind `AppShell` (`src/main.tsx`): a visitor who hasn't entered is sent to `/?next=<path>` and returned there afterwards (`safeNext` only follows same-site paths). Signed-in visitors skip the landing page; the logo always returns to it (`state.home`).
+
+- **Guest:** `sessionStorage['fip.guest']`; settings under `fip.g.*` in `sessionStorage`, starting from the sample watchlist/comparison. A striped cobalt banner says "Guest mode — nothing is saved. Create an account to keep your work".
+- **Account:** `src/lib/auth.tsx` (Supabase e-mail + password, client loaded on demand from `src/lib/supabase.ts`). Settings cache under `fip.u.<id>.*` and sync, debounced, to `public.fi_settings` (owner-only RLS). A new account is seeded from the guest's values.
+- Auth pages (`/login`, `/signup`) are a bone card on the cobalt grid, with "or continue as guest" and visitor-safe error text.
+
 
 Three isometric columns rising left to right: three audited years, the newest in cobalt. The geometry lives in one place, `src/lib/brandMark.ts` (`MARK_COLUMNS`, `markFaces`, `markSvg`), and drives:
 

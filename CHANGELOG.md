@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.9.0 — 2026-11-27 · Landing page and three ways in
+
+- The site now opens on a 3D landing page (Apple's audited revenue as a skyline you can turn and tap) with Create account, Log in and Continue as guest, in the hero and again under "How it works". The Overview moved to `/overview`; deep links send first-time visitors to the landing page and on to the page they asked for.
+- Guest mode: one click, full app, sample watchlist and comparison, kept in `sessionStorage` only, with a "Guest mode — nothing is saved" banner and an Exit guest control.
+- Accounts (Supabase e-mail + password, lazy-loaded): log in / create account pages with "or continue as guest", per-user settings synced to an owner-only `fi_settings` row (RLS migration in `supabase/migrations/`); a new account starts from the guest's companies. Off until `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` are set — the live site is guest-only for now.
+
 ## 7.8.0 — 2026-11-27 · Cobalt Blueprint
 
 - New identity: a logo of three isometric columns (three audited years, the newest in cobalt), generated from one geometry for the header, favicons, PWA icons, the Open Graph card and the GitHub social preview (`web/scripts/render-brand.mjs`). New in-app brand kit at `/brand` with a 3D logo you can flick.

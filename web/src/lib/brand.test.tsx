@@ -27,7 +27,7 @@ describe('brand mark', () => {
 
 describe('site map', () => {
   it('numbers pages for the header index', () => {
-    expect(pageIndex('/')).toEqual({ n: '01', of: String(NAV.length).padStart(2, '0') })
+    expect(pageIndex('/overview')).toEqual({ n: '01', of: String(NAV.length).padStart(2, '0') })
     expect(pageIndex('/brand')?.n).toBe(String(NAV.length).padStart(2, '0'))
     expect(pageIndex('/nope')).toBeNull()
   })
