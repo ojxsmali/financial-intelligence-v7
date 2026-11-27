@@ -14,14 +14,15 @@ What it does:
 
 - **13,000+ US exchange-listed securities** are searchable, rebuilt daily from official exchange directories. About 5,600 of them are operating companies.
 - **Audited annual statements** come straight from SEC XBRL (10-K / 20-F / 40-F), with correct units, fiscal periods and filing links.
-- **A market terminal.** *Terminal* (the default) — near-black panels, an amber signal colour and cyan data accents, with JetBrains Mono figures — and *Paper*, a light research-note theme one click away. Space Grotesk headings, Instrument Sans text, a ⌘K command palette for 13,000+ companies, and accessible charts (legend, keyboard tooltips, data-table alternative, a colour-blind-validated palette per theme). Responsive down to 320 px.
-- **Motion with a purpose.** KPIs count up to the exact reported figure, bars grow from the zero line, lines wipe in and pages settle on navigation; all of it is off under `prefers-reduced-motion`. See [web/DESIGN.md](web/DESIGN.md).
+- **"Cobalt Blueprint" design (v7.8).** Ink and bone with full-bleed cobalt poster slabs, Geist at billboard sizes with one serif-italic phrase per headline, and a logo of three isometric columns (three audited years, the newest in cobalt). Dark *Ink* by default, light *Paper* one click away, a ⌘K palette for 13,000+ companies, and a full-screen menu on phones and tablets.
+- **A 3D hero you can pick up.** On the Overview, each fiscal year is a column on a blueprint floor (three.js / react-three-fiber): one scale, zero at the floor, losses hanging below it. Drag to turn it (it springs back), tap a column to read that year. three.js loads lazily, phones get a lighter scene, rendering pauses off screen, and browsers without WebGL get a flat bar chart instead.
+- **Motion with a purpose.** Spring-loaded headlines, KPIs that count up to the exact reported figure and can be pulled and let go (mouse only; touch always scrolls), bars that grow from zero, press ripples on every control. All of it is off under `prefers-reduced-motion`. See [web/DESIGN.md](web/DESIGN.md) and the in-app [brand kit](https://financial-intelligence-v7.vercel.app/brand).
 - **A secure Gemini assistant.** The key stays server-side, only free-tier models are allowlisted, and abuse limits are enforced on the server.
 - **Deployed on Vercel** (static front end + Python serverless API), plus a one-click Windows executable.
 
 > Educational research tool. It shows **reported annual financial statements**, not stock prices or real-time data, and it gives no investment advice.
 
-![Financial Intelligence — Apple Inc. overview: KPI strip, revenue and margin charts](docs/screenshots/web-overview-desktop.png)
+![Financial Intelligence — Apple Inc. on a cobalt poster with a 3D skyline of its fiscal years](docs/screenshots/web-overview-desktop.png)
 
 | ⌘K command palette | Paper theme |
 |---|---|
@@ -32,11 +33,15 @@ What it does:
 | ![Watchlist of followed companies with plain-English filings](docs/screenshots/web-watchlist-desktop.png) | ![Side-by-side ratios, amounts and trends](docs/screenshots/web-compare-desktop.png) |
 | **Statements** | **Plain-English insights** |
 | ![Income statement with one scale, derived and restated markers](docs/screenshots/web-statements-desktop.png) | ![Insights that explain how each number is worked out](docs/screenshots/web-insights-desktop.png) |
+| **Brand kit** | |
+| ![The brand kit: the logo in 3D on cobalt, logo variants, colours and type](docs/screenshots/web-brand-desktop.png) | |
 
 <p align="center">
-  <img src="docs/screenshots/web-overview-mobile.png" alt="Overview on a phone" width="240" />
+  <img src="docs/screenshots/web-overview-mobile.png" alt="Overview on a phone with the lighter 3D skyline" width="220" />
   &nbsp;&nbsp;
-  <img src="docs/screenshots/web-screener-mobile.png" alt="Screener on a phone" width="240" />
+  <img src="docs/screenshots/web-screener-mobile.png" alt="Screener on a phone" width="220" />
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/web-menu-mobile.png" alt="Full-screen cobalt menu on a phone" width="220" />
 </p>
 
 *Screenshots of the web app with live SEC data (November 2026). The `01_…`–`12_…` images in `docs/screenshots/` are the Streamlit desktop version.*
@@ -253,6 +258,8 @@ data/                     bundled snapshots (universe, SEC profiles, 53 companie
 tests/                    pytest suite (+ trimmed real SEC fixtures)
 ```
 ## Design decisions (2026-11 redesign)
+
+*This section covers the Streamlit desktop app. The web app's design system ("Cobalt Blueprint", 3D hero, logo and brand kit) is documented in [web/DESIGN.md](web/DESIGN.md).*
 
 The full pre-redesign review is in [docs/REVIEW.md](docs/REVIEW.md).
 

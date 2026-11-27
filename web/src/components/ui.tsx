@@ -1,16 +1,27 @@
-import { motion } from 'motion/react'
+import { motion, useDragControls } from 'motion/react'
 import { Component, useEffect, useId, useRef, type KeyboardEvent, type ReactNode } from 'react'
+import { useLocation } from 'react-router-dom'
 import { MESSAGES, RequestError, reportClientError, type Insight } from '../lib/api'
+import { pageIndex } from '../lib/nav'
 
 /** Poster-sized page title: a plain statement, optionally closed by one serif-italic phrase. */
 export function PageHeader({ eyebrow, title, accent, sub }: { eyebrow: string; title: string; accent?: string; sub?: string }) {
+  const idx = pageIndex(useLocation().pathname)
+  const words = title.split(' ')
   return (
     <header className="page-head">
-      <div className="eyebrow">{eyebrow}</div>
-      <motion.h1 initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }}
-        transition={{ type: 'spring', stiffness: 200, damping: 24 }}>
-        {title}{accent && <> <em>{accent}</em></>}
-      </motion.h1>
+      <div className="page-tag">
+        {idx && <span className="page-no" aria-hidden="true">{idx.n}<span>/{idx.of}</span></span>}
+        <span className="eyebrow">{eyebrow}</span>
+      </div>
+      <h1>
+        {words.map((w, i) => (
+          <motion.span key={i} className="w" initial={{ opacity: 0, y: '0.6em', rotate: 4 }} animate={{ opacity: 1, y: 0, rotate: 0 }}
+            transition={{ type: 'spring', stiffness: 260, damping: 20, delay: i * 0.05 }}>{w}{' '}</motion.span>
+        ))}
+        {accent && <motion.em initial={{ opacity: 0, x: -18 }} animate={{ opacity: 1, x: 0 }}
+          transition={{ type: 'spring', stiffness: 200, damping: 18, delay: words.length * 0.05 + 0.05 }}>{accent}</motion.em>}
+      </h1>
       {sub && <p className="sub">{sub}</p>}
     </header>
   )
@@ -21,7 +32,7 @@ export function Section({ title, sub, children, aside }: { title: string; sub?: 
   const id = useId()
   return (
     <motion.section className="section" aria-labelledby={id}
-      initial={{ opacity: 0, y: 30, filter: 'blur(4px)' }} whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      initial={{ y: 28 }} whileInView={{ y: 0 }}
       viewport={{ once: true, margin: '0px 0px -8% 0px' }} transition={{ type: 'spring', stiffness: 120, damping: 20 }}>
       <div className="section-head">
         <div><h2 id={id}>{title}</h2>{sub && <p className="section-sub">{sub}</p>}</div>
@@ -40,6 +51,7 @@ export function Notice({ kind = 'warn', children }: { kind?: 'warn' | 'info' | '
 export function EmptyState({ kicker = 'Nothing to show', title, children, action }: { kicker?: string; title: string; children?: ReactNode; action?: ReactNode }) {
   return (
     <div className="empty" role="status">
+      <div className="empty-glyph" aria-hidden="true"><i /><i /><i /></div>
       <div className="empty-k">{kicker}</div>
       <h2>{title}</h2>
       {children && <div className="empty-b">{children}</div>}
@@ -105,26 +117,33 @@ export type Kpi = { label: string; value: string; delta?: string; direction?: 'u
 
 const GLYPH = { up: '▲', down: '▼', flat: '' }
 
+function KpiTile({ k, i }: { k: Kpi; i: number }) {
+  // Pull-and-release is a mouse toy only: on touch screens a drag must always scroll the page.
+  const controls = useDragControls()
+  return (
+    <motion.div className={k.available === false ? 'kpi na' : 'kpi'}
+      drag dragControls={controls} dragListener={false} dragSnapToOrigin dragElastic={0.45} dragTransition={{ bounceStiffness: 420, bounceDamping: 14 }}
+      onPointerDown={e => { if (e.pointerType === 'mouse') controls.start(e) }}
+      whileDrag={{ scale: 1.06, rotate: -2, zIndex: 5 }} whileHover={{ y: -4 }} whileTap={{ scale: 0.96 }}
+      initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ type: 'spring', stiffness: 260, damping: 24, delay: i * 0.05 }}
+      onPointerMove={spotlight}>
+      <dt className="kpi-label">
+        {k.label}
+        {k.tip && <abbr className="def" title={k.tip} aria-label={`Definition: ${k.tip}`}>i</abbr>}
+      </dt>
+      <dd className="kpi-value"><Figure text={k.value} /></dd>
+      <dd className="kpi-foot">
+        {k.delta && <span className={`delta ${k.direction ?? 'flat'}`}>{k.direction && GLYPH[k.direction] && <span aria-hidden="true">{GLYPH[k.direction]} </span>}{k.delta}</span>}
+        {k.foot && <span>{k.foot}</span>}
+      </dd>
+    </motion.div>
+  )
+}
+
 export function KpiStrip({ items, label }: { items: Kpi[]; label: string }) {
   return (
     <dl className="kpis" aria-label={label}>
-      {items.map((k, i) => (
-        <motion.div key={k.label} className={k.available === false ? 'kpi na' : 'kpi'}
-          drag dragSnapToOrigin dragElastic={0.45} dragTransition={{ bounceStiffness: 420, bounceDamping: 14 }}
-          whileDrag={{ scale: 1.06, rotate: -1.5, zIndex: 5 }} whileHover={{ y: -4 }} whileTap={{ scale: 0.97 }}
-          initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ type: 'spring', stiffness: 260, damping: 24, delay: i * 0.05 }}
-          onPointerMove={spotlight}>
-          <dt className="kpi-label">
-            {k.label}
-            {k.tip && <abbr className="def" title={k.tip} aria-label={`Definition: ${k.tip}`}>i</abbr>}
-          </dt>
-          <dd className="kpi-value"><Figure text={k.value} /></dd>
-          <dd className="kpi-foot">
-            {k.delta && <span className={`delta ${k.direction ?? 'flat'}`}>{k.direction && GLYPH[k.direction] && <span aria-hidden="true">{GLYPH[k.direction]} </span>}{k.delta}</span>}
-            {k.foot && <span>{k.foot}</span>}
-          </dd>
-        </motion.div>
-      ))}
+      {items.map((k, i) => <KpiTile key={k.label} k={k} i={i} />)}
     </dl>
   )
 }
@@ -132,6 +151,7 @@ export function KpiStrip({ items, label }: { items: Kpi[]; label: string }) {
 export function Skeleton({ message = 'Loading annual filings from SEC EDGAR…' }: { message?: string }) {
   return (
     <div role="status" aria-live="polite" className="skeleton">
+      <div className="loader" aria-hidden="true">{Array.from({ length: 5 }, (_, i) => <i key={i} style={{ ['--i' as string]: i }} />)}</div>
       <p className="loading">{message}</p>
       <div className="kpis" aria-hidden="true">
         {Array.from({ length: 6 }, (_, i) => <div className="kpi" key={i}><div className="skel" style={{ height: 12, width: '60%' }} /><div className="skel" style={{ height: 26, width: '80%', marginTop: 10 }} /></div>)}

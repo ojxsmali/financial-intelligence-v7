@@ -1,6 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="7" fill="#0D0D0D"/>
-  <rect x="7" y="17" width="5" height="8" rx="1" fill="#F3F1EC"/>
-  <rect x="13.5" y="12" width="5" height="13" rx="1" fill="#F3F1EC"/>
-  <rect x="20" y="6" width="5" height="19" rx="1" fill="#6F86FF"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64"><rect width="64" height="64" rx="14.08" fill="#0B0B0D"/><g transform="translate(10.24 10.24)" stroke-linejoin="round"><polygon points="2.27,24.01 10.93,29.01 10.93,17.51 2.27,12.51" fill="#C8C5BD"/><polygon points="19.59,24.01 10.93,29.01 10.93,17.51 19.59,12.51" fill="#8E8B84"/><polygon points="10.93,7.50 19.59,12.51 10.93,17.51 2.27,12.51" fill="#F3F1EC"/><polygon points="13.10,30.26 21.76,35.27 21.76,15.76 13.10,10.75" fill="#C8C5BD"/><polygon points="30.42,30.26 21.76,35.27 21.76,15.76 30.42,10.75" fill="#8E8B84"/><polygon points="21.76,5.75 30.42,10.75 21.76,15.76 13.10,10.75" fill="#F3F1EC"/><polygon points="23.93,36.52 32.59,41.52 32.59,12.01 23.93,7.00" fill="#2E4BFF"/><polygon points="41.25,36.52 32.59,41.52 32.59,12.01 41.25,7.00" fill="#1A2BB8"/><polygon points="32.59,2.00 41.25,7.00 32.59,12.01 23.93,7.00" fill="#8C9EFF"/></g></svg>

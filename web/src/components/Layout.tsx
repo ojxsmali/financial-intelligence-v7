@@ -5,34 +5,14 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { api, getContact, setContact } from '../lib/api'
 import type { Unit } from '../lib/format'
 import { useSettings, YEAR_OPTIONS } from '../lib/settings'
+import { NAV } from '../lib/nav'
 import { CompanyPicker } from './CompanyPicker'
+import { LogoMark, Wordmark } from './Logo'
 import { Segmented } from './ui'
 
-/** Mark: three rising bars, the newest in the signal colour — audited figures, year after year. */
-export function LogoMark({ size = 30 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true" focusable="false" className="brand-mark">
-      <rect width="32" height="32" rx="7" fill="var(--ink)" />
-      <rect x="7" y="17" width="5" height="8" rx="1" fill="var(--bg)" />
-      <rect x="13.5" y="12" width="5" height="13" rx="1" fill="var(--bg)" />
-      <rect x="20" y="6" width="5" height="19" rx="1" fill="var(--accent)" />
-    </svg>
-  )
-}
+const MAIN_NAV = NAV.filter(n => n.to !== '/brand')
 
 export const AUTHOR = { name: 'Ojas Mali', url: 'https://github.com/ojxsmali' }
-
-const NAV = [
-  { to: '/', label: 'Overview' },
-  { to: '/watchlist', label: 'Watchlist' },
-  { to: '/screener', label: 'Screener' },
-  { to: '/explorer', label: 'Explorer' },
-  { to: '/compare', label: 'Compare' },
-  { to: '/statements', label: 'Statements' },
-  { to: '/insights', label: 'Insights' },
-  { to: '/assistant', label: 'Assistant' },
-  { to: '/sources', label: 'Sources' },
-]
 
 const UNITS: { id: Unit; label: string }[] = [
   { id: 'auto', label: 'Auto' }, { id: 'M', label: 'M' }, { id: 'B', label: 'B' }, { id: 'T', label: 'T' },
@@ -46,6 +26,11 @@ export function Layout({ children }: { children: ReactNode }) {
   const search = `?t=${encodeURIComponent(symbol)}`
   const companyPage = ['/', '/statements', '/insights', '/sources'].includes(pathname)
   const [palette, setPalette] = useState(false)
+  const [menu, setMenu] = useState(false)
+  useEffect(() => { setMenu(false) }, [pathname])
+  useEffect(() => {
+    document.documentElement.classList.toggle('menu-open', menu)
+  }, [menu])
   const navigate = useNavigate()
 
   // ⌘K / Ctrl+K (or "/" outside a field) opens the command palette.
@@ -55,7 +40,7 @@ export function Layout({ children }: { children: ReactNode }) {
       if ((e.key === 'k' && (e.metaKey || e.ctrlKey)) || (e.key === '/' && !typing)) {
         e.preventDefault()
         setPalette(p => !p)
-      } else if (e.key === 'Escape') setPalette(false)
+      } else if (e.key === 'Escape') { setPalette(false); setMenu(false) }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -68,13 +53,10 @@ export function Layout({ children }: { children: ReactNode }) {
         <div className="bar-inner">
           <NavLink to={{ pathname: '/', search }} className="brand" aria-label="Financial Intelligence — home">
             <LogoMark />
-            <span className="brand-text">
-              <span className="brand-name">Financial Intelligence</span>
-              <span className="brand-sub">SEC fundamentals</span>
-            </span>
+            <Wordmark className="brand-name" />
           </NavLink>
           <nav aria-label="Pages" className="nav">
-            {NAV.map(n => (
+            {MAIN_NAV.map(n => (
               <NavLink key={n.to} to={{ pathname: n.to, search }} end={n.to === '/'}>
                 {({ isActive }) => (
                   <>
@@ -90,22 +72,46 @@ export function Layout({ children }: { children: ReactNode }) {
             <span className="cmdk-text">Search</span><kbd>⌘K</kbd>
           </button>
           <ThemeToggle />
+          <button type="button" className="menu-btn" aria-expanded={menu} aria-controls="menu-sheet" onClick={() => setMenu(m => !m)}>
+            <span className="menu-icon" aria-hidden="true"><i /><i /></span>
+            <span>{menu ? 'Close' : 'Menu'}</span>
+          </button>
         </div>
       </header>
+
+      <AnimatePresence>
+        {menu && (
+          <motion.nav id="menu-sheet" className="menu-sheet" aria-label="All pages"
+            initial={{ clipPath: 'inset(0 0 100% 0)' }} animate={{ clipPath: 'inset(0 0 0% 0)' }} exit={{ clipPath: 'inset(0 0 100% 0)' }}
+            transition={{ type: 'spring', stiffness: 260, damping: 32 }}>
+            <ol>
+              {NAV.map((n, i) => (
+                <motion.li key={n.to} initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }}
+                  transition={{ type: 'spring', stiffness: 320, damping: 24, delay: 0.06 + i * 0.035 }}>
+                  <NavLink to={{ pathname: n.to, search }} end={n.to === '/'} onClick={() => setMenu(false)}>
+                    <span className="menu-no">{String(i + 1).padStart(2, '0')}</span>{n.label}
+                  </NavLink>
+                </motion.li>
+              ))}
+            </ol>
+            <p className="menu-foot">Designed &amp; built by {AUTHOR.name} · SEC EDGAR data, not advice</p>
+          </motion.nav>
+        )}
+      </AnimatePresence>
 
       <div className="toolbar" role="region" aria-label="Company and display settings">
         <div className="bar-inner toolbar-inner">
           <div className="tool-company">
             <CompanyPicker label="Change company" compact onPick={setSymbol} placeholder={`${symbol} — search another company`} />
-            <button className="btn ghost" type="button" onClick={() => {
+            <button className="btn ghost" type="button" aria-label={`Add ${symbol} to compare`} onClick={() => {
               const r = addToCompare(symbol)
               notify(r === 'added' ? `${symbol} added to the comparison` : `${symbol} is already in the comparison`)
-            }}>Add {symbol} to compare</button>
+            }}><span aria-hidden="true">+</span> Compare</button>
             <button className={following ? 'btn ghost on' : 'btn ghost'} type="button" aria-pressed={following} onClick={() => {
               const r = toggleWatch(symbol)
               notify(r === 'added' ? `Following ${symbol}: new SEC filings will show on your watchlist`
                 : r === 'removed' ? `Stopped following ${symbol}` : 'Your watchlist is full (15 companies)')
-            }}>{following ? `Following ${symbol}` : `Follow ${symbol}`}</button>
+            }}><span aria-hidden="true">{following ? '★' : '☆'}</span> {following ? 'Following' : 'Follow'}<span className="sr-only"> {symbol}</span></button>
           </div>
           <div className="tool-display">
             <Segmented label="Display units" options={UNITS} value={unit} onChange={setUnit} size="sm" />
@@ -124,18 +130,26 @@ export function Layout({ children }: { children: ReactNode }) {
       <main id="main" className="main" tabIndex={-1}><div key={pathname} className="page-settle">{children}</div></main>
 
       <footer className="footer">
+        <div className="tape" aria-hidden="true">
+          <div className="tape-track">
+            {Array.from({ length: 2 }, (_, k) => (
+              <span key={k}>Audited figures <em>plainly told</em> ✦ Straight from SEC EDGAR ✦ {meta.data ? meta.data.universe.total.toLocaleString('en-US') : '13,000+'} listed securities ✦ Every number has a source ✦&nbsp;</span>
+            ))}
+          </div>
+        </div>
         <div className="bar-inner footer-inner">
-          <p className="footer-statement" aria-hidden="true">Audited figures, <em>plainly told.</em></p>
-          <div>
+          <div className="footer-brand">
+            <LogoMark size={56} />
             <p className="credit">Designed &amp; built by <a href={AUTHOR.url} target="_blank" rel="noopener noreferrer">{AUTHOR.name}</a></p>
             <p>Data: SEC EDGAR XBRL Company Facts and the Nasdaq Trader symbol directory. Reported annual statements — not real-time market data and not investment advice.</p>
+            <p className="footer-links"><NavLink to={{ pathname: '/brand', search }}>Brand kit</NavLink><a href="https://github.com/ojxsmali/financial-intelligence-v7" target="_blank" rel="noopener noreferrer">Source on GitHub</a><NavLink to={{ pathname: '/sources', search }}>Methodology</NavLink></p>
           </div>
           {meta.data && (
             <dl className="status">
               <div><dt>Listed securities</dt><dd>{meta.data.universe.total.toLocaleString('en-US')}</dd></div>
               <div><dt>Operating companies</dt><dd>{meta.data.universe.companies.toLocaleString('en-US')}</dd></div>
               <div><dt>Listings built</dt><dd>{meta.data.universe.built_at.slice(0, 10) || '—'}</dd></div>
-              <div><dt>Gemini assistant</dt><dd>{meta.data.gemini_configured ? 'configured' : 'off'}</dd></div>
+              <div><dt>AI assistant</dt><dd>{meta.data.gemini_configured ? 'Gemini, on' : 'off on this deploy'}</dd></div>
               <div><dt>Version</dt><dd>{meta.data.version}</dd></div>
             </dl>
           )}

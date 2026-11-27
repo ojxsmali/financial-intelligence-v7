@@ -7,12 +7,13 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MotionConfig } from 'motion/react'
 import React, { StrictMode, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, Link, Route, Routes, useLocation } from 'react-router-dom'
 import { Layout } from './components/Layout'
 import { EmptyState, ErrorBoundary } from './components/ui'
 import { reportClientError } from './lib/api'
 import { SettingsProvider } from './lib/settings'
 import { Assistant } from './pages/Assistant'
+import { Brand } from './pages/Brand'
 import { Compare } from './pages/Compare'
 import { Explorer } from './pages/Explorer'
 import { Insights } from './pages/Insights'
@@ -26,7 +27,7 @@ const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWind
 
 const TITLES: Record<string, string> = {
   '/': 'Overview', '/explorer': 'Explorer', '/compare': 'Compare', '/statements': 'Statements',
-  '/insights': 'Insights', '/assistant': 'Assistant', '/sources': 'Sources', '/screener': 'Screener', '/watchlist': 'Watchlist',
+  '/insights': 'Insights', '/assistant': 'Assistant', '/sources': 'Sources', '/screener': 'Screener', '/watchlist': 'Watchlist', '/brand': 'Brand kit',
 }
 
 /** Per-page document title, and focus moved to <main> on navigation so screen readers announce the new page. */
@@ -48,7 +49,7 @@ function RoutedBoundary({ children }: { children: React.ReactNode }) {
 
 // Press feedback: every button-like control gets a ripple from the exact point it was pressed.
 document.addEventListener('pointerdown', e => {
-  const el = (e.target as HTMLElement | null)?.closest<HTMLElement>('.btn, .segmented button, .tabs button, .theme-toggle, .cmdk-hint, .metric-tabs button')
+  const el = (e.target as HTMLElement | null)?.closest<HTMLElement>('.btn, .segmented button, .tabs button, .theme-toggle, .cmdk-hint, .metric-tabs button, .menu-btn, .year-rail button, .swatch')
   if (!el || (el as HTMLButtonElement).disabled) return
   const r = el.getBoundingClientRect()
   el.style.setProperty('--rx', `${e.clientX - r.left}px`)
@@ -87,7 +88,10 @@ createRoot(document.getElementById('root')!).render(
               <Route path="/insights" element={<Insights />} />
               <Route path="/assistant" element={<Assistant />} />
               <Route path="/sources" element={<Sources />} />
-              <Route path="*" element={<EmptyState kicker="404" title="Page not found">Use the navigation above.</EmptyState>} />
+              <Route path="/brand" element={<Brand />} />
+              <Route path="*" element={<EmptyState kicker="404 · no such page" title="This page isn’t in the filing."
+                action={<><Link className="btn primary" to="/">Back to the overview</Link><Link className="btn" to="/screener">Open the screener</Link></>}>
+                The address may be mistyped, or the page has moved. Every company is one search away: press <kbd>/</kbd>.</EmptyState>} />
             </Routes>
             </RoutedBoundary>
           </Layout>

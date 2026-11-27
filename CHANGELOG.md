@@ -1,5 +1,12 @@
 # Changelog
 
+## 7.8.0 — 2026-11-27 · Cobalt Blueprint
+
+- New identity: a logo of three isometric columns (three audited years, the newest in cobalt), generated from one geometry for the header, favicons, PWA icons, the Open Graph card and the GitHub social preview (`web/scripts/render-brand.mjs`). New in-app brand kit at `/brand` with a 3D logo you can flick.
+- Overview hero rebuilt as a full-bleed cobalt poster with a 3D skyline of the fiscal years (three.js / react-three-fiber, lazy-loaded): drag to turn, tap a column or use the year rail and arrow keys. Lighter scene on phones, paused off screen, flat bar chart without WebGL.
+- Bolder type and indexed page headers that spring in, cobalt section tiles, full-screen menu on phones and tablets, compact phone toolbar, building-columns loader, restyled empty / error / 404 states, cobalt footer tape.
+- Fixes: sections no longer start invisible until scrolled into view; nav and metric tabs no longer clip on laptops, tablets and phones; KPI tiles only drag with a mouse; table scroll shadows; screener labels and filters fit on phones; duplicate CAGR removed from the hero facts.
+
 ## 7.7.0 — 2026-11-23 · Editorial redesign
 
 - New look: ink and bone with a single cobalt signal colour (green/red stay reserved for direction), Geist with a serif-italic accent phrase per page title, Geist Mono labels and a dot-matrix year readout. Dark "Ink" by default, light "Paper" one click away.
